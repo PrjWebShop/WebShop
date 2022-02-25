@@ -13,7 +13,32 @@ class Product
     private $size;
     private $sellerId;
     private $imagePath;
-    
+
+    public function getProductId() { return $this->productId; }
+
+    public function getCategoryId() { return $this->categoryId; }
+    public function setCategoryId($categoryId) { $this->categoryId = $categoryId; }
+
+    public function getName() { return $this->name; }
+    public function setName($name) { $this->name = $name; }
+
+    public function getDescription() { return $this->description; }
+    public function setDescription($description) { $this->description = $description; }
+
+    public function getPrice() { return $this->price; }
+    public function setPrice($price) { $this->price = $price; }
+
+    public function getQuantity() { return $this->quantity; }
+    public function setQuantity($quantity) { $this->quantity = $quantity; }
+
+    public function getSize() { return $this->size; }
+    public function setSize($size) { $this->size = $size; }
+
+    public function getSellerId() { return $this->sellerId; }
+
+    public function getImagePath() { return $this->imagePath; }
+    public function setImagePath($imagePath) { $this->imagePath = $imagePath; }
+
     function __construct($productId, $categoryId, $name, $description, $price, $quantity, $size, $sellerId, $imagePath)
     {
         $this->productId = $productId;
@@ -28,132 +53,28 @@ class Product
     }
 
     /**
-     * @return mixed
+     * Function that adds a product to the database and returns true on success.
+     * 
+     * @return bool
      */
-    public function getProductId()
+    public function addProductToDatabase()
     {
-        return $this->productId;
+
+        global $connection;
+
+        $sqlStmt = "INSERT INTO product(category_id, name, description, price, quantity, size, seller_id, image)
+                    VALUES($this->category_id, '$this->name', '$this->description', $this->price, $this->quantity, $this->size, $this->seller_id, '$this->image')";
+        echo $sqlStmt . "</br>";
+
+        $queryId = mysqli_query($connection, $sqlStmt);
+
+        if ($queryId)
+            return true;
+        return false;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCategoryId()
-    {
-        return $this->categoryId;
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSize()
-    {
-        return $this->size;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSellerId()
-    {
-        return $this->sellerId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImagePath()
-    {
-        return $this->imagePath;
-    }
-
-    /**
-     * @param mixed $categoryId
-     */
-    public function setCategoryId($categoryId)
-    {
-        $this->categoryId = $categoryId;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @param mixed $price
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    /**
-     * @param mixed $quantity
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-    }
-
-    /**
-     * @param mixed $size
-     */
-    public function setSize($size)
-    {
-        $this->size = $size;
-    }
-
-    /**
-     * @param mixed $imagePath
-     */
-    public function setImagePath($imagePath)
-    {
-        $this->imagePath = $imagePath;
-    }
+    // STATIC METHODS //
 
     /**
      * Function that returns all products from the product database as an associative array.
@@ -224,7 +145,6 @@ class Product
         return $listOfProducts;
     }
 
-
     /**
      * Function that returns an array of products in the shopping cart
      * 
@@ -260,30 +180,6 @@ class Product
         return $listOfProducts;
     }
 
-
-
-    /**
-     * Function that adds a product to the database and returns true on success.
-     * 
-     * @return bool
-     */
-    public function addProductToDatabase()
-    {
-
-        global $connection;
-
-        $sqlStmt = "INSERT INTO product(category_id, name, description, price, quantity, size, seller_id, image)
-                    VALUES($this->category_id, '$this->name', '$this->description', $this->price, $this->quantity, $this->size, $this->seller_id, '$this->image')";
-        echo $sqlStmt . "</br>";
-
-        $queryId = mysqli_query($connection, $sqlStmt);
-
-        if ($queryId)
-            return true;
-        return false;
-    }
-
-
     /**
      * Function to change the count of a specific product in a cart
      * 
@@ -317,7 +213,6 @@ class Product
             return Product::removeProductFromCart($account_id, $product_id);
     }
 
-
     /**
      * Removes an product from the cart table
      * 
@@ -336,8 +231,6 @@ class Product
             return true;
         return false;
     }
-
-
 
     /**
      * Adds a product to the shopping cart
@@ -362,7 +255,6 @@ class Product
             return true;
         return false;
     }
-
 
     /**
      * Updates product quantity and clears the shopping cart after comparing amount in cart and quantity in stock for each product.
@@ -407,7 +299,6 @@ class Product
         Product::removeAllFromCart($account_id);
     }
 
-
     /**
      * Clears the shopping cart.
      * 
@@ -447,6 +338,12 @@ class Product
         return false;
     }
     
+    /**
+     * Function that returns a product's quantity in stock from product table
+     * 
+     * @param int $product_id
+     * @return int returns the quantity in stock of a product
+     */
     private static function getQuantityInStock($product_id)
     {
         global $connection;
@@ -456,12 +353,18 @@ class Product
         $result = $connection->query($sqlStmt);
 
         if ($row = $result->fetch_assoc()) {
-            $category = $row["quantity"];
-            return (int)$category;
+            $quantity = $row["quantity"];
+            return (int)$quantity;
         }
         return 0;
     }
 
+    /**
+     * Function that returns the name of the category with the given ID
+     * 
+     * @param int $category_id
+     * @return string returns the category name
+     */
     public static function getCategoryName($category_id)
     {
         global $connection;
@@ -475,7 +378,12 @@ class Product
         return "No Category";
     }
 
-
+    /**
+     * Function that returns size
+     * 
+     * @param int $num any number between 1 and 7
+     * @return string returns size from XS to XXXL
+     */
     public static function getSizeToString($num)
     {
         switch ($num) {

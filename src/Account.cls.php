@@ -4,7 +4,6 @@ require_once 'dbConfig.php';
 
 class Account
 {
-
     private $accountId;
     private $email;
     private $firstName;
@@ -19,78 +18,20 @@ class Account
         $this->lastName = $lastName;
         $this->address = $address;
     }
+
+    public function getAccountId() { return $this->accountId; }
     
-    /**
-     * @return string
-     */
-    public function getAccountId()
-    {
-        return $this->accountId;
-    }
+    public function getEmail() { return $this->email; }
+    public function setEmail($email) { $this->email = $email; }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+    public function getFirstName() { return $this->firstName; }
+    public function setFirstName($firstName) { $this->firstName = $firstName; }
+    
+    public function getLastName() { return $this->lastName; }
+    public function setLastName($lastName) { $this->lastName = $lastName; }
 
-    /**
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @param string $firstName
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * @param string $address
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    }
+    public function getAddress() { return $this->address; }
+    public function setAddress($address) { $this->address = $address; }
 
     /**
      * Function that retrieves account info from the database with given identifier
@@ -100,13 +41,13 @@ class Account
     public static function getAccountInfo($identifier)
     {
         global $connection;
-
+        
         if (is_numeric($identifier)) {
             $sqlStmt = "SELECT * FROM account WHERE account_id = $identifier";
         } else {
             $sqlStmt = "SELECT * FROM account WHERE email = '$identifier'";
         }
-
+        
         $result = $connection->query($sqlStmt);
 
         if ($row = $result->fetch_assoc()) {
@@ -121,7 +62,6 @@ class Account
         }
         return false;
     }
-
 
     /**
      * This function creates the account in the database and returns true on success.
@@ -151,7 +91,6 @@ class Account
         else
             return false;
     }
-
 
     /**
      * This function returns true if the email and password entered match the ones in the database.
