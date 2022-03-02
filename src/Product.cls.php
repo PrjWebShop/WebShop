@@ -64,7 +64,6 @@ class Product
 
         $sqlStmt = "INSERT INTO product(category_id, name, description, price, quantity, size, seller_id, image)
                     VALUES($this->category_id, '$this->name', '$this->description', $this->price, $this->quantity, $this->size, $this->seller_id, '$this->image')";
-        echo $sqlStmt . "</br>";
 
         $queryId = mysqli_query($connection, $sqlStmt);
 
@@ -125,6 +124,8 @@ class Product
         else
             $sqlStmt = "SELECT * FROM product;";
 
+
+        
         $result = $connection->query($sqlStmt);
 
         while ($row = $result->fetch_assoc()) {
@@ -279,7 +280,6 @@ class Product
         while ($row = $result->fetch_assoc()) {
             if ($row["count"] > $row["quantity"])
             {
-                echo "count greater than quantity";
                 return false;
             }
         }
@@ -297,6 +297,7 @@ class Product
 
         // empty cart
         Product::removeAllFromCart($account_id);
+        return true;
     }
 
     /**
