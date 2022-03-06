@@ -65,7 +65,7 @@ if (isset($_REQUEST["create_account"])) {
     <video autoplay muted id="videoBg" class="w-100 text-center">
         <source src="./vdo.mp4" type="video/mp4">
     </video>
-    <div id="ui" class="container-fluid negativeMargin">
+    <div id="ui" class="container-fluid negativeMargin fade-in-element">
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
             <div class="card p-4 transparentBg hvr-grow-shadow" style="width: 27rem;">
                 <form method="post">
@@ -88,8 +88,8 @@ if (isset($_REQUEST["create_account"])) {
             </div>
         </div>
     </div>
-    <div id="secondScreen" class="container-fluid negativeMargin">
-        <div class="h-100 w-100 d-flex justify-content-center align-items-center">
+    <div id="secondScreen" class="container-fluid negativeMargin fade-in-element">
+        <div class="h-100 w-100 d-flex justify-content-center align-items-center hidden">
             <div class="card p-4 transparentBg hvr-grow-shadow" style="width: 30rem;">
                 <h4>About WebShop</h4>
                 <p>
@@ -105,8 +105,8 @@ if (isset($_REQUEST["create_account"])) {
 
         </div>
     </div>
-    <div id="thirdScreen" class="container-fluid negativeMargin">
-        <div class="h-100 w-100 d-flex justify-content-center align-items-center">
+    <div id="thirdScreen" class="container-fluid negativeMargin fade-in-element">
+        <div class="h-100 w-100 d-flex justify-content-center align-items-center hidden">
             <div class="card p-4 transparentBg hvr-grow-shadow" style="width: 30rem;">
                 <h4>Our Tech Stack</h4>
                 <p>
@@ -158,6 +158,35 @@ if (isset($_REQUEST["create_account"])) {
                 }
             });
         });
+    </script>
+    <script>
+        (function() {
+            var elements
+            var windowHeight;
+
+            function init() {
+                elements = document.querySelectorAll('.hidden');
+                windowHeight = window.innerHeight;
+            }
+
+            function checkPosition() {
+                for (var i = 0; i < elements.length; i++) {
+                    var element = elements[i];
+                    var positionFromTop = elements[i].getBoundingClientRect().top;
+
+                    if (positionFromTop - windowHeight <= 0) {
+                        element.classList.add('fade-in-element');
+                        element.classList.remove('hidden');
+                    }
+                }
+            }
+
+            window.addEventListener('scroll', checkPosition);
+            window.addEventListener('resize', init);
+
+            init();
+            checkPosition();
+        })();
     </script>
 </body>
 

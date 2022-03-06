@@ -19,7 +19,10 @@ if (isset($_COOKIE["user"])) {
 function itemCard($listOfItems)
 {
     foreach ($listOfItems as $oneDim) {
-        echo "<div style='border-style: solid; text-align: center; width: 40%; margin: auto;'>";
+        echo "<div class='col-12 col-md-6'>";
+        echo "<div class='card m-2'>";
+        // echo "<img class='card-img-top' src='" . $oneDim->getImage() . "' alt='Card image cap'>";
+        echo "<div class='card-body'>";
         echo "<u>" . Product::getCategoryName($oneDim->getCategoryId()) . "</u><br/><br/>";
         echo "<b>" . $oneDim->getName() . "</b><br/>";
         echo "<i>" . $oneDim->getDescription() . "</i><br/><br/>";
@@ -31,7 +34,8 @@ function itemCard($listOfItems)
         echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
         // echo "Seller: " . getAccountName($oneDim["seller_id"]) . "<br/>";
         echo "</div>";
-        echo "<br/>";
+        echo "</div>";
+        echo "</div>";
     }
 }
 ?>
@@ -43,18 +47,71 @@ function itemCard($listOfItems)
 </head>
 
 <body>
-    <?php
-    echo "Welcome, " . $user->getFirstName() . " " . $user->getLastName() . " <br/><br/>";
-    ?>
-    <form method="POST">
-        <input type="submit" name="logout" value="Logout" />
-    </form>
-    <?php
-    itemCard(Product::getProductList());
-    ?>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light transparentBg mb-4">
+
+        <?php
+        echo "<a class='navbar-brand font-weight-bold' href=''>Welcome, " . $user->getFirstName() . " " . $user->getLastName() . " </a>";
+        ?>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Browse</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <form method="POST" class="nav-link">
+                        <input type="submit" name="logout" value="Logout" class="btn btn-danger pl-1 pr-1 p-0 m-0" />
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active">
+                        Categories
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">Shirts</a>
+                    <a href="#" class="list-group-item list-group-item-action">Pants</a>
+                    <a href="#" class="list-group-item list-group-item-action">Shoes</a>
+                    <a href="#" class="list-group-item list-group-item-action">Accessories</a>
+                </div>
+            </div>
+            <div class="col-md-9 col-12">
+                <div class="row">
+                    <?php
+                    $listOfItems = Product::getProductList();
+                    itemCard($listOfItems);
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- <?php
+            itemCard(Product::getProductList());
+            ?> -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
 </body>
 
 </html>

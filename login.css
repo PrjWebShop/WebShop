@@ -64,3 +64,15 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.9);
 }
+.hidden {
+  opacity: 0;
+}
+
+.fade-in-element {
+animation: fade-in 1.4s;
+}
+
+@keyframes fade-in {
+  from {opacity: 0; transform: scale(.7,.7)}
+  to {opacity: 1;}
+}
