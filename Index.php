@@ -12,6 +12,7 @@ if (isset($_REQUEST["logout"])) {
 
 if (isset($_COOKIE["user"])) {
     $user = Account::getAccountInfo($_COOKIE["user"]);
+    
 } else {
     header("Location: login.php");
 }

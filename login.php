@@ -34,8 +34,8 @@ if (isset($_REQUEST["create_account"])) {
     </style>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="./login.css">
-    <link rel="stylesheet" href="./hover-min.css">
+    <link rel="stylesheet" href="./Css/login.css">
+    <link rel="stylesheet" href="./Css/hover-min.css">
 </head>
 
 <body>
@@ -63,7 +63,7 @@ if (isset($_REQUEST["create_account"])) {
         </div>
     </nav>
     <video autoplay muted id="videoBg" class="w-100 text-center">
-        <source src="./vdo.mp4" type="video/mp4">
+        <source src="./Video/vdo.mp4" type="video/mp4">
     </video>
     <div id="ui" class="container-fluid negativeMargin fade-in-element">
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'dbConfig.php';
+require_once 'src/dbConfig.php';
 
 class Account
 {
