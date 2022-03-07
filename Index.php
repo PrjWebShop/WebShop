@@ -5,6 +5,8 @@
 
 require_once 'src/lib.php';
 
+$category_filter = null;
+
 if (isset($_REQUEST["logout"])) {
     setcookie("user", "", time() - 3600);
     header("Location: login.php");
@@ -16,12 +18,35 @@ if (isset($_COOKIE["user"])) {
     header("Location: login.php");
 }
 
+if (isset($_GET["search"]))
+{
+    $category = $_GET["search"];
+    
+    switch ($category) {
+        case 'electronics':
+            $category_filter = 1;
+            break;
+        case 'video games':
+            $category_filter = 2;
+            break;
+        case 'movies':
+            $category_filter = 3;
+            break;
+        case 'clothing':
+            $category_filter = 4;
+            break;
+        
+        default:
+            break;
+    }
+}
+
 function itemCard($listOfItems)
 {
     foreach ($listOfItems as $oneDim) {
         echo "<div class='col-12 col-md-6'>";
         echo "<div class='card m-2'>";
-        // echo "<img class='card-img-top' src='" . $oneDim->getImage() . "' alt='Card image cap'>";
+        // echo "<img class='card-img-top' src='img/" . $oneDim->getImagePath() . "' alt='Card image cap'>";
         echo "<div class='card-body'>";
         echo "<u>" . Product::getCategoryName($oneDim->getCategoryId()) . "</u><br/><br/>";
         echo "<b>" . $oneDim->getName() . "</b><br/>";
@@ -32,7 +57,6 @@ function itemCard($listOfItems)
             echo "Size: " . Product::getSizeToString($oneDim->getSize()) . "<br/>";
         $seller = Account::getAccountInfo($oneDim->getSellerId());
         echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
-        // echo "Seller: " . getAccountName($oneDim["seller_id"]) . "<br/>";
         echo "</div>";
         echo "</div>";
         echo "</div>";
@@ -84,16 +108,16 @@ function itemCard($listOfItems)
                     <a href="#" class="list-group-item list-group-item-action active">
                         Categories
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action">Shirts</a>
-                    <a href="#" class="list-group-item list-group-item-action">Pants</a>
-                    <a href="#" class="list-group-item list-group-item-action">Shoes</a>
-                    <a href="#" class="list-group-item list-group-item-action">Accessories</a>
+                    <a href="?search=electronics" class="list-group-item list-group-item-action">Electronics</a>
+                    <a href="?search=video games" class="list-group-item list-group-item-action">Video Games</a>
+                    <a href="?search=movies" class="list-group-item list-group-item-action">Movies</a>
+                    <a href="?search=clothing" class="list-group-item list-group-item-action">Clothing</a>
                 </div>
             </div>
             <div class="col-md-9 col-12">
                 <div class="row">
                     <?php
-                    $listOfItems = Product::getProductList();
+                    $listOfItems = Product::getProductList($category_filter);
                     itemCard($listOfItems);
                     ?>
                 </div>
@@ -105,7 +129,7 @@ function itemCard($listOfItems)
 
 
     <!-- <?php
-            itemCard(Product::getProductList());
+            //itemCard(Product::getProductList());
             ?> -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
