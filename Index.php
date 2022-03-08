@@ -5,17 +5,20 @@
 
 require_once 'src/lib.php';
 
+// User hit logout
 if (isset($_REQUEST["logout"])) {
     setcookie("user", "", time() - 3600);
     header("Location: login.php");
 }
 
+// Checks if the user is logged in and retrieves account information if they are
 if (isset($_COOKIE["user"])) {
     $user = Account::getAccountInfo($_COOKIE["user"]);
 } else {
     header("Location: login.php");
 }
 
+// Sets the product category filter
 if (isset($_GET["search"]))
 {
     $category = $_GET["search"];
@@ -49,7 +52,6 @@ function itemCard($listOfItems)
             echo "Size: " . Product::getSizeToString($oneDim->getSize()) . "<br/>";
         $seller = Account::getAccountInfo($oneDim->getSellerId());
         echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
-        // echo "Seller: " . getAccountName($oneDim["seller_id"]) . "<br/>";
         echo "</div>";
         echo "</div>";
         echo "</div>";

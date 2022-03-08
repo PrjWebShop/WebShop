@@ -4,10 +4,12 @@ require_once 'src/lib.php';
 $failed_login = null;
 $entered_email = "";
 
+ // If the user is already logged in, redirect to index
 if (isset($_COOKIE["user"])) {
     header("Location: Index.php");
 }
 
+// Login button
 if (isset($_REQUEST["login"])) {
     $email = $_REQUEST["email"];
     $pwd = $_REQUEST["password"];
@@ -20,6 +22,7 @@ if (isset($_REQUEST["login"])) {
     }
 }
 
+// Register button
 if (isset($_REQUEST["create_account"])) {
     header("Location: create_account.php");
 }

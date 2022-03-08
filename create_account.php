@@ -3,10 +3,12 @@ require_once 'src/lib.php';
 
 $failed_attempt = null;
 
+ // If the user is already logged in, redirect to index
 if (isset($_COOKIE["user"])) {
     header("Location: Index.php");
 }
 
+// Register button
 if (isset($_REQUEST["register"])) {
     $email = $_REQUEST["email"];
     $pwd = $_REQUEST["password"];
