@@ -17,46 +17,6 @@ if (isset($_COOKIE["user"])) {
 } else {
     header("Location: login.php");
 }
-
-// Sets the product category filter
-if (isset($_GET["search"]))
-{
-    $category = $_GET["search"];
-    
-    $category_filter = Product::getCategoryIndexFromName($category);
-}
-
-function displayCategories()
-{
-    $listOfCategories = Product::getCategoryList();
-    
-    foreach ($listOfCategories as $category)
-    {
-        echo "<a href='?search=$category' class='list-group-item list-group-item-action'>$category</a>";
-    }
-}
-
-function itemCard($listOfItems)
-{
-    foreach ($listOfItems as $oneDim) {
-        echo "<div class='col-12 col-md-6'>";
-        echo "<div class='card m-2'>";
-        // echo "<img class='card-img-top' src='" . $oneDim->getImage() . "' alt='Card image cap'>";
-        echo "<div class='card-body'>";
-        echo "<u>" . Product::getCategoryName($oneDim->getCategoryId()) . "</u><br/><br/>";
-        echo "<b>" . $oneDim->getName() . "</b><br/>";
-        echo "<i>" . $oneDim->getDescription() . "</i><br/><br/>";
-        echo "Price: $" . $oneDim->getPrice() . "<br/>";
-        echo "Quantity: " . $oneDim->getQuantity() . " in stock <br/>";
-        if ($oneDim->getCategoryId() == 4)
-            echo "Size: " . Product::getSizeToString($oneDim->getSize()) . "<br/>";
-        $seller = Account::getAccountInfo($oneDim->getSellerId());
-        echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-    }
-}
 ?>
 
 <html>
@@ -111,8 +71,8 @@ function itemCard($listOfItems)
             <div class="col-md-9 col-12">
                 <div class="row">
                     <?php
-                    $listOfItems = Product::getProductList($category_filter);
-                    itemCard($listOfItems);
+                    $listOfProducts = Product::getProductList($category_filter);
+                    displayProducts($listOfProducts);
                     ?>
                 </div>
             </div>

@@ -23,10 +23,10 @@ if (isset($_REQUEST["register"])) {
     } catch (\Throwable $th) {
         $failed_attempt = true;
         switch ($th->getCode()) {
-            case 1062:
+            case SQL_ERROR_DUPLICATE:
                 $error = "Email already registed!";
                 break;
-            case 1406:
+            case SQL_ERROR_DATA_TOO_LONG:
                 $error = $th->getMessage(); //"Fields must have less than 100 characters!";
                 break;
             default:
