@@ -361,6 +361,42 @@ class Product
     }
 
     /**
+     * Returns full list of categories from the database in an array
+     */
+    public static function getCategoryList()
+    {
+        global $connection;
+        
+        $cpt = 0;
+
+        $sqlStmt = "SELECT * FROM category;";
+        
+        $result = $connection->query($sqlStmt);
+                
+        while ($row = $result->fetch_assoc()) {
+            
+            $category_name = $row["name"];
+            
+            $ListOfCategories[$cpt++] = $category_name;
+        }
+        return $ListOfCategories;
+    }
+
+    public static function getCategoryIndexFromName($name)
+    {
+        global $connection;
+
+        $sqlStmt = "SELECT * FROM category WHERE name = '$name';";
+
+        $result = $connection->query($sqlStmt);
+        if ($row = $result->fetch_assoc()) {
+            $index = $row["category_id"];
+            return (int)$index;
+        }
+        return null;
+    } 
+
+    /**
      * Function that returns the name of the category with the given ID
      * 
      * @param int $category_id
