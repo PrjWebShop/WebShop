@@ -14,7 +14,7 @@ if (isset($_REQUEST["login"])) {
     $email = $_REQUEST["email"];
     $pwd = $_REQUEST["password"];
     if (Account::checkLogin($email, $pwd)) {
-        setcookie("user", $email, time() + 600);
+        setcookie("user", $email, time() + 86400);
         header("Location: Index.php");
     } else {
         $failed_login = true;
