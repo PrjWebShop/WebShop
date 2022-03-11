@@ -24,6 +24,11 @@ function displayCategories()
     }
 }
 
+/**
+ * Function that displays the products
+ * 
+ * @param Product[] $listOfProducts
+ */
 function displayProducts($listOfProducts)
 {
     foreach ($listOfProducts as $product) {

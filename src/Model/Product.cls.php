@@ -110,7 +110,7 @@ class Product
      * Function that returns all products from the product database as an associative array.
      * 
      * @param int $category_filter [optional] filters the results by category
-     * @return array (product_id, category_id, name, description, price, quantity, size, seller_id, image)
+     * @return Product[]
      */
     public static function getProductList($category_filter = NULL)
     {
@@ -142,6 +142,41 @@ class Product
 
             $prod = new Product($prodId, $catId, $name, $desc, $price, $qty, $size, $seller, $img);
             $listOfProducts[$cpt++] = $prod;
+        }
+        return $listOfProducts;
+    }
+
+    /**
+     * Functions that searches for products with a given name.
+     * 
+     * @param string $name
+     * 
+     * @return Product[] returns an array of Product
+     */
+    public static function searchProduct($name)
+    {
+        global $connection;
+
+        $counter = 0;
+        
+        $sqlStmt = "SELECT * FROM product WHERE name LIKE '%$name%';";
+        
+        $result = $connection->query($sqlStmt);
+
+        while ($row = $result->fetch_assoc()) {
+            
+            $prodId = $row["product_id"];
+            $catId = $row["category_id"];
+            $name = $row["name"];
+            $desc = $row["description"];
+            $price = $row["price"];
+            $qty = $row["quantity"];
+            $size = $row["size"];
+            $seller = $row["seller_id"];
+            $img = $row["image"];
+
+            $prod = new Product($prodId, $catId, $name, $desc, $price, $qty, $size, $seller, $img);
+            $listOfProducts[$counter++] = $prod;
         }
         return $listOfProducts;
     }
