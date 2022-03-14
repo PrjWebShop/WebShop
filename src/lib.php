@@ -40,7 +40,7 @@ function displayProducts($listOfProducts)
         // echo "<img class='card-img-top' src='" . $product->getImage() . "' alt='Card image cap'>";
         echo "<div class='card-body'>";
         echo "<u>" . Product::getCategoryName($product->getCategoryId()) . "</u><br/><br/>";
-        echo "<b>" . $product->getName() . "</b><br/>";
+        echo "<b><a href='product.php?id=". $product->getProductId() . "'>" . $product->getName() . "</a></b><br/>";
         echo "<i>" . $product->getDescription() . "</i><br/><br/>";
         echo "Price: $" . $product->getPrice() . "<br/>";
         echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
