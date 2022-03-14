@@ -103,3 +103,10 @@ body {
     top: 0;
     left: 0;
 }
+
+.navi-logo {
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid lightgray;
+    margin-right: 1rem;
+}

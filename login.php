@@ -45,13 +45,14 @@ if (isset($_REQUEST["create_account"])) {
 
     <div className="topBaar">
     <nav class="navbar navbar-expand-lg nav-dark transparentBg mb-4 fixed-top">
+        <img class="navi-logo" src="./Img/Logo/Main_Icon.png" alt="Logo Not Found">
         
-        <a class="navbar-brand font-weight-bold" href="#">Web Shop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="Index.php">Browse</a>
