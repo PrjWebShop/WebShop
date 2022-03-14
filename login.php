@@ -7,7 +7,6 @@ $entered_email = "";
 // If the user is already logged in, redirect to index
 if (isset($_COOKIE["user"])) {
     header("Location: Index.php");
-    
 }
 
 // Login button

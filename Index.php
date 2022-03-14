@@ -15,6 +15,14 @@ if (isset($_COOKIE["user"])) {
     $user = Account::getAccountInfo($_COOKIE["user"]);
     $accountLogged = true;
 }
+
+if (isset($_GET["search"])) {
+    $search = $_GET["search"];
+    $listOfProducts = Product::searchProduct($search);
+}
+else {
+    $listOfProducts = Product::getProductList($category_filter);
+}
 ?>
 
 <html>
@@ -41,6 +49,12 @@ if (isset($_COOKIE["user"])) {
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <form method="GET" class="nav-link">
+                        <input type="text" name="search" minlength="3" />
+                        <input type="submit" value="Search" class="btn btn-primary pl-1 pr-1 p-0 m-0" />
+                    </form>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Browse</a>
                 </li>
@@ -73,7 +87,6 @@ if (isset($_COOKIE["user"])) {
             <div class="col-md-9 col-12">
                 <div class="row">
                     <?php
-                    $listOfProducts = Product::getProductList($category_filter);
                     displayProducts($listOfProducts);
                     ?>
                 </div>
