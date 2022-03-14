@@ -54,7 +54,7 @@ if (isset($_REQUEST["create_account"])) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Browse</a>
+                    <a class="nav-link" href="Index.php">Browse</a>
                 </li>
                 <!-- link to the #secondScreen -->
                 <li class="nav-item">

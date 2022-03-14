@@ -1,9 +1,8 @@
-<!-- add comment -->
-<!-- You -->
-<!-- test  -->
 <?php
 
 require_once 'src/lib.php';
+
+$accountLogged = false;
 
 // User hit logout
 if (isset($_REQUEST["logout"])) {
@@ -14,8 +13,7 @@ if (isset($_REQUEST["logout"])) {
 // Checks if the user is logged in and retrieves account information if they are
 if (isset($_COOKIE["user"])) {
     $user = Account::getAccountInfo($_COOKIE["user"]);
-} else {
-    header("Location: login.php");
+    $accountLogged = true;
 }
 ?>
 
@@ -31,7 +29,11 @@ if (isset($_COOKIE["user"])) {
     <nav class="navbar navbar-expand-lg navbar-light bg-light transparentBg mb-4">
 
         <?php
-        echo "<a class='navbar-brand font-weight-bold' href=''>Welcome, " . $user->getFirstName() . " " . $user->getLastName() . " </a>";
+        if ($accountLogged)
+            $welcomeMessage = "Welcome, " . $user->getFirstName() . " " . $user->getLastName();
+        else
+            $welcomeMessage = "Welcome!";
+        echo "<a class='navbar-brand font-weight-bold' href=''>$welcomeMessage</a>";
         ?>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
