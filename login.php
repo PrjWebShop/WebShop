@@ -43,8 +43,8 @@ if (isset($_REQUEST["create_account"])) {
 
 <body>
 
-
-    <nav class="navbar navbar-expand-lg nav-dark transparentBg mb-4">
+    <div className="topBaar">
+    <nav class="navbar navbar-expand-lg nav-dark transparentBg mb-4 fixed-top">
         
         <a class="navbar-brand font-weight-bold" href="#">Web Shop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,6 +66,7 @@ if (isset($_REQUEST["create_account"])) {
             </ul>
         </div>
     </nav>
+    </div>
 
     <video autoplay muted id="videoBg" class="w-100 text-center">
         <source src="./Video/vdo.mp4" type="video/mp4">
