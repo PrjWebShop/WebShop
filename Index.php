@@ -5,63 +5,17 @@
 
 require_once 'src/lib.php';
 
-$category_filter = null;
-
+// User hit logout
 if (isset($_REQUEST["logout"])) {
     setcookie("user", "", time() - 3600);
     header("Location: login.php");
 }
 
+// Checks if the user is logged in and retrieves account information if they are
 if (isset($_COOKIE["user"])) {
     $user = Account::getAccountInfo($_COOKIE["user"]);
-    
 } else {
     header("Location: login.php");
-}
-
-if (isset($_GET["search"]))
-{
-    $category = $_GET["search"];
-    
-    switch ($category) {
-        case 'electronics':
-            $category_filter = 1;
-            break;
-        case 'video games':
-            $category_filter = 2;
-            break;
-        case 'movies':
-            $category_filter = 3;
-            break;
-        case 'clothing':
-            $category_filter = 4;
-            break;
-        
-        default:
-            break;
-    }
-}
-
-function itemCard($listOfItems)
-{
-    foreach ($listOfItems as $oneDim) {
-        echo "<div class='col-12 col-md-6'>";
-        echo "<div class='card m-2'>";
-        // echo "<img class='card-img-top' src='img/" . $oneDim->getImagePath() . "' alt='Card image cap'>";
-        echo "<div class='card-body'>";
-        echo "<u>" . Product::getCategoryName($oneDim->getCategoryId()) . "</u><br/><br/>";
-        echo "<b>" . $oneDim->getName() . "</b><br/>";
-        echo "<i>" . $oneDim->getDescription() . "</i><br/><br/>";
-        echo "Price: $" . $oneDim->getPrice() . "<br/>";
-        echo "Quantity: " . $oneDim->getQuantity() . " in stock <br/>";
-        if ($oneDim->getCategoryId() == 4)
-            echo "Size: " . Product::getSizeToString($oneDim->getSize()) . "<br/>";
-        $seller = Account::getAccountInfo($oneDim->getSellerId());
-        echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-    }
 }
 ?>
 
@@ -106,20 +60,19 @@ function itemCard($listOfItems)
         <div class="row">
             <div class="col-md-3 col-12">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">
+                    <a href="./Index.php" class="list-group-item list-group-item-action active">
                         Categories
                     </a>
-                    <a href="?search=electronics" class="list-group-item list-group-item-action">Electronics</a>
-                    <a href="?search=video games" class="list-group-item list-group-item-action">Video Games</a>
-                    <a href="?search=movies" class="list-group-item list-group-item-action">Movies</a>
-                    <a href="?search=clothing" class="list-group-item list-group-item-action">Clothing</a>
+                    <?php 
+                    displayCategories();
+                    ?>
                 </div>
             </div>
             <div class="col-md-9 col-12">
                 <div class="row">
                     <?php
-                    $listOfItems = Product::getProductList($category_filter);
-                    itemCard($listOfItems);
+                    $listOfProducts = Product::getProductList($category_filter);
+                    displayProducts($listOfProducts);
                     ?>
                 </div>
             </div>

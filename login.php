@@ -4,15 +4,17 @@ require_once 'src/lib.php';
 $failed_login = null;
 $entered_email = "";
 
+ // If the user is already logged in, redirect to index
 if (isset($_COOKIE["user"])) {
     header("Location: Index.php");
 }
 
+// Login button
 if (isset($_REQUEST["login"])) {
     $email = $_REQUEST["email"];
     $pwd = $_REQUEST["password"];
     if (Account::checkLogin($email, $pwd)) {
-        setcookie("user", $email, time() + 600);
+        setcookie("user", $email, time() + 86400);
         header("Location: Index.php");
     } else {
         $failed_login = true;
@@ -20,6 +22,7 @@ if (isset($_REQUEST["login"])) {
     }
 }
 
+// Register button
 if (isset($_REQUEST["create_account"])) {
     header("Location: create_account.php");
 }
@@ -68,7 +71,7 @@ if (isset($_REQUEST["create_account"])) {
     <div id="ui" class="container-fluid negativeMargin fade-in-element">
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
             <div class="card p-4 transparentBg hvr-grow-shadow" style="width: 27rem;">
-                <form method="post">
+                <form method="post" action="./login.php">
                     <div class="form-group" for="email">
                         <label> Email </label> <input type="email" name="email" id="email" class="form-control" value="<?php echo $entered_email ?>" />
                     </div>

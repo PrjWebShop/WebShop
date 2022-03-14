@@ -3,10 +3,12 @@ require_once 'src/lib.php';
 
 $failed_attempt = null;
 
+ // If the user is already logged in, redirect to index
 if (isset($_COOKIE["user"])) {
     header("Location: Index.php");
 }
 
+// Register button
 if (isset($_REQUEST["register"])) {
     $email = $_REQUEST["email"];
     $pwd = $_REQUEST["password"];
@@ -21,10 +23,10 @@ if (isset($_REQUEST["register"])) {
     } catch (\Throwable $th) {
         $failed_attempt = true;
         switch ($th->getCode()) {
-            case 1062:
+            case SQL_ERROR_DUPLICATE:
                 $error = "Email already registed!";
                 break;
-            case 1406:
+            case SQL_ERROR_DATA_TOO_LONG:
                 $error = $th->getMessage(); //"Fields must have less than 100 characters!";
                 break;
             default:
