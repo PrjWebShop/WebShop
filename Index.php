@@ -3,6 +3,7 @@
 require_once 'src/lib.php';
 
 $accountLogged = false;
+$category_filter = null;
 
 // User hit logout
 if (isset($_REQUEST["logout"])) {
@@ -56,7 +57,7 @@ else {
                     </form>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Browse</a>
+                    <a class="nav-link" href="./Index.php">Browse</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Cart</a>
