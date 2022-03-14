@@ -71,7 +71,7 @@ if (isset($_REQUEST["create_account"])) {
     <div id="ui" class="container-fluid negativeMargin fade-in-element">
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
             <div class="card p-4 transparentBg hvr-grow-shadow" style="width: 27rem;">
-                <form method="post">
+                <form method="post" action="./login.php">
                     <div class="form-group" for="email">
                         <label> Email </label> <input type="email" name="email" id="email" class="form-control" value="<?php echo $entered_email ?>" />
                     </div>
