@@ -7,9 +7,9 @@ require_once 'src/Model/Account.cls.php';
 require_once 'src/Model/Product.cls.php';
 
 // Sets the product category filter
-if (isset($_GET["search"]))
+if (isset($_GET["category"]))
 {
-    $category = $_GET["search"];
+    $category = $_GET["category"];
     
     $category_filter = Product::getCategoryIndexFromName($category);
 }
@@ -20,7 +20,7 @@ function displayCategories()
     
     foreach ($listOfCategories as $category)
     {
-        echo "<a href='?search=$category' class='list-group-item list-group-item-action'>$category</a>";
+        echo "<a href='?category=$category' class='list-group-item list-group-item-action'>$category</a>";
     }
 }
 

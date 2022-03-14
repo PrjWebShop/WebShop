@@ -3,6 +3,7 @@
 require_once 'src/lib.php';
 
 $accountLogged = false;
+$category_filter = null;
 
 // User hit logout
 if (isset($_REQUEST["logout"])) {
@@ -14,6 +15,14 @@ if (isset($_REQUEST["logout"])) {
 if (isset($_COOKIE["user"])) {
     $user = Account::getAccountInfo($_COOKIE["user"]);
     $accountLogged = true;
+}
+
+if (isset($_GET["search"])) {
+    $search = $_GET["search"];
+    $listOfProducts = Product::searchProduct($search);
+}
+else {
+    $listOfProducts = Product::getProductList($category_filter);
 }
 ?>
 
@@ -43,7 +52,13 @@ if (isset($_COOKIE["user"])) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Browse</a>
+                    <form method="GET" class="nav-link">
+                        <input type="text" name="search" minlength="3" />
+                        <input type="submit" value="Search" class="btn btn-primary pl-1 pr-1 p-0 m-0" />
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./Index.php">Browse</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Cart</a>
@@ -74,7 +89,6 @@ if (isset($_COOKIE["user"])) {
             <div class="col-md-9 col-12">
                 <div class="row">
                     <?php
-                    $listOfProducts = Product::getProductList($category_filter);
                     displayProducts($listOfProducts);
                     ?>
                 </div>
