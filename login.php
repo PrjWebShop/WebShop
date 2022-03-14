@@ -4,17 +4,15 @@ require_once 'src/lib.php';
 $failed_login = null;
 $entered_email = "";
 
- // If the user is already logged in, redirect to index
 if (isset($_COOKIE["user"])) {
     header("Location: Index.php");
 }
 
-// Login button
 if (isset($_REQUEST["login"])) {
     $email = $_REQUEST["email"];
     $pwd = $_REQUEST["password"];
     if (Account::checkLogin($email, $pwd)) {
-        setcookie("user", $email, time() + 86400);
+        setcookie("user", $email, time() + 600);
         header("Location: Index.php");
     } else {
         $failed_login = true;
@@ -22,7 +20,6 @@ if (isset($_REQUEST["login"])) {
     }
 }
 
-// Register button
 if (isset($_REQUEST["create_account"])) {
     header("Location: create_account.php");
 }
@@ -45,6 +42,7 @@ if (isset($_REQUEST["create_account"])) {
 
 
     <nav class="navbar navbar-expand-lg nav-dark transparentBg mb-4">
+        
         <a class="navbar-brand font-weight-bold" href="#">Web Shop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -65,13 +63,14 @@ if (isset($_REQUEST["create_account"])) {
             </ul>
         </div>
     </nav>
+
     <video autoplay muted id="videoBg" class="w-100 text-center">
         <source src="./Video/vdo.mp4" type="video/mp4">
     </video>
     <div id="ui" class="container-fluid negativeMargin fade-in-element">
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
             <div class="card p-4 transparentBg hvr-grow-shadow" style="width: 27rem;">
-                <form method="post" action="./login.php">
+                <form method="post">
                     <div class="form-group" for="email">
                         <label> Email </label> <input type="email" name="email" id="email" class="form-control" value="<?php echo $entered_email ?>" />
                     </div>
