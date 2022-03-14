@@ -13,6 +13,9 @@ if (isset($_GET["category"]))
     
     $category_filter = Product::getCategoryIndexFromName($category);
 }
+else {
+    $category_filter = null;
+}
 
 function displayCategories()
 {

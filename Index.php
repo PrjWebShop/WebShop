@@ -3,7 +3,6 @@
 require_once 'src/lib.php';
 
 $accountLogged = false;
-$category_filter = null;
 
 // User hit logout
 if (isset($_REQUEST["logout"])) {
