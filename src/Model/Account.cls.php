@@ -36,7 +36,7 @@ class Account
     /**
      * Function that retrieves account info from the database with given identifier
      * @param mixed $identifier use either id or email
-     * @return mixed returns Account object on success or false if no accounts exist with the given identifier
+     * @return Account returns Account object on success or false if no accounts exist with the given identifier
      */
     public static function getAccountInfo($identifier)
     {
