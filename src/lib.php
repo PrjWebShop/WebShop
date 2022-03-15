@@ -6,17 +6,6 @@ define("SQL_ERROR_DATA_TOO_LONG", 1406); // Data exceeds character limit
 require_once 'src/Model/Account.cls.php';
 require_once 'src/Model/Product.cls.php';
 
-// Sets the product category filter
-if (isset($_GET["category"]))
-{
-    $category = $_GET["category"];
-    
-    $category_filter = Product::getCategoryIndexFromName($category);
-}
-else {
-    $category_filter = null;
-}
-
 function displayCategories()
 {
     $listOfCategories = Product::getCategoryList();

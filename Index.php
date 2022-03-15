@@ -2,8 +2,6 @@
 
 require_once 'src/lib.php';
 
-$accountLogged = false;
-
 // User hit logout
 if (isset($_REQUEST["logout"])) {
     setcookie("user", "", time() - 3600);
@@ -14,6 +12,9 @@ if (isset($_REQUEST["logout"])) {
 if (isset($_COOKIE["user"])) {
     $user = Account::getAccountInfo($_COOKIE["user"]);
     $accountLogged = true;
+}
+else {
+    $accountLogged = false;
 }
 
 if (isset($_GET["search"])) {
