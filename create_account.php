@@ -53,7 +53,7 @@ if (isset($_REQUEST["register"])) {
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
             <div class="card p-4 transparentBg hvr-grow-shadow" style="width: 27rem;">
                 <form method="post">
-                    <div class="form-group"><label>Email</label><input type="text" name="email" class="form-control" /></div>
+                    <div class="form-group"><label>Email</label><input type="email" name="email" class="form-control" /></div>
                     <div class="form-group"><label>Password</label><input type="password" name="password" class="form-control" /></div>
                     <div class="form-group"><label>First Name</label><input type="text" name="first_name" class="form-control" /></div>
                     <div class="form-group"><label>Last Name</label><input type="text" name="last_name" class="form-control" /></div>
