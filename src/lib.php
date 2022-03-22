@@ -2,6 +2,7 @@
 
 define("SQL_ERROR_DUPLICATE", 1062);
 define("SQL_ERROR_DATA_TOO_LONG", 1406); // Data exceeds character limit
+define("MAX_PRODUCT_PER_PAGE", 8);
 
 require_once 'src/Model/Account.cls.php';
 require_once 'src/Model/Product.cls.php';
@@ -41,6 +42,15 @@ else {
     $search = false;
 }
 
+if (isset($_GET["page"]))
+{
+    $currentPage = $_GET["page"];
+}
+else
+{
+    $currentPage = 1;
+}
+
 function displayCategories()
 {
     $listOfCategories = Product::getCategoryList();
@@ -58,22 +68,34 @@ function displayCategories()
  */
 function displayProducts($listOfProducts)
 {
+    global $currentPage;
+
+    $start = ($currentPage - 1) * MAX_PRODUCT_PER_PAGE + 1;
+    $end = $start + MAX_PRODUCT_PER_PAGE;
+    $count = 1;
     foreach ($listOfProducts as $product) {
-        echo "<div class='col-12 col-md-6'>";
-            echo "<div class='card m-2'>";
-                // echo "<img class='card-img-top' src='" . $product->getImage() . "' alt='Card image cap'>";
-                echo "<div class='card-body'>";
-                    echo "<u>" . Product::getCategoryName($product->getCategoryId()) . "</u><br/><br/>";
-                    echo "<b><a href='product.php?id=". $product->getProductId() . "'>" . $product->getName() . "</a></b><br/>";
-                    echo "<i>" . $product->getDescription() . "</i><br/><br/>";
-                    echo "Price: $" . $product->getPrice() . "<br/>";
-                    echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
-                    if ($product->getCategoryId() == 4)
-                        echo "Size: " . Product::getSizeToString($product->getSize()) . "<br/>";
-                    $seller = Account::getAccountInfo($product->getSellerId());
-                    echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
+        if ($count++ < $start)
+        {
+            continue;
+        }
+            echo "<div class='col-12 col-md-6'>";
+                echo "<div class='card m-2'>";
+                    // echo "<img class='card-img-top' src='" . $product->getImage() . "' alt='Card image cap'>";
+                    echo "<div class='card-body'>";
+                        echo "<u>" . Product::getCategoryName($product->getCategoryId()) . "</u><br/><br/>";
+                        echo "<b><a href='product.php?id=". $product->getProductId() . "'>" . $product->getName() . "</a></b><br/>";
+                        echo "<i>" . $product->getDescription() . "</i><br/><br/>";
+                        echo "Price: $" . $product->getPrice() . "<br/>";
+                        echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
+                        if ($product->getCategoryId() == 4)
+                            echo "Size: " . Product::getSizeToString($product->getSize()) . "<br/>";
+                        $seller = Account::getAccountInfo($product->getSellerId());
+                        echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
+                    echo "</div>";
                 echo "</div>";
             echo "</div>";
-        echo "</div>";
+        
+        if ($count == $end)
+        { return; }
     }
 }
