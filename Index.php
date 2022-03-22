@@ -2,41 +2,8 @@
 
 require_once 'src/lib.php';
 
-// User hit logout
-if (isset($_REQUEST["logout"])) {
-    setcookie("user", "", time() - 3600);
-    header("Location: login.php");
-}
+$listOfProducts = Product::getProductList($category_filter, $search);
 
-// Checks if the user is logged in and retrieves account information if they are
-if (isset($_COOKIE["user"])) {
-    $user = Account::getAccountInfo($_COOKIE["user"]);
-    $accountLogged = true;
-}
-else {
-    $accountLogged = false;
-}
-
-// Sets the product category filter
-if (isset($_GET["category"]))
-{
-    $category = $_GET["category"];
-
-    $category_filter = Product::getCategoryIndexFromName($category);
-}
-else {
-    $category_filter = null;
-}
-
-
-// Search button
-if (isset($_GET["search"])) {
-    $search = $_GET["search"];
-    $listOfProducts = Product::searchProduct($search);
-}
-else {
-    $listOfProducts = Product::getProductList($category_filter);
-}
 ?>
 
 <html>
@@ -64,6 +31,10 @@ else {
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item d-flex align-items-center justify-content-center">
                     <form method="GET" class="nav-link">
+                        <?php 
+                        if (isset($_GET["category"]))
+                        { echo "<input type='hidden' name='category' value='$category'/>"; }
+                        ?>
                         <input type="text" name="search" minlength="3" />
                         <input type="submit" value="Search" class="btn btn-primary pl-1 pr-1 p-0 m-0" />
                     </form>
