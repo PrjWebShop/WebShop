@@ -21,7 +21,7 @@ else {
 if (isset($_GET["category"]))
 {
     $category = $_GET["category"];
-    
+
     $category_filter = Product::getCategoryIndexFromName($category);
 }
 else {
@@ -79,7 +79,12 @@ else {
                 </li>
                 <li class="nav-item d-flex align-items-center justify-content-center">
                     <form method="POST" class="nav-link">
-                        <input type="submit" name="logout" value="Logout" class="btn btn-danger pl-1 pr-1 p-0 m-0" />
+                        <?php 
+                        if ($accountLogged)
+                            echo '<input type="submit" name="logout" value="Logout" class="btn btn-danger pl-1 pr-1 p-0 m-0" />';
+                        else
+                            echo '<input type="submit" name="logout" value="Login" class="btn btn-success pl-1 pr-1 p-0 m-0" />';
+                        ?>
                     </form>
                 </li>
             </ul>
@@ -92,7 +97,7 @@ else {
                     <a href="./Index.php" class="list-group-item list-group-item-action active">
                         Categories
                     </a>
-                    <?php 
+                    <?php
                     displayCategories();
                     ?>
                 </div>
