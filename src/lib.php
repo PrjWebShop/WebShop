@@ -32,6 +32,9 @@ if (isset($_REQUEST["addToCart"])) {
 
     if ($accountLogged) {
         Product::addProductToCart($user->getAccountId(), $prod->getProductId(), 1);
+        unset($_POST);
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit;
     }
     // add product to local storage
 
