@@ -15,6 +15,7 @@ if (isset($_COOKIE["user"])) {
     $accountLogged = true;
 }
 else {
+    //local cart - todo
     $accountLogged = false;
 }
 
@@ -97,7 +98,7 @@ function displayCategories()
  */
 function displayProducts($listOfProducts)
 {
-    global $currentPage, $user;
+    global $currentPage, $user, $accountLogged;
 
     if ($listOfProducts == 0)
         return;
@@ -122,11 +123,11 @@ function displayProducts($listOfProducts)
                             echo "Size: " . Product::getSizeToString($product->getSize()) . "<br/>";
                         $seller = Account::getAccountInfo($product->getSellerId());
                         echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
-                        if ($user->getAccountId() == $product->getSellerId())
+                        if ($accountLogged && $user->getAccountId() == $product->getSellerId())
                         {
                             echo "<input type='button' value='Cannot purchase your own products' disabled />";
                         }
-                        elseif (Product::isProductInCart($user->getAccountId(), $product->getProductId()))
+                        elseif ($accountLogged && Product::isProductInCart($user->getAccountId(), $product->getProductId()))
                         {
                             echo "<input type='button' value='In Cart' disabled />";
                         }
