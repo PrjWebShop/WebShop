@@ -27,7 +27,7 @@ if (isset($_REQUEST["logout"])) {
 // Add to cart button
 if (isset($_REQUEST["addToCart"])) {
     $prodID = $_REQUEST["productID"];
-    $prodID = Product::getProductByID($prodID);
+    $prod = Product::getProductByID($prodID);
 
     // check if user is the seller of the product
     
