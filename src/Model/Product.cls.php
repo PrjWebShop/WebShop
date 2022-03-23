@@ -136,6 +136,9 @@ class Product
         
         $result = $connection->query($sqlStmt);
 
+        if (!$result)
+            return 0;
+
         while ($row = $result->fetch_assoc()) {
             
             $prodId = $row["product_id"];

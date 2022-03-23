@@ -2,8 +2,6 @@
 
 require_once 'src/lib.php';
 
-$listOfProducts = Product::getProductList($category_filter, $search);
-
 ?>
 
 <html>
@@ -74,7 +72,12 @@ $listOfProducts = Product::getProductList($category_filter, $search);
             <div class="col-md-9 col-12">
                 <div class="row">
                     <?php
+                    if ($productFound)
+                    {
                         displayProducts($listOfProducts);
+                        navigationArrows();
+                    }
+                        
                     ?>
                 </div>
             </div>

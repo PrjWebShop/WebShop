@@ -42,14 +42,27 @@ else {
     $search = false;
 }
 
-if (isset($_GET["page"]))
+$listOfProducts = Product::getProductList($category_filter, $search);
+
+if ($listOfProducts != 0)
 {
-    $currentPage = $_GET["page"];
+    $maxPage = ceil(count($listOfProducts) / MAX_PRODUCT_PER_PAGE);
+
+    if (isset($_GET["page"]))
+    {
+        $currentPage = min($_GET["page"], $maxPage);
+    }
+    else
+    {
+        $currentPage = 1;
+    }
+    $productFound = true;
 }
-else
+else 
 {
-    $currentPage = 1;
+    $productFound = false;
 }
+
 
 function displayCategories()
 {
@@ -69,6 +82,9 @@ function displayCategories()
 function displayProducts($listOfProducts)
 {
     global $currentPage;
+
+    if ($listOfProducts == 0)
+        return;
 
     $start = ($currentPage - 1) * MAX_PRODUCT_PER_PAGE + 1;
     $end = $start + MAX_PRODUCT_PER_PAGE;
@@ -98,4 +114,15 @@ function displayProducts($listOfProducts)
         if ($count == $end)
         { return; }
     }
+}
+
+function navigationArrows()
+{
+    global $currentPage, $maxPage;
+    
+    echo "<input type='button' value='|<' />";
+    echo "<input type='button' value='<' />";
+    echo "$currentPage / $maxPage";
+    echo "<input type='button' value='>' />";
+    echo "<input type='button' value='>|' />";
 }
