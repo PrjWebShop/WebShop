@@ -17,6 +17,7 @@ require_once 'src/lib.php';
         <?php
         if ($accountLogged)
             $welcomeMessage = "Welcome, " . $user->getFirstName() . " " . $user->getLastName();
+            else $welcomeMessage = "";
         echo "<a class='navbar-brand font-weight-bold' href=''>$welcomeMessage</a>";
         ?>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
