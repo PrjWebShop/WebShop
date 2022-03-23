@@ -1,5 +1,6 @@
 <?php
 require_once 'src/lib.php';
+require_once 'src/htmlFunction.php';
 
 $failed_login = null;
 $entered_email = "";
@@ -43,31 +44,9 @@ if (isset($_REQUEST["create_account"])) {
 
 <body>
 
-    <div className="topBaar">
-    <nav class="navbar navbar-expand-lg nav-dark transparentBg mb-4 fixed-top">
-        <img class="navi-logo img-fluid" src="./Img/Logo/logo.png" alt="Logo Not Found">
-        
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="Index.php">Browse</a>
-                </li>
-                <!-- link to the #secondScreen -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#secondScreen">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#thirdScreen">Tech Stack</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    </div>
+    <?php
+        htmlNavBar();
+    ?>
 
     <video autoplay muted id="videoBg" class="w-100 text-center">
         <source src="./Video/vdo.mp4" type="video/mp4">
@@ -135,7 +114,7 @@ if (isset($_REQUEST["create_account"])) {
     <div class="text-center p-2 bg-dark">
         <span class="p-1 font-weight-bold btn text-light p-2 m-2">&copy; 2022 WebShop Designed by ></span>
         <span class="p-1 font-weight-bold btn btn-danger">Alexandre Michaud</span>
-        <span class="p-1 font-weight-bold btn btn-info">Alexandre Bouche</span>
+        <span class="p-1 font-weight-bold btn btn-info">Alexandre Boucher</span>
         <span class="p-1 font-weight-bold btn btn-warning">Yue Yin</span>
         <span class="p-1 font-weight-bold btn btn-success">Anurag Nandi</span>
         <span class="p-1 font-weight-bold btn btn-primary"><a class="text-light" href="#ui">Back to top &uarr;</a></span>
