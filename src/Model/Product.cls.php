@@ -181,6 +181,7 @@ class Product
 
         $result = $connection->query($sqlStmt);
 
+        $listOfProducts = false;
         while ($row = $result->fetch_assoc()) {
             $prodId = $row["product_id"];
             $catId = $row["category_id"];
