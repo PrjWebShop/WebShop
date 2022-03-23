@@ -432,6 +432,20 @@ class Product
         return "No Category";
     }
 
+    public static function isProductInCart($account_id, $product_id)
+    {
+        global $connection;
+
+        $sqlStmt = "SELECT * FROM carts WHERE account_id = $account_id AND product_id = $product_id;";
+        
+        $result = $connection->query($sqlStmt);
+
+        if ($row = $result->fetch_assoc()) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Function that returns size
      * 
