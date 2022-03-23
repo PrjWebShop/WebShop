@@ -36,7 +36,13 @@ class Product
 
     public function getSellerId() { return $this->sellerId; }
 
-    public function getImagePath() { return $this->imagePath; }
+    public function getImagePath() 
+    { 
+        if (file_exists($this->imagePath))
+            return $this->imagePath;
+            else
+            return DEFAULT_IMAGE_PATH;
+    }
     public function setImagePath($imagePath) { $this->imagePath = $imagePath; }
 
     function __construct($productId, $categoryId, $name, $description, $price, $quantity, $size, $sellerId, $imagePath)
@@ -49,7 +55,7 @@ class Product
         $this->quantity = $quantity;
         $this->size = $size;
         $this->sellerId = $sellerId;
-        $this->imagePath = $imagePath;
+        $this->imagePath = "Img/".$imagePath;
     }
 
     /**

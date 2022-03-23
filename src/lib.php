@@ -3,6 +3,7 @@
 define("SQL_ERROR_DUPLICATE", 1062);
 define("SQL_ERROR_DATA_TOO_LONG", 1406); // Data exceeds character limit
 define("MAX_PRODUCT_PER_PAGE", 8);
+define("DEFAULT_IMAGE_PATH", "Img/default.jpg");
 
 require_once 'src/Model/Account.cls.php';
 require_once 'src/Model/Product.cls.php';
@@ -96,9 +97,8 @@ function displayProducts($listOfProducts)
         }
             echo "<div class='col-12 col-md-6'>";
                 echo "<div class='card m-2'>";
-                    // echo "<img class='card-img-top' src='" . $product->getImage() . "' alt='Card image cap'>";
+                    echo "<img class='card-img-top' src='" . $product->getImagePath() . "' alt='Card image cap'>";
                     echo "<div class='card-body'>";
-                        echo "<u>" . Product::getCategoryName($product->getCategoryId()) . "</u><br/><br/>";
                         echo "<b><a href='product.php?id=". $product->getProductId() . "'>" . $product->getName() . "</a></b><br/>";
                         echo "<i>" . $product->getDescription() . "</i><br/><br/>";
                         echo "Price: $" . $product->getPrice() . "<br/>";
