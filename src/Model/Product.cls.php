@@ -167,7 +167,7 @@ class Product
      * Function that returns an array of products in the shopping cart
      * 
      * @param int $account_id
-     * @return Product returns an array of type Product
+     * @return Product[] returns an array of type Product
      */
     public static function getProductListFromCart($account_id)
     {
@@ -430,6 +430,20 @@ class Product
             return $category;
         }
         return "No Category";
+    }
+
+    public static function isProductInCart($account_id, $product_id)
+    {
+        global $connection;
+
+        $sqlStmt = "SELECT * FROM carts WHERE account_id = $account_id AND product_id = $product_id;";
+        
+        $result = $connection->query($sqlStmt);
+
+        if ($row = $result->fetch_assoc()) {
+            return true;
+        }
+        return false;
     }
 
     /**

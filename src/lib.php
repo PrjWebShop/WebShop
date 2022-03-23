@@ -11,8 +11,10 @@ require_once 'src/Model/Product.cls.php';
 // Checks if the user is logged in and retrieves account information if they are
 if (isset($_COOKIE["user"])) {
     $user = Account::getAccountInfo($_COOKIE["user"]);
+    $cart = Product::getProductListFromCart($user->getAccountId());
     $accountLogged = true;
 } else {
+    //local cart - todo
     $accountLogged = false;
 }
 
@@ -20,6 +22,19 @@ if (isset($_COOKIE["user"])) {
 if (isset($_REQUEST["logout"])) {
     setcookie("user", "", time() - 3600);
     header("Location: login.php");
+}
+// Add to cart button
+if (isset($_REQUEST["addToCart"])) {
+    $prodID = $_REQUEST["productID"];
+    $prodID = Product::getProductByID($prodID);
+
+    // check if user is the seller of the product
+
+    if ($accountLogged) {
+        Product::addProductToCart($user->getAccountId(), $prod->getProductId(), 1);
+    }
+    // add product to local storage
+
 }
 
 // Sets the product category filter
@@ -70,7 +85,7 @@ function displayCategories()
  */
 function displayProducts($listOfProducts)
 {
-    global $currentPage;
+    global $currentPage, $user, $accountLogged;
 
     if ($listOfProducts == 0)
         return;
@@ -94,10 +109,23 @@ function displayProducts($listOfProducts)
             echo "Size: " . Product::getSizeToString($product->getSize()) . "<br/>";
         $seller = Account::getAccountInfo($product->getSellerId());
         echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
+        if ($accountLogged && $user->getAccountId() == $product->getSellerId()) {
+            echo "<input type='button' value='Cannot purchase your own products' disabled />";
+        } elseif ($accountLogged && Product::isProductInCart($user->getAccountId(), $product->getProductId())) {
+            echo "<input type='button' value='In Cart' disabled />";
+        } else {
+            echo "<form method='POST'>";
+            echo "<input type='hidden' name='productID' value='" . $product->getProductId() . "'/>";
+            echo "<input type='submit' name='addToCart' value='Add to cart'/>";
+            echo "</form>";
+        }
+
+
+
         echo "</div>";
         echo "</div>";
         echo "</div>";
-            
+
         if ($count == $end) {
             return;
         }
