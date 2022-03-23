@@ -40,7 +40,7 @@ require_once 'src/lib.php';
                     <a class="nav-link" href="./Index.php">Browse</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Cart[<?php echo sizeof($cart); ?>]</a>
+                    <a class="nav-link" href="#">Cart</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Orders</a>

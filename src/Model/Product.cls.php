@@ -167,7 +167,7 @@ class Product
      * Function that returns an array of products in the shopping cart
      * 
      * @param int $account_id
-     * @return Product returns an array of type Product
+     * @return Product[] returns an array of type Product
      */
     public static function getProductListFromCart($account_id)
     {
