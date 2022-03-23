@@ -141,7 +141,7 @@ function navigationArrows()
     echo "<div class='d-inline'>";
     echo "<input type='button' value='|<' />";
     echo "<input type='button' value='<' />";
-    echo "$currentPage / $maxPage";
+    echo "&nbsp $currentPage / $maxPage &nbsp";
     echo "<input type='button' value='>' />";
     echo "<input type='button' value='>|' />";
     echo "</div>";
