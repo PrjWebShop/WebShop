@@ -60,7 +60,7 @@ function htmlNavBar()
 
         </nav>
         <div class="bg-light w-100 p-2 d-flex justify-content-end">
-            Yo tihs is second div
+            
         </div>
     </div>
 
