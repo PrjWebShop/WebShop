@@ -447,6 +447,21 @@ class Product
         return false;
     }
 
+    public static function getTotalCountFromCart($account_id)
+    {
+        global $connection;
+
+        $sqlStmt = "SELECT count FROM carts WHERE account_id = $account_id;";
+
+        $result = $connection->query($sqlStmt);
+
+        $total = 0;
+        while ($row = $result->fetch_array()) {
+            $total += $row[0];
+        }
+        return $total;
+    }
+
     /**
      * Function that returns size
      * 
