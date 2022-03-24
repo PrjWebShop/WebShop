@@ -43,14 +43,19 @@ class Account
         global $connection;
         
         if (is_numeric($identifier)) {
-            $sqlStmt = "SELECT * FROM account WHERE account_id = $identifier";
+            $sqlStmt = $connection->prepare("SELECT * FROM account WHERE account_id = identifier");
         } else {
-            $sqlStmt = "SELECT * FROM account WHERE email = '$identifier'";
+            $sqlStmt = $connection->prepare("SELECT * FROM account WHERE email = identifier");
         }
         
-        $result = $connection->query($sqlStmt);
+        $sqlStmt->bindParam(':identifier', $identifier);
 
-        if ($row = $result->fetch_assoc()) {
+        $sqlStmt->execute();
+        
+        
+
+        if ($sqlStmt->setFetchMode(PDO::FETCH_ASSOC)) {
+            $row = $sqlStmt->fetch();
             $accountId = $row["account_id"];
             $email = $row["email"];
             $firstName = $row["first_name"];
@@ -81,10 +86,16 @@ class Account
 
         $hashedPassword = hash("sha256", $password);
 
-        $sqlStmt = "INSERT INTO account(email, password, first_name, last_name, address)
-                    VALUES ('$email', '$hashedPassword', '$first_name', '$last_name', '$address');";
+        $sqlStmt = $connection->prepare("INSERT INTO account(email, password, first_name, last_name, address)
+                    VALUES (p_email, p_hashedPassword, p_first_name, p_last_name, p_address);");
+        
+        $sqlStmt->bindParam(':p_email', $email);
+        $sqlStmt->bindParam(':p_hashedPassword', $hashedPassword);
+        $sqlStmt->bindParam(':p_first_name', $first_name);
+        $sqlStmt->bindParam(':p_last_name', $last_name);
+        $sqlStmt->bindParam(':p_address', $address);
 
-        $queryId = mysqli_query($connection, $sqlStmt);
+        $queryId = $sqlStmt->execute();
 
         if ($queryId) //Checks if the query worked
             return true;
@@ -104,11 +115,16 @@ class Account
     {
         global $connection;
 
-        $sqlStmt = "SELECT * FROM account WHERE email = '$email'";
-        $result = $connection->query($sqlStmt);
+        $sqlStmt = $connection->prepare("SELECT * FROM account WHERE email = p_email");
 
-        if ($result->num_rows == 1) {
-            $row = $result->fetch_assoc();
+        $sqlStmt->bindParam(':p_email', $email);
+
+        $sqlStmt->execute();
+        
+        
+
+        if ($sqlStmt->setFetchMode(PDO::FETCH_ASSOC)) {
+            $row = $sqlStmt->fetch();
             $dbPassword = $row["password"];
             $hashedPassword = hash("sha256", $password);
 

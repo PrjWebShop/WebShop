@@ -1,5 +1,6 @@
 <?php
-require_once 'src/lib.php';
+//require_once 'src/lib.php';
+require_once 'src/Model/Account.cls.php'; // remove
 require_once 'src/htmlFunction.php';
 
 $failed_login = null;
