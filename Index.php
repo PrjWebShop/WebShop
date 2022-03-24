@@ -43,9 +43,12 @@ require_once 'src/lib.php';
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Cart<?php 
-                    $countInCart = Product::getTotalCountFromCart($user->getAccountId());
-                    if ($countInCart != "0")
-                        echo $accountLogged? "(" . Product::getTotalCountFromCart($user->getAccountId()) . ")" : ""; // temp fix 
+                    if ($accountLogged)
+                    {
+                        $countInCart = Product::getTotalCountFromCart($user->getAccountId());
+                        if ($countInCart != "0")
+                        echo "(" . Product::getTotalCountFromCart($user->getAccountId()) . ")"; // temp fix
+                    } 
                     ?></a>
                 </li>
                 <li class="nav-item">
