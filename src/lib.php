@@ -106,7 +106,7 @@ function displayProducts($listOfProducts)
         echo "<div class='card-body'>";
         echo "<b><a href='product.php?id=" . $product->getProductId() . "'>" . $product->getName() . "</a></b><br/>";
         echo "<i>" . $product->getDescription() . "</i><br/><br/>";
-        echo "Price: $" . $product->getPrice() . "<br/>";
+        echo "Price: $" . number_format($product->getPrice(), 2) . "<br/>";
         echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
         if ($product->getCategoryId() == 4)
             echo "Size: " . Product::getSizeToString($product->getSize()) . "<br/>";
