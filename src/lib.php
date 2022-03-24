@@ -139,10 +139,10 @@ function navigationArrows()
 {
     global $currentPage, $maxPage;
     echo "<div class='d-inline'>";
-    echo "<input type='button' value='|<' />";
-    echo "<input type='button' value='<' />";
+    echo "<input type='button' value='|<'" . ($currentPage == 1 ? "disabled" : "") . " />";
+    echo "<input type='button' value='<'" . ($currentPage == 1 ? "disabled" : "") . " />";
     echo "&nbsp $currentPage / $maxPage &nbsp";
-    echo "<input type='button' value='>' />";
-    echo "<input type='button' value='>|' />";
+    echo "<input type='button' value='>'" . ($currentPage == $maxPage ? "disabled" : "") . "/>";
+    echo "<input type='button' value='>|'" . ($currentPage == $maxPage ? "disabled" : "") . "/>";
     echo "</div>";
 }
