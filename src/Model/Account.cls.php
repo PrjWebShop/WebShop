@@ -35,7 +35,7 @@ class Account
 
     /**
      * Function that retrieves account info from the database with given identifier
-     * @param mixed $identifier use either id or email
+     * @param int|string $identifier use either id or email
      * @return Account returns Account object on success or false if no accounts exist with the given identifier
      */
     public static function getAccountInfo($identifier)
@@ -43,19 +43,16 @@ class Account
         global $connection;
         
         if (is_numeric($identifier)) {
-            $sqlStmt = $connection->prepare("SELECT * FROM account WHERE account_id = identifier");
+            $sqlStmt = $connection->prepare("SELECT * FROM account WHERE account_id = :identifier");
         } else {
-            $sqlStmt = $connection->prepare("SELECT * FROM account WHERE email = identifier");
+            $sqlStmt = $connection->prepare("SELECT * FROM account WHERE email = :identifier");
         }
         
         $sqlStmt->bindParam(':identifier', $identifier);
 
         $sqlStmt->execute();
         
-        
-
-        if ($sqlStmt->setFetchMode(PDO::FETCH_ASSOC)) {
-            $row = $sqlStmt->fetch();
+        if ($row = $sqlStmt->fetch()) {
             $accountId = $row["account_id"];
             $email = $row["email"];
             $firstName = $row["first_name"];
@@ -79,7 +76,7 @@ class Account
      *
      * @return bool returns true or false
      */
-    public static function createAccount($email, $password, $first_name, $last_name, $address)
+    public static function createAccount(string $email, string $password, string $first_name, string $last_name, string $address)
     {
 
         global $connection;
@@ -87,13 +84,13 @@ class Account
         $hashedPassword = hash("sha256", $password);
 
         $sqlStmt = $connection->prepare("INSERT INTO account(email, password, first_name, last_name, address)
-                    VALUES (p_email, p_hashedPassword, p_first_name, p_last_name, p_address);");
+                    VALUES (:email, :hashedPassword, :first_name, :last_name, :address);");
         
-        $sqlStmt->bindParam(':p_email', $email);
-        $sqlStmt->bindParam(':p_hashedPassword', $hashedPassword);
-        $sqlStmt->bindParam(':p_first_name', $first_name);
-        $sqlStmt->bindParam(':p_last_name', $last_name);
-        $sqlStmt->bindParam(':p_address', $address);
+        $sqlStmt->bindParam(':email', $email);
+        $sqlStmt->bindParam(':hashedPassword', $hashedPassword);
+        $sqlStmt->bindParam(':first_name', $first_name);
+        $sqlStmt->bindParam(':last_name', $last_name);
+        $sqlStmt->bindParam(':address', $address);
 
         $queryId = $sqlStmt->execute();
 
@@ -111,20 +108,18 @@ class Account
      *
      * @return bool returns true or false
      */
-    public static function checkLogin($email, $password)
+    public static function checkLogin(string $email, string $password)
     {
         global $connection;
 
-        $sqlStmt = $connection->prepare("SELECT * FROM account WHERE email = p_email");
+        $sqlStmt = $connection->prepare("SELECT * FROM account WHERE email = :email");
 
-        $sqlStmt->bindParam(':p_email', $email);
+        $sqlStmt->bindParam(':email', $email);
 
         $sqlStmt->execute();
-        
-        
 
-        if ($sqlStmt->setFetchMode(PDO::FETCH_ASSOC)) {
-            $row = $sqlStmt->fetch();
+        if ($row = $sqlStmt->fetch()) {
+            
             $dbPassword = $row["password"];
             $hashedPassword = hash("sha256", $password);
 
