@@ -68,10 +68,21 @@ class Product
 
         global $connection;
 
-        $sqlStmt = "INSERT INTO product(category_id, name, description, price, quantity, size, seller_id, image)
-                    VALUES($this->category_id, '$this->name', '$this->description', $this->price, $this->quantity, $this->size, $this->seller_id, '$this->image')";
+        $sqlStmt = $connection->prepare("INSERT INTO product(category_id, name, description, price, quantity, size, seller_id, image)
+                    VALUES(:category_id, :name, :description, :price, :quantity, :size, :seller_id, :image)");
 
-        $queryId = mysqli_query($connection, $sqlStmt);
+        $sqlStmt->bindParam(':category_id', $this->categoryId);
+        $sqlStmt->bindParam(':name', $this->name);
+        $sqlStmt->bindParam(':description', $this->description);
+        $sqlStmt->bindParam(':price', $this->price);
+        $sqlStmt->bindParam(':quantity', $this->quantity);
+        $sqlStmt->bindParam(':size', $this->size);
+        $sqlStmt->bindParam(':seller_id', $this->sellerId);
+        $sqlStmt->bindParam(':image', $this->imagePath);
+
+        $sqlStmt->execute();
+
+        $queryId = $sqlStmt->fetch();
 
         if ($queryId)
             return true;
@@ -87,15 +98,20 @@ class Product
      * @param int $category_filter [optional] filters the results by category
      * @return Product (product_id, category_id, name, description, price, quantity, size, seller_id, image)
      */
-    public static function getProductByID($product_id)
+    public static function getProductByID(int $product_id)
     {
         global $connection;
 
-        $sqlStmt = "SELECT * FROM product WHERE product_id = $product_id;";
-        
-        $result = $connection->query($sqlStmt);
+        $sqlStmt = $connection->prepare("SELECT * FROM product WHERE product_id = :product_id;");
 
-        if ($row = $result->fetch_assoc()) {
+        $sqlStmt->bindParam(':product_id', $product_id);
+
+        $sqlStmt->execute();
+
+        if ($sqlStmt->rowCount()==0) // no rows
+            return null;
+
+        if ($row = $sqlStmt->fetch()) {
             
             $prodId = $row["product_id"];
             $catId = $row["category_id"];
@@ -118,34 +134,42 @@ class Product
      * @param int $category_filter [optional] filters the results by category
      * @return Product[]
      */
-    public static function getProductList($category_filter, $search)
+    public static function getProductList(string $category_filter, string $p_search)
     {
         global $connection;
 
         $cpt = 0;
-        if ($category_filter == false && $search == false)
+        if ($category_filter == false && $p_search == false)
         {
-            $sqlStmt = "SELECT * FROM product;";
+            $sqlStmt = $connection->prepare("SELECT * FROM product;");
         }
         elseif ($category_filter == false)
         {
-            $sqlStmt = "SELECT * FROM product WHERE name LIKE '%$search%' OR description LIKE '%$search%';";
+            $sqlStmt = $connection->prepare("SELECT * FROM product WHERE name LIKE :search OR description LIKE :search;");
+            $search = "%" . $p_search . "%";
+            $sqlStmt->bindValue(':search', $search, PDO::PARAM_STR);
         }
-        elseif ($search == false)
+        elseif ($p_search == false)
         {
-            $sqlStmt = "SELECT * FROM product WHERE category_id = $category_filter;";
+            $sqlStmt = $connection->prepare("SELECT * FROM product WHERE category_id = :category_filter;");
+            $sqlStmt->bindParam(':category_filter', $category_filter);
         }
         else
         {
-            $sqlStmt = "SELECT * FROM product WHERE category_id = $category_filter AND (name LIKE '%$search%' OR description LIKE '%$search%');";
+            $sqlStmt = $connection->prepare("SELECT * FROM product WHERE category_id = :category_filter AND (name LIKE :search OR description LIKE :search);");
+            $search = "%" . $p_search . "%";
+            $sqlStmt->bindValue(':search', $search, PDO::PARAM_STR);
+            $sqlStmt->bindParam(':category_filter', $category_filter);
         }
         
-        $result = $connection->query($sqlStmt);
+        $sqlStmt->execute();
 
-        if (!$result)
+        $result = $sqlStmt->rowCount();
+
+        if ($result == 0)
             return 0;
 
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $sqlStmt->fetch()) {
             
             $prodId = $row["product_id"];
             $catId = $row["category_id"];
@@ -169,20 +193,23 @@ class Product
      * @param int $account_id
      * @return Product[] returns an array of type Product
      */
-    public static function getProductListFromCart($account_id)
+    public static function getProductListFromCart(int $account_id)
     {
         global $connection;
 
         $cpt = 0;
 
-        $sqlStmt = "SELECT * FROM product
+        $sqlStmt = $connection->prepare("SELECT * FROM product
                     WHERE product_id IN
-                    (SELECT product_id FROM carts WHERE account_id = $account_id);";
+                    (SELECT product_id FROM carts WHERE account_id = :account_id);");
+        
+        $sqlStmt->bindParam(':account_id', $account_id);
 
-        $result = $connection->query($sqlStmt);
+        $sqlStmt->execute();
 
         $listOfProducts = false;
-        while ($row = $result->fetch_assoc()) {
+
+        while ($row = $sqlStmt->fetch()) {
             $prodId = $row["product_id"];
             $catId = $row["category_id"];
             $name = $row["name"];
@@ -206,7 +233,7 @@ class Product
      * @param int $product_id
      * @param int $newCount
      */
-    public static function editProductCountInCart($account_id, $product_id, $newCount)
+    public static function editProductCountInCart(int $account_id, int $product_id, int $newCount)
     {
         global $connection;
 
@@ -216,15 +243,17 @@ class Product
             // Checks if there's enough in stock
             if (Product::getQuantityInStock($product_id) >= $newCount)
             {
-                $sqlStmt = "UPDATE carts SET count = $newCount WHERE account_id = $account_id AND product_id = $product_id";
-                $queryId = mysqli_query($connection, $sqlStmt);
+                $sqlStmt = $connection->prepare("UPDATE carts SET count = :newCount WHERE account_id = :account_id AND product_id = :product_id");
 
-                if ($queryId) {
-                    if (mysqli_affected_rows($connection) >= 1)
-                        return true;
-                } else
-                echo mysqli_error($connection);
-                return false; // error with sql
+                $sqlStmt->bindParam(':newCount', $newCount);
+                $sqlStmt->bindParam(':account_id', $account_id);
+                $sqlStmt->bindParam(':product_id', $product_id);
+
+                $sqlStmt->execute();
+
+                if ($sqlStmt->rowCount($connection) >= 1)
+                    return true;
+                
             }
             return false; // count is greater than quantity    
                 
@@ -238,17 +267,20 @@ class Product
      * @param int $account_id
      * @param int $product_id
      */
-    public static function removeProductFromCart($account_id, $product_id)
+    public static function removeProductFromCart(int $account_id, int $product_id)
     {
         global $connection;
 
-        $sqlStmt = "DELETE FROM carts WHERE account_id = $account_id AND product_id = $product_id";
+        $sqlStmt = $connection->prepare("DELETE FROM carts WHERE account_id = :account_id AND product_id = :product_id");
 
-        $queryId = mysqli_query($connection, $sqlStmt);
+        $sqlStmt->bindParam(':account_id', $account_id);
+        $sqlStmt->bindParam(':product_id', $product_id);
 
-        if ($queryId)
-            return true;
-        return false;
+        $sqlStmt->execute();
+
+        if ($sqlStmt->rowCount() == 0)
+            return false;
+        return true;
     }
 
     /**
@@ -260,19 +292,24 @@ class Product
      * 
      * @return bool
      */
-    public static function addProductToCart($account_id, $product_id, $count)
+    public static function addProductToCart(int $account_id, int $product_id, int $count)
     {
         global $connection;
 
         $date = date('Y-m-d H:i:s');
 
-        $sqlStmt = "INSERT INTO carts VALUES ($account_id, $product_id, $count, '$date')";
+        $sqlStmt = $connection->prepare("INSERT INTO carts VALUES (:account_id, :product_id, :count, :date)");
 
-        $queryId = mysqli_query($connection, $sqlStmt);
+        $sqlStmt->bindParam(':account_id', $account_id);
+        $sqlStmt->bindParam(':product_id', $product_id);
+        $sqlStmt->bindParam(':count', $count);
+        $sqlStmt->bindParam(':date', $date);
 
-        if ($queryId)
-            return true;
-        return false;
+        $sqlStmt->execute();
+
+        if ($sqlStmt->rowCount() == 0)
+            return false;
+        return true;
     }
 
     /**
@@ -281,21 +318,23 @@ class Product
      * 
      * @param int $account_id
      */
-    public static function checkout($account_id)
+    public static function checkout(int $account_id)
     {
         global $connection;
 
         
-        $sqlStmt = "SELECT p.quantity, c.count 
+        $sqlStmt = $connection->prepare("SELECT p.quantity, c.count 
                     FROM product AS p
                     INNER JOIN carts as c 
                     ON c.product_id = p.product_id 
-                    WHERE c.account_id = $account_id;";
+                    WHERE c.account_id = :account_id;");
 
-        $result = $connection->query($sqlStmt);
+        $sqlStmt->bindParam(':account_id', $account_id);
+
+        $sqlStmt->execute();
 
         // check if count is greater than quantity in stock
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $sqlStmt->fetch()) {
             if ($row["count"] > $row["quantity"])
             {
                 return false;
@@ -303,11 +342,13 @@ class Product
         }
 
         // changes quantity from products in cart in product table
-        $sqlStmt = "SELECT * FROM carts WHERE account_id = $account_id";
+        $sqlStmt = $connection->prepare("SELECT * FROM carts WHERE account_id = :account_id");
+        
+        $sqlStmt->bindParam(':account_id', $account_id);
+        
+        $sqlStmt->execute();
 
-        $result = $connection->query($sqlStmt);
-
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $sqlStmt->fetch()) {
             $product_id = $row["product_id"];
             $amount = $row["count"];
             Product::updateProductQuantity($product_id, -$amount);
@@ -323,17 +364,19 @@ class Product
      * 
      * @param int $account_id
      */
-    public static function removeAllFromCart($account_id)
+    public static function removeAllFromCart(int $account_id)
     {
         global $connection;
 
-        $sqlStmt = "DELETE FROM carts WHERE account_id = $account_id";
+        $sqlStmt = $connection->prepare("DELETE FROM carts WHERE account_id = :account_id");
+        
+        $sqlStmt->bindParam(':account_id', $account_id);
+        
+        $sqlStmt->execute();
 
-        $queryId = mysqli_query($connection, $sqlStmt);
-
-        if ($queryId)
-            return true;
-        return false;
+        if ($sqlStmt->rowCount() == 0)
+            return false;
+        return true;
     }
 
     /**
@@ -342,19 +385,23 @@ class Product
      * @param int $product_id
      * @param int $amount amount to add or remove
      */
-    public static function updateProductQuantity($product_id, $amount)
+    public static function updateProductQuantity(int $product_id, int $amount)
     {
         global $connection;
 
-        $sqlStmt = "UPDATE product
-                    SET quantity = quantity + $amount
-                    WHERE product_id = $product_id";
+        $sqlStmt = $connection->prepare("UPDATE product
+                    SET quantity = quantity + :amount
+                    WHERE product_id = :product_id");
 
-        $queryId = mysqli_query($connection, $sqlStmt);
+        
+        $sqlStmt->bindParam(':amount', $amount);
+        $sqlStmt->bindParam(':product_id', $product_id);
 
-        if ($queryId)
-            return true;
-        return false;
+        $sqlStmt->execute();
+
+        if ($sqlStmt->rowCount() == 0)
+            return false;
+        return true;
     }
     
     /**
@@ -363,15 +410,17 @@ class Product
      * @param int $product_id
      * @return int returns the quantity in stock of a product
      */
-    private static function getQuantityInStock($product_id)
+    private static function getQuantityInStock(int $product_id)
     {
         global $connection;
 
-        $sqlStmt = "SELECT quantity FROM product WHERE product_id = $product_id";
+        $sqlStmt = $connection->prepare("SELECT quantity FROM product WHERE product_id = :product_id");
 
-        $result = $connection->query($sqlStmt);
+        $sqlStmt->bindParam(':product_id', $product_id);
 
-        if ($row = $result->fetch_assoc()) {
+        $sqlStmt->execute();
+
+        if ($row = $sqlStmt->fetch()) {
             $quantity = $row["quantity"];
             return (int)$quantity;
         }
@@ -387,11 +436,11 @@ class Product
         
         $cpt = 0;
 
-        $sqlStmt = "SELECT * FROM category;";
-        
-        $result = $connection->query($sqlStmt);
+        $sqlStmt = $connection->prepare("SELECT * FROM category;");
+
+        $sqlStmt->execute();
                 
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $sqlStmt->fetch()) {
             
             $category_name = $row["name"];
             
@@ -400,14 +449,17 @@ class Product
         return $ListOfCategories;
     }
 
-    public static function getCategoryIndexFromName($name)
+    public static function getCategoryIndexFromName(string $name)
     {
         global $connection;
 
-        $sqlStmt = "SELECT * FROM category WHERE name = '$name';";
+        $sqlStmt = $connection->prepare("SELECT * FROM category WHERE name = :name;");
 
-        $result = $connection->query($sqlStmt);
-        if ($row = $result->fetch_assoc()) {
+        $sqlStmt->bindParam(':name', $name);
+
+        $sqlStmt->execute();
+        
+        if ($row = $sqlStmt->fetch()) {
             $index = $row["category_id"];
             return (int)$index;
         }
@@ -420,43 +472,54 @@ class Product
      * @param int $category_id
      * @return string returns the category name
      */
-    public static function getCategoryName($category_id)
+    public static function getCategoryName(int $category_id)
     {
         global $connection;
 
-        $sqlStmt = "SELECT * FROM category WHERE category_id = $category_id";
-        $result = $connection->query($sqlStmt);
-        if ($row = $result->fetch_assoc()) {
+        $sqlStmt = $connection->prepare("SELECT * FROM category WHERE category_id = :category_id");
+
+        $sqlStmt->bindParam(':category_id', $category_id);
+
+        $sqlStmt->execute();
+        
+        if ($row = $sqlStmt->fetch()) {
             $category = $row["name"];
             return $category;
         }
         return "No Category";
     }
 
-    public static function isProductInCart($account_id, $product_id)
+    public static function isProductInCart(int $account_id, int $product_id)
     {
         global $connection;
 
-        $sqlStmt = "SELECT * FROM carts WHERE account_id = $account_id AND product_id = $product_id;";
+        $sqlStmt = $connection->prepare("SELECT * FROM carts WHERE account_id = :account_id AND product_id = :product_id;");
         
-        $result = $connection->query($sqlStmt);
+        $sqlStmt->bindParam(':product_id', $product_id);
+        $sqlStmt->bindParam(':account_id', $account_id);
 
-        if ($row = $result->fetch_assoc()) {
+        $sqlStmt->execute();
+
+        if ($sqlStmt->fetch()) {
             return true;
         }
         return false;
     }
 
-    public static function getTotalCountFromCart($account_id)
+    public static function getTotalCountFromCart(int $account_id)
     {
         global $connection;
 
-        $sqlStmt = "SELECT count FROM carts WHERE account_id = $account_id;";
+        $sqlStmt = $connection->prepare("SELECT count FROM carts WHERE account_id = :account_id;");
 
-        $result = $connection->query($sqlStmt);
+        $sqlStmt->bindParam(':account_id', $account_id);
+
+        $sqlStmt->execute();
+
+        $sqlStmt->setFetchMode(PDO::FETCH_BOTH);
 
         $total = 0;
-        while ($row = $result->fetch_array()) {
+        while ($row = $sqlStmt->fetch()) {
             $total += $row[0];
         }
         return $total;
@@ -468,7 +531,7 @@ class Product
      * @param int $num any number between 1 and 7
      * @return string returns size from XS to XXXL
      */
-    public static function getSizeToString($num)
+    public static function getSizeToString(int $num)
     {
         switch ($num) {
             case 1:
