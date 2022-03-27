@@ -23,7 +23,7 @@ $fieldCheck = true;
                 <!-- Category -->
                 <label>Category</label><?php checkField("name"); ?>
                 <br/>
-                <select name="category">
+                <select name="category" id="category" onchange="categoryOnChange()">
                     <?php listCategories(); ?>
                 </select><br/><br/>
 
@@ -42,7 +42,7 @@ $fieldCheck = true;
 
                 <!-- Size -->
                 <label>Size</label><?php checkField("size"); ?>
-                <br/><input required type="number" name="size" min="0"/><br/><br/>
+                <br/><input type="number" name="size" id="size" min="0" disabled/><br/><br/>
 
                 <!-- Image -->
                 <label>Image</label>
@@ -59,6 +59,26 @@ $fieldCheck = true;
                 </a>
             </form>
         </div>
+
+
+        <script>
+            function categoryOnChange() {
+
+                var category = document.getElementById("category");
+                var txtSize = document.getElementById("size");
+                // Enables the size field for clothing products
+                if (category.value == "Clothing")
+                {
+                    txtSize.disabled = false;
+                }
+                else
+                {
+                    txtSize.disabled = true;
+                    txtSize.value = "";
+                }
+            }
+        </script>
+
     </body>
 </html>
 
@@ -76,7 +96,7 @@ if (isset($_REQUEST["submit"]) && $fieldCheck)
     $prodDesc = $_REQUEST["description"];
     $prodPrice = $_REQUEST["price"];
     $prodQuantity = $_REQUEST["quantity"];
-    $prodSize = $_REQUEST["size"] != "" ? $_REQUEST["size"] : 0;
+    $prodSize = $_REQUEST["size"] != "" ? $_REQUEST["size"] : 0; // Needs to be optimized to only fire when Clothing category is selected
     $prodSeller = $user->getAccountId();
     $prodImagePath = "";
 
