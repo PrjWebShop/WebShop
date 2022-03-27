@@ -151,11 +151,11 @@ function navigationArrows()
     echo "<a href='Index.php'>";
     echo "<input type='submit' value='|<'" . ($currentPage == 1 ? "disabled" : "") . " />";
     echo "</a>";
-    echo "<a href='Index.php?page=" . $currentPage - 1 . "'>";
+    echo "<a href='Index.php?page=" . ((int)$currentPage - 1) . "'>";
     echo "<input type='submit' value='<'" . ($currentPage == 1 ? "disabled" : "") . " />";
     echo "</a>";
     echo "&nbsp $currentPage / $maxPage &nbsp";
-    echo "<a href='Index.php?page=" . $currentPage + 1 . "'>";
+    echo "<a href='Index.php?page=" . ((int)$currentPage + 1) . "'>";
     echo "<input type='button' value='>'" . ($currentPage == $maxPage ? "disabled" : "") . "/>";
     echo "</a>";
     echo "<a href='Index.php?page=" . $maxPage . "'>";
