@@ -4,3 +4,8 @@
     border: 1px solid lightgray;
     margin-right: 1rem;
 }
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+  }

@@ -3,7 +3,6 @@
 require_once 'src/lib.php';
 
 ?>
-
 <html>
 
 <head>
@@ -52,7 +51,12 @@ require_once 'src/lib.php';
                     ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Orders</a>
+                    <?php
+                    if ($accountLogged)
+                        echo "<a class='nav-link' href='register_product.php'>Sell</a>";
+                    else
+                        echo "<a class='nav-link disabled'>Sell</a>";
+                    ?>
                 </li>
                 <li class="nav-item d-flex align-items-center justify-content-center">
                     <form method="POST" class="nav-link">

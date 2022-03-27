@@ -101,10 +101,11 @@ function displayProducts($listOfProducts)
             continue;
         }
         echo "<div class='col-12 col-md-6'>";
+        echo "<a title='". $product->getName() ."' href='product.php?id=" . $product->getProductId() . "'>";
         echo "<div class='card m-2'>";
         echo "<img class='card-img-top' src='" . $product->getImagePath() . "' alt='Card image cap'>";
         echo "<div class='card-body'>";
-        echo "<b><a href='product.php?id=" . $product->getProductId() . "'>" . $product->getName() . "</a></b><br/>";
+        echo "<b>" . $product->getName() . "</b><br/>";
         echo "<i>" . $product->getDescription() . "</i><br/><br/>";
         echo "Price: $" . number_format($product->getPrice(), 2) . "<br/>";
         echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
@@ -127,6 +128,7 @@ function displayProducts($listOfProducts)
 
         echo "</div>";
         echo "</div>";
+        echo "</a>";
         echo "</div>";
 
         if ($count == $end) {
@@ -139,10 +141,34 @@ function navigationArrows()
 {
     global $currentPage, $maxPage;
     echo "<div class='d-inline'>";
-    echo "<input type='button' value='|<'" . ($currentPage == 1 ? "disabled" : "") . " />";
-    echo "<input type='button' value='<'" . ($currentPage == 1 ? "disabled" : "") . " />";
+
+    echo "<a href='Index.php'>";
+    echo "<input type='submit' value='|<'" . ($currentPage == 1 ? "disabled" : "") . " />";
+    echo "</a>";
+    echo "<a href='Index.php?page=" . $currentPage - 1 . "'>";
+    echo "<input type='submit' value='<'" . ($currentPage == 1 ? "disabled" : "") . " />";
+    echo "</a>";
     echo "&nbsp $currentPage / $maxPage &nbsp";
+    echo "<a href='Index.php?page=" . $currentPage + 1 . "'>";
     echo "<input type='button' value='>'" . ($currentPage == $maxPage ? "disabled" : "") . "/>";
+    echo "</a>";
+    echo "<a href='Index.php?page=" . $maxPage . "'>";
     echo "<input type='button' value='>|'" . ($currentPage == $maxPage ? "disabled" : "") . "/>";
+    echo "</a>";
+
     echo "</div>";
+}
+
+function checkField($field)
+{
+    if (!isset($_REQUEST["submit"]))
+        return;
+    
+    $fieldValue = $_REQUEST[$field];
+
+    if ($fieldValue == "")
+    {
+        $fieldCheck = false;
+        echo "<label style='color: red;'>*</label>";
+    }
 }
