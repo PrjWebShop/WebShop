@@ -1,1 +1,7 @@
 /.vscode
+
+# exclude everything
+Img/uploads/*
+
+# exception to the rule
+!Img/uploads/.gitkeep

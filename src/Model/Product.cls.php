@@ -1,5 +1,7 @@
 <?php
 
+define("IMAGE_UPLOAD_FOLDER", "Img/uploads/");
+
 require_once 'src/dbConfig.php';
 
 class Product 
@@ -38,9 +40,9 @@ class Product
 
     public function getImagePath() 
     { 
-        if (file_exists($this->imagePath))
-            return $this->imagePath;
-            else
+        if (file_exists(IMAGE_UPLOAD_FOLDER . $this->imagePath))
+            return IMAGE_UPLOAD_FOLDER . $this->imagePath;
+        else
             return DEFAULT_IMAGE_PATH;
     }
     public function setImagePath($imagePath) { $this->imagePath = $imagePath; }
@@ -55,7 +57,7 @@ class Product
         $this->quantity = $quantity;
         $this->size = $size;
         $this->sellerId = $sellerId;
-        $this->imagePath = "Img/".$imagePath;
+        $this->imagePath = $imagePath;
     }
 
     /**

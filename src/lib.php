@@ -1,12 +1,12 @@
 <?php
 
+require_once 'src/Model/Account.cls.php';
+require_once 'src/Model/Product.cls.php';
+
 define("SQL_ERROR_DUPLICATE", 1062);
 define("SQL_ERROR_DATA_TOO_LONG", 1406); // Data exceeds character limit
 define("MAX_PRODUCT_PER_PAGE", 8);
 define("DEFAULT_IMAGE_PATH", "Img/default.jpg");
-
-require_once 'src/Model/Account.cls.php';
-require_once 'src/Model/Product.cls.php';
 
 // Checks if the user is logged in and retrieves account information if they are
 if (isset($_COOKIE["user"])) {
@@ -81,6 +81,15 @@ function displayCategories()
     }
 }
 
+function listCategories()
+{
+    $listOfCategories = Product::getCategoryList();
+
+    foreach ($listOfCategories as $category) {
+        echo "<option>$category</option>";
+    }
+}
+
 /**
  * Function that displays the products
  * 
@@ -123,9 +132,6 @@ function displayProducts($listOfProducts)
             echo "<input type='submit' name='addToCart' value='Add to cart'/>";
             echo "</form>";
         }
-
-
-
         echo "</div>";
         echo "</div>";
         echo "</a>";
@@ -171,4 +177,35 @@ function checkField($field)
         $fieldCheck = false;
         echo "<label style='color: red;'>*</label>";
     }
+}
+
+function uploadFile($file, $prod)
+{
+    if ($file['name'] == '') {
+        return true; // No file (accepted)
+    }
+    
+    $fileName = $file['name'];
+    $fileTmpName = $file['tmp_name'];
+    $fileSize = $file['size'];
+    $fileError = $file['error'];
+
+    $fileExt = explode('.', $fileName);
+    $fileActualExt = strtolower(end($fileExt));
+
+    if (!$fileError === 0) {
+        echo "There was an error uploading your file!";
+        return false;
+    }
+    if ($fileSize > 10000000) {
+        echo "Your file is too big";
+        return false;
+    }
+
+    $fileNameNew = uniqid('', true) . "." . $fileActualExt;
+    $fileDestination = IMAGE_UPLOAD_FOLDER . $fileNameNew;
+    move_uploaded_file($fileTmpName, $fileDestination);
+    $prod->setImagePath($fileName);
+
+    return true;
 }
