@@ -3,9 +3,13 @@
 require_once 'src/Model/Account.cls.php';
 require_once 'src/Model/Product.cls.php';
 
+include 'js/javascript.php';
+
 define("SQL_ERROR_DUPLICATE", 1062);
 define("SQL_ERROR_DATA_TOO_LONG", 1406); // Data exceeds character limit
+
 define("MAX_PRODUCT_PER_PAGE", 8);
+
 define("DEFAULT_IMAGE_PATH", "Img/default.jpg");
 
 // Checks if the user is logged in and retrieves account information if they are
@@ -14,7 +18,7 @@ if (isset($_COOKIE["user"])) {
     $cart = Product::getProductListFromCart($user->getAccountId());
     $accountLogged = true;
 } else {
-    //local cart - todo
+    //TODO - Add to local cart
     $accountLogged = false;
 }
 
@@ -25,18 +29,23 @@ if (isset($_REQUEST["logout"])) {
 }
 // Add to cart button
 if (isset($_REQUEST["addToCart"])) {
+    $addToCartOK = true;
     $prodID = $_REQUEST["productID"];
     $prod = Product::getProductByID($prodID);
 
     // check if user is the seller of the product
+    if ($prod->getSellerId() == $user->getAccountId()) {
+        $addToCartOK = false;
+        alert("You cannot add your own products in your cart!");
+    }
 
-    if ($accountLogged) {
+    if ($accountLogged && $addToCartOK) {
         Product::addProductToCart($user->getAccountId(), $prod->getProductId(), 1);
         unset($_POST);
         header("Location: ".$_SERVER['PHP_SELF']);
         exit;
     }
-    // add product to local storage
+    //TODO - Add to local cart
 
 }
 
@@ -118,7 +127,7 @@ function displayProducts($listOfProducts)
         echo "<i>" . $product->getDescription() . "</i><br/><br/>";
         echo "Price: $" . number_format($product->getPrice(), 2) . "<br/>";
         echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
-        if ($product->getCategoryId() == 4)
+        if ($product->getCategoryId() == 4) // Hard-coded - need to rewrite this
             echo "Size: " . Product::getSizeToString($product->getSize()) . "<br/>";
         $seller = Account::getAccountInfo($product->getSellerId());
         echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
@@ -151,11 +160,11 @@ function navigationArrows()
     echo "<a href='Index.php'>";
     echo "<input type='submit' value='|<'" . ($currentPage == 1 ? "disabled" : "") . " />";
     echo "</a>";
-    echo "<a href='Index.php?page=" . ((int)$currentPage - 1) . "'>";
+    echo "<a href='Index.php?page=" . max(((int)$currentPage - 1), 1) . "'>";
     echo "<input type='submit' value='<'" . ($currentPage == 1 ? "disabled" : "") . " />";
     echo "</a>";
     echo "&nbsp $currentPage / $maxPage &nbsp";
-    echo "<a href='Index.php?page=" . ((int)$currentPage + 1) . "'>";
+    echo "<a href='Index.php?page=" . min(((int)$currentPage + 1), $maxPage) . "'>";
     echo "<input type='button' value='>'" . ($currentPage == $maxPage ? "disabled" : "") . "/>";
     echo "</a>";
     echo "<a href='Index.php?page=" . $maxPage . "'>";

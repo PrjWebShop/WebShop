@@ -141,21 +141,28 @@ class Product
         global $connection;
 
         $cpt = 0;
+        // No filter //
         if ($category_filter == false && $p_search == false)
         {
             $sqlStmt = $connection->prepare("SELECT * FROM product;");
         }
+
+        // Search filter //
         elseif ($category_filter == false)
         {
             $sqlStmt = $connection->prepare("SELECT * FROM product WHERE name LIKE :search OR description LIKE :search;");
             $search = "%" . $p_search . "%";
             $sqlStmt->bindValue(':search', $search, PDO::PARAM_STR);
         }
+
+        // Category filter //
         elseif ($p_search == false)
         {
             $sqlStmt = $connection->prepare("SELECT * FROM product WHERE category_id = :category_filter;");
             $sqlStmt->bindParam(':category_filter', $category_filter);
         }
+
+        // Both filters //
         else
         {
             $sqlStmt = $connection->prepare("SELECT * FROM product WHERE category_id = :category_filter AND (name LIKE :search OR description LIKE :search);");
