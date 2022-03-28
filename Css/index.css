@@ -9,3 +9,7 @@ a.disabled {
     pointer-events: none;
     cursor: default;
   }
+
+.maxHeight_A{
+    max-height: 25rem;
+}

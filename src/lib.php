@@ -55,6 +55,7 @@ if (isset($_GET["category"])) {
 
     $category_filter = Product::getCategoryIndexFromName($category);
 } else {
+    $category = false;
     $category_filter = false;
 }
 
@@ -83,10 +84,13 @@ if ($listOfProducts != 0) {
 
 function displayCategories()
 {
+    global $category;
     $listOfCategories = Product::getCategoryList();
 
-    foreach ($listOfCategories as $category) {
-        echo "<a href='?category=$category' class='list-group-item list-group-item-action'>$category</a>";
+    foreach ($listOfCategories as $oneCategory) {
+        echo "<a href='?category=$oneCategory' class='list-group-item list-group-item-action";
+        if ($oneCategory == $category) echo "active";
+        echo "'>$oneCategory</a>";
     }
 }
 
@@ -118,7 +122,7 @@ function displayProducts($listOfProducts)
         if ($count++ < $start) {
             continue;
         }
-        echo "<div class='col-12 col-md-6'>";
+        echo "<div class='col-12 col-md-6 maxHeight_A'>";
         echo "<a title='". $product->getName() ."' href='product.php?id=" . $product->getProductId() . "'>";
         echo "<div class='card m-2'>";
         echo "<img class='card-img-top' src='" . $product->getImagePath() . "' alt='Card image cap'>";
@@ -186,35 +190,4 @@ function checkField($field)
         $fieldCheck = false;
         echo "<label style='color: red;'>*</label>";
     }
-}
-
-function uploadFile($file, $prod)
-{
-    if ($file['name'] == '') {
-        return true; // No file (accepted)
-    }
-    
-    $fileName = $file['name'];
-    $fileTmpName = $file['tmp_name'];
-    $fileSize = $file['size'];
-    $fileError = $file['error'];
-
-    $fileExt = explode('.', $fileName);
-    $fileActualExt = strtolower(end($fileExt));
-
-    if (!$fileError === 0) {
-        echo "There was an error uploading your file!";
-        return false;
-    }
-    if ($fileSize > 10000000) {
-        echo "Your file is too big";
-        return false;
-    }
-
-    $fileNameNew = uniqid('', true) . "." . $fileActualExt;
-    $fileDestination = IMAGE_UPLOAD_FOLDER . $fileNameNew;
-    move_uploaded_file($fileTmpName, $fileDestination);
-    $prod->setImagePath($fileName);
-
-    return true;
 }
