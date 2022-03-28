@@ -1,15 +1,29 @@
 .navi-logo {
-    width: 10%;
-    height: 20%;
-    border: 1px solid lightgray;
-    margin-right: 1rem;
+  width: 10%;
+  height: 20%;
+  border: 1px solid lightgray;
+  margin-right: 1rem;
 }
 
 a.disabled {
-    pointer-events: none;
-    cursor: default;
-  }
+  pointer-events: none;
+  cursor: default;
+}
+.CardImgWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
 
-.maxHeight_A{
-    max-height: 25rem;
+.card{
+    min-height: 35rem;
+}
+
+.maxSizeImage {
+  min-width: 10rem;
+  min-height: 10rem;
+  max-width: 15rem;
+  max-height: 15rem;
 }

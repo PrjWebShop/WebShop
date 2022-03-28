@@ -121,10 +121,12 @@ function displayProducts($listOfProducts)
         if ($count++ < $start) {
             continue;
         }
-        echo "<div class='col-12 col-md-6 maxHeight_A'>";
+        echo "<div class='col-12 col-md-6'>";
         echo "<a title='" . $product->getName() . "' href='product.php?id=" . $product->getProductId() . "'>";
         echo "<div class='card m-2'>";
-        echo "<img class='card-img-top' src='" . $product->getImagePath() . "' alt='Card image cap'>";
+        echo "<div class='CardImgWrap'>";
+        echo "<img class='card-img-top maxSizeImage' src='" . $product->getImagePath() . "' alt='Card image cap'>";
+        echo "</div>";
         echo "<div class='card-body'>";
         echo "<b>" . $product->getName() . "</b><br/>";
         echo "<i>" . $product->getDescription() . "</i><br/><br/>";
@@ -139,7 +141,7 @@ function displayProducts($listOfProducts)
         } elseif ($accountLogged && Product::isProductInCart($user->getAccountId(), $product->getProductId())) {
             echo "<input type='button' value='In Cart' disabled />";
         } else {
-            echo "<form method='POST'>";
+            echo "<form method='POST' class='d-flex justify-content-end mt-1'>";
             echo "<input type='hidden' name='productID' value='" . $product->getProductId() . "'/>";
             echo "<input type='submit' name='addToCart' value='Add to cart'/>";
             echo "</form>";
