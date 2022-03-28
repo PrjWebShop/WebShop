@@ -42,7 +42,7 @@ if (isset($_REQUEST["addToCart"])) {
     if ($accountLogged && $addToCartOK) {
         Product::addProductToCart($user->getAccountId(), $prod->getProductId(), 1);
         unset($_POST);
-        header("Location: ".$_SERVER['PHP_SELF']);
+        header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     }
     //TODO - Add to local cart
@@ -52,7 +52,6 @@ if (isset($_REQUEST["addToCart"])) {
 // Sets the product category filter
 if (isset($_GET["category"])) {
     $category = $_GET["category"];
-
     $category_filter = Product::getCategoryIndexFromName($category);
 } else {
     $category = false;
@@ -88,7 +87,7 @@ function displayCategories()
     $listOfCategories = Product::getCategoryList();
 
     foreach ($listOfCategories as $oneCategory) {
-        echo "<a href='?category=$oneCategory' class='list-group-item list-group-item-action";
+        echo "<a href='?category=$oneCategory' id='" . Product::getCategoryIndexFromName($oneCategory) . "' class='list-group-item list-group-item-action";
         if ($oneCategory == $category) echo "active";
         echo "'>$oneCategory</a>";
     }
@@ -123,7 +122,7 @@ function displayProducts($listOfProducts)
             continue;
         }
         echo "<div class='col-12 col-md-6 maxHeight_A'>";
-        echo "<a title='". $product->getName() ."' href='product.php?id=" . $product->getProductId() . "'>";
+        echo "<a title='" . $product->getName() . "' href='product.php?id=" . $product->getProductId() . "'>";
         echo "<div class='card m-2'>";
         echo "<img class='card-img-top' src='" . $product->getImagePath() . "' alt='Card image cap'>";
         echo "<div class='card-body'>";
@@ -182,11 +181,10 @@ function checkField($field)
 {
     if (!isset($_REQUEST["submit"]))
         return;
-    
+
     $fieldValue = $_REQUEST[$field];
 
-    if ($fieldValue == "")
-    {
+    if ($fieldValue == "") {
         $fieldCheck = false;
         echo "<label style='color: red;'>*</label>";
     }
