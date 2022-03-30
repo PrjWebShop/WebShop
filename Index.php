@@ -17,8 +17,19 @@ require_once 'src/htmlFunction.php';
     <?php
         htmlNavBar();
     ?>
-
-
+    <div class="clearfix">
+        <form action="Index.php" method="GET" class="nav-link Search_Bar">
+            <?php
+                if (isset($_GET["category"])) {
+                    echo "<input type='hidden' name='category' value='$category'/>";
+                }
+            ?>
+            <input type="text" name="search" minlength="3" />
+            <input type="submit" value="Search" class="btn btn-primary pl-1 pr-1 p-0 m-0" />
+        </form>
+    </div>
+    
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 col-12">

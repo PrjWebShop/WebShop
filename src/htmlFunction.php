@@ -22,26 +22,15 @@ function htmlNavBar()
             echo "<a class='navbar-brand font-weight-bold' href=''>$welcomeMessage</a>";
 
             ?>
-                <li class="nav-item d-flex align-item-right" >
-                    <form action="Index.php" method="GET" class="nav-link">
-                        <?php
-                            if (isset($_GET["category"])) {
-                                echo "<input type='hidden' name='category' value='$category'/>";
-                            }
-                        ?>
-                        <input type="text" name="search" minlength="3" />
-                        <input type="submit" value="Search" class="btn btn-primary pl-1 pr-1 p-0 m-0" />
-                    </form>
-                </li>
 
             <!-- nav bar toggle into a small button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
 
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav align-items-end">
                    
                     
                     <li class="nav-item">
@@ -69,7 +58,12 @@ function htmlNavBar()
                         ?>
                     </li>
                     
-                    <li class="nav-item d-flex align-items-center justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.php">About</a>
+                    </li>
+                    
+                    <!-- Login/logout Button -->
+                    <li class="nav-item d-flex ">
                         <form method="POST" class="nav-link">
                             <?php
                                 if ($accountLogged)
@@ -78,11 +72,6 @@ function htmlNavBar()
                                     echo '<input type="submit" name="logout" value="Login" class="btn btn-success pl-1 pr-1 p-0 m-0" />';
                             ?>
                         </form>
-                    </li>
-                    
-                    <!-- link to the #secondScreen -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.php">About</a>
                     </li>
                 </ul>
             </div>

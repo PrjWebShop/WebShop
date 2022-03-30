@@ -32,3 +32,12 @@ footer span {
     background-color: gold;
     color: black;
 }
+
+.Search_Bar {
+    float: right;
+    right: 0;
+}
+
+.clearfix::after {
+    clear: both
+}
