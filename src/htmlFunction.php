@@ -89,7 +89,7 @@ function htmlNavBar()
                     
                     <!-- link to the #secondScreen -->
                     <li class="nav-item">
-                        <a class="nav-link" href="../about.php">About</a>
+                        <a class="nav-link" href="about.php">About</a>
                     </li>
                 </ul>
             </div>
