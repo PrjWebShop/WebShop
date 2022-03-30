@@ -9,7 +9,7 @@ function htmlNavBar()
 ?>
 
     <div className="topBaar">
-        <!--        navbar navbar-expand-lg navbar-light bg-light transparentBg mb-4 -->
+
         <nav class="navbar navbar-expand-lg nav-dark transparentBg">
             <img class="navi-logo img-fluid" src="./Img/Logo/logo.png" alt="Logo Not Found">
 
@@ -22,25 +22,18 @@ function htmlNavBar()
             echo "<a class='navbar-brand font-weight-bold' href=''>$welcomeMessage</a>";
 
             ?>
+                <li class="nav-item d-flex align-item-right" >
+                    <form action="Index.php" method="GET" class="nav-link">
+                        <?php
+                            if (isset($_GET["category"])) {
+                                echo "<input type='hidden' name='category' value='$category'/>";
+                            }
+                        ?>
+                        <input type="text" name="search" minlength="3" />
+                        <input type="submit" value="Search" class="btn btn-primary pl-1 pr-1 p-0 m-0" />
+                    </form>
+                </li>
 
-             <?php
-                    if ($location == "/WebShop/Index.php") {
-                    ?>
-                        <li class="nav-item d-flex align-items-center justify-content-center">
-                            <form method="GET" class="nav-link">
-                                <?php
-                                    if (isset($_GET["category"])) {
-                                        echo "<input type='hidden' name='category' value='$category'/>";
-                                    }
-                                ?>
-                                <input type="text" name="search" minlength="3" />
-                                <input type="submit" value="Search" class="btn btn-primary pl-1 pr-1 p-0 m-0" />
-                            </form>
-                        </li>
-
-                    <?php 
-                    }
-                    ?>
             <!-- nav bar toggle into a small button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
