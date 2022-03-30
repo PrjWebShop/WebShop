@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/lib.php';
+require_once 'src/htmlFunction.php';
 
 ?>
 <html>
@@ -8,68 +9,16 @@ require_once 'src/lib.php';
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="./Css/index.css">
+    <link rel="stylesheet" href="./Css/style.css">
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light transparentBg mb-4">
-        <img class="navi-logo img-fluid" src="./Img/Logo/logo.png" alt="Logo Not Found">
-        <?php
-        if ($accountLogged)
-            $welcomeMessage = "Welcome, " . $user->getFirstName() . " " . $user->getLastName();
-        else $welcomeMessage = "";
-        echo "<a class='navbar-brand font-weight-bold' href=''>$welcomeMessage</a>";
-        ?>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <?php
+        htmlNavBar();
+    ?>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item d-flex align-items-center justify-content-center">
-                    <form method="GET" class="nav-link">
-                        <?php
-                        if (isset($_GET["category"])) {
-                            echo "<input type='hidden' name='category' value='$category'/>";
-                        }
-                        ?>
-                        <input type="text" name="search" minlength="3" />
-                        <input type="submit" value="Search" class="btn btn-primary pl-1 pr-1 p-0 m-0" />
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./Index.php">Browse</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Cart<?php
-                                                        if ($accountLogged) {
-                                                            $countInCart = Product::getTotalCountFromCart($user->getAccountId());
-                                                            if ($countInCart != "0")
-                                                                echo "(" . Product::getTotalCountFromCart($user->getAccountId()) . ")"; // temp fix
-                                                        }
-                                                        ?></a>
-                </li>
-                <li class="nav-item">
-                    <?php
-                    if ($accountLogged)
-                        echo "<a class='nav-link' href='register_product.php'>Sell</a>";
-                    else
-                        echo "<a class='nav-link disabled'>Sell</a>";
-                    ?>
-                </li>
-                <li class="nav-item d-flex align-items-center justify-content-center">
-                    <form method="POST" class="nav-link">
-                        <?php
-                        if ($accountLogged)
-                            echo '<input type="submit" name="logout" value="Logout" class="btn btn-danger pl-1 pr-1 p-0 m-0" />';
-                        else
-                            echo '<input type="submit" name="logout" value="Login" class="btn btn-success pl-1 pr-1 p-0 m-0" />';
-                        ?>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </nav>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 col-12">
@@ -114,4 +63,7 @@ require_once 'src/lib.php';
 
 </body>
 
+<?php
+    htmlFooter();
+?>
 </html>

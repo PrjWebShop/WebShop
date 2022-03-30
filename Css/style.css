@@ -1,0 +1,34 @@
+footer {
+    background-color: #343A40;
+    margin-top: 2rem;
+    padding: 2rem 0 2rem 0;
+    text-align: center;
+    color: white;
+}
+
+footer span {
+    margin: 0 1rem 0 0;
+    padding: .5rem 1rem .5rem 1rem;
+    border-radius: .5rem;
+    font-size: 1.25rem;
+}
+
+.AB {
+    background-color: green;
+    color: black;
+}
+
+.AM {
+    background-color: teal;
+    color: black;
+}
+
+.AN {
+    background-color: darkred;
+    color: black;
+}
+
+.YY {
+    background-color: gold;
+    color: black;
+}

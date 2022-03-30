@@ -111,69 +111,9 @@ if (isset($_REQUEST["create_account"])) {
 
         </div>
     </div>
-    <div class="text-center p-2 bg-dark">
-        <span class="p-1 font-weight-bold btn text-light p-2 m-2">&copy; 2022 WebShop Designed by ></span>
-        <span class="p-1 font-weight-bold btn btn-danger">Alexandre Michaud</span>
-        <span class="p-1 font-weight-bold btn btn-info">Alexandre Boucher</span>
-        <span class="p-1 font-weight-bold btn btn-warning">Yue Yin</span>
-        <span class="p-1 font-weight-bold btn btn-success">Anurag Nandi</span>
-        <span class="p-1 font-weight-bold btn btn-primary"><a class="text-light" href="#ui">Back to top &uarr;</a></span>
-
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script>
-        var vid = document.getElementById("videoBg");
-        vid.playbackRate = 1;
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("a").on('click', function(event) {
-
-                // Make sure this.hash has a value before overriding default behavior
-                if (this.hash !== "") {
-                    event.preventDefault();
-                    var hash = this.hash;
-                    $('html, body').animate({
-                        scrollTop: $(hash).offset().top
-                    }, 100, function() {
-                        window.location.hash = hash;
-                    });
-                }
-            });
-        });
-    </script>
-    <script>
-        (function() {
-            var elements
-            var windowHeight;
-
-            function init() {
-                elements = document.querySelectorAll('.hidden');
-                windowHeight = window.innerHeight;
-            }
-
-            function checkPosition() {
-                for (var i = 0; i < elements.length; i++) {
-                    var element = elements[i];
-                    var positionFromTop = elements[i].getBoundingClientRect().top;
-
-                    if (positionFromTop - windowHeight <= 0) {
-                        element.classList.add('fade-in-element');
-                        element.classList.remove('hidden');
-                    }
-                }
-            }
-
-            window.addEventListener('scroll', checkPosition);
-            window.addEventListener('resize', init);
-
-            init();
-            checkPosition();
-        })();
-    </script>
+    <<?php
+        htmlFooter();
+    ?>
 </body>
 
 </html>
