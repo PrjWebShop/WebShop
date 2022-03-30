@@ -1,32 +1,6 @@
 <?php
-require_once 'src/lib.php';
+
 require_once 'src/htmlFunction.php';
-
-$failed_login = null;
-$entered_email = "";
-
-// If the user is already logged in, redirect to index
-if (isset($_COOKIE["user"])) {
-    header("Location: Index.php");
-}
-
-// Login button
-if (isset($_REQUEST["login"])) {
-    $email = $_REQUEST["email"];
-    $pwd = $_REQUEST["password"];
-    if (Account::checkLogin($email, $pwd)) {
-        setcookie("user", $email, time() + 86400);
-        header("Location: Index.php");
-    } else {
-        $failed_login = true;
-        $entered_email = $_REQUEST["email"];
-    }
-}
-
-// Register button
-if (isset($_REQUEST["create_account"])) {
-    header("Location: create_account.php");
-}
 
 ?>
 
@@ -92,8 +66,8 @@ if (isset($_REQUEST["create_account"])) {
         <span class="p-1 font-weight-bold btn btn-warning">Yue Yin</span>
         <span class="p-1 font-weight-bold btn btn-success">Anurag Nandi</span>
     </div>
-
-
-
-
+</body>
+<?php
+htmlFooter();
+?>
 </html>
