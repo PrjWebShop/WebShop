@@ -11,12 +11,13 @@ if (isset($_REQUEST["login"])) {
     $pwd = $_REQUEST["password"];
     if (Account::checkLogin($email, $pwd)) {
         setcookie("user", $email, time() + 86400);
+        $_POST = array();
+        header("Refresh:0");
     } else {
         $failed_login = true;
         $entered_email = $_REQUEST["email"];
     }
     $_POST = array();
-    header("Refresh:0");
 }
 
 // is set for sign up
@@ -30,6 +31,8 @@ if (isset($_REQUEST["register"])) {
     try {
         if (Account::createAccount($email, $pwd, $first_name, $last_name, $address)) {
             setcookie("user", $email, time() + 600);
+            $_POST = array();
+            header("Refresh:0");
         }
     } catch (\Throwable $th) {
         $failed_attempt = true;
@@ -46,7 +49,6 @@ if (isset($_REQUEST["register"])) {
         }
     }
     $_POST = array();
-    header("Refresh:0");
 }
 
 function htmlNavBar()
@@ -114,7 +116,7 @@ function htmlNavBar()
                     <div class="tab-content">
                         <div class="tab-pane active" id="SignIn">
 
-                            <form method="post" action="#">
+                            <form method="post">
                                 <div class="form-group" for="email">
                                     <label> Email </label> <input type="email" name="email" id="email" class="form-control" value="<?php echo $entered_email ?>" />
                                 </div>
