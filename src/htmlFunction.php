@@ -86,13 +86,9 @@ function htmlNavBar()
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <?php if ($accountLogged)
-                {
-                    
-                }
-                else
-                {
+            <form onsubmit="return false" class="form-inline my-2 my-lg-0">
+                <?php if ($accountLogged) {
+                } else {
                     echo "<button type='button' class='btn btn-primary  my-2 my-sm-0' data-toggle='modal' data-target='#exampleModal'>";
                     echo "Sign In";
                     echo "</button>";

@@ -10,29 +10,33 @@ require_once 'src/htmlFunction.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="./Css/index.css">
     <link rel="stylesheet" href="./Css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
 
     <?php
-        htmlNavBar();
+    htmlNavBar();
     ?>
-    <div class="clearfix">
-        <form action="Index.php" method="GET" class="nav-link Search_Bar">
+    <div class="d-flex justify-content-center mt-2 mb-2">
+        <form action="Index.php" method="GET" class="form-inline">
             <?php
-                if (isset($_GET["category"])) {
-                    echo "<input type='hidden' name='category' value='$category'/>";
-                }
+            if (isset($_GET["category"])) {
+                echo "<input type='hidden' name='category' value='$category'/>";
+            }
             ?>
-            <input type="text" name="search" minlength="3" />
-            <input type="submit" value="Search" class="btn btn-primary pl-1 pr-1 p-0 m-0" />
+            <div class="form-group input-group-sm">
+                <input type="text" class="form-control input-group-sm" name="search" minlength="3" placeholder="Enter keyword">
+                <button type="submit" class="btn btn-primary ml-1 mr-1"><span class="fa fa-search"></span></button>
+            </div>
         </form>
     </div>
-    
-    
+
+
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-12">
+            <!-- <div class="col-md-3 col-12">
                 <div class="list-group">
                     <a href="./Index.php" id="all" class="list-group-item list-group-item-action">
                         All Categories
@@ -41,8 +45,18 @@ require_once 'src/htmlFunction.php';
                     displayCategories();
                     ?>
                 </div>
+            </div> -->
+            <div class="col-md-12 col-12">
+                <div class="text-center">
+                    <span class="badge badge-pill badge-primary p-2">All Categories</span>
+                    <span class="badge badge-pill badge-secondary p-2">Featured</span>
+                    <span class="badge badge-pill badge-success p-2">New</span>
+                    <span class="badge badge-pill badge-danger p-2">Sale</span>
+                    <span class="badge badge-pill badge-info p-2">Clothing</span>
+                    <span class="badge badge-pill badge-warning p-2">Accessories</span>
+                </div>
             </div>
-            <div class="col-md-9 col-12">
+            <div class="col-md-12 col-12">
                 <div class="row">
                     <?php
                     if ($productFound) {
@@ -75,6 +89,7 @@ require_once 'src/htmlFunction.php';
 </body>
 
 <?php
-    htmlFooter();
+htmlFooter();
 ?>
+
 </html>

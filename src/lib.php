@@ -120,7 +120,7 @@ function displayProducts($listOfProducts)
         if ($count++ < $start) {
             continue;
         }
-        echo "<div class='col-12 col-md-6'>";
+        echo "<div class='col-12 col-md-4'>";
         echo "<a title='" . $product->getName() . "' href='product.php?id=" . $product->getProductId() . "'>";
         echo "<div class='card m-2'>";
         echo "<div class='CardImgWrap'>";
