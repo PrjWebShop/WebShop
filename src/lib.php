@@ -25,7 +25,6 @@ if (isset($_COOKIE["user"])) {
 // User hit logout
 if (isset($_REQUEST["logout"])) {
     setcookie("user", "", time() - 3600);
-    header("Location: login.php");
 }
 // Add to cart button
 if (isset($_REQUEST["addToCart"])) {

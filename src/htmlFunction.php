@@ -5,27 +5,18 @@ $failed_login = null;
 $entered_email = "";
 $failed_attempt = null;
 
-// If the user is already logged in, redirect to index
-if (isset($_COOKIE["user"])) {
-    header("Location: Index.php");
-}
-
 // Login button
 if (isset($_REQUEST["login"])) {
     $email = $_REQUEST["email"];
     $pwd = $_REQUEST["password"];
     if (Account::checkLogin($email, $pwd)) {
         setcookie("user", $email, time() + 86400);
-        header("Location: Index.php");
     } else {
         $failed_login = true;
         $entered_email = $_REQUEST["email"];
     }
-}
-
-// Register button
-if (isset($_REQUEST["create_account"])) {
-    header("Location: create_account.php");
+    $_POST = array();
+    header("Refresh:0");
 }
 
 // is set for sign up
@@ -39,7 +30,6 @@ if (isset($_REQUEST["register"])) {
     try {
         if (Account::createAccount($email, $pwd, $first_name, $last_name, $address)) {
             setcookie("user", $email, time() + 600);
-            header("Location: Index.php");
         }
     } catch (\Throwable $th) {
         $failed_attempt = true;
@@ -55,6 +45,8 @@ if (isset($_REQUEST["register"])) {
                 break;
         }
     }
+    $_POST = array();
+    header("Refresh:0");
 }
 
 function htmlNavBar()
@@ -93,9 +85,17 @@ function htmlNavBar()
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <button type="button" class="btn btn-primary  my-2 my-sm-0" data-toggle="modal" data-target="#exampleModal">
-                    Sign in
-                </button>
+                <?php if ($accountLogged)
+                {
+                    
+                }
+                else
+                {
+                    echo "<button type='button' class='btn btn-primary  my-2 my-sm-0' data-toggle='modal' data-target='#exampleModal'>";
+                    echo "Sign In";
+                    echo "</button>";
+                }
+                ?>
             </form>
         </div>
     </nav>
@@ -114,7 +114,7 @@ function htmlNavBar()
                     <div class="tab-content">
                         <div class="tab-pane active" id="SignIn">
 
-                            <form method="post" action="./login.php">
+                            <form method="post" action="#">
                                 <div class="form-group" for="email">
                                     <label> Email </label> <input type="email" name="email" id="email" class="form-control" value="<?php echo $entered_email ?>" />
                                 </div>
