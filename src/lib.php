@@ -8,7 +8,7 @@ include 'js/javascript.php';
 define("SQL_ERROR_DUPLICATE", 1062);
 define("SQL_ERROR_DATA_TOO_LONG", 1406); // Data exceeds character limit
 
-define("MAX_PRODUCT_PER_PAGE", 8);
+define("MAX_PRODUCT_PER_PAGE", 21);
 
 define("DEFAULT_IMAGE_PATH", "Img/default.jpg");
 
@@ -25,6 +25,8 @@ if (isset($_COOKIE["user"])) {
 // User hit logout
 if (isset($_REQUEST["logout"])) {
     setcookie("user", "", time() - 3600);
+    $_POST = array();
+    header("Refresh:0");
 }
 // Add to cart button
 if (isset($_REQUEST["addToCart"])) {

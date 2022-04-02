@@ -3,7 +3,7 @@
 require_once 'src/lib.php';
 
 if(!$accountLogged)
-    header("Location: Index.php");
+    header("Location: Index");
 
 $fieldCheck = true;
 
