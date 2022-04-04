@@ -51,6 +51,34 @@ if (isset($_REQUEST["register"])) {
     $_POST = array();
 }
 
+function htmlHeader($currFile)
+{ ?>
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+    </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="WebShop/Css/hover-min.css">
+    <link rel="stylesheet" href="WebShop/Css/style.css">
+
+    <?php // get current file's css (Index.php -> index.css)
+        $cssFile = "/" . strtolower(pathinfo($currFile)["filename"]) . ".css";
+        $cssPath = "/WebShop/Css" . $cssFile;
+        $cssFullPath = pathinfo($currFile)["dirname"] . "/Css" . $cssFile;
+        echo $cssPath;
+        echo "<br/>";
+        echo $cssFullPath;
+        if (file_exists($cssFullPath))
+            echo "<link rel='stylesheet' href='$cssPath'>";
+    ?>
+
+</head>
+
+<?php 
+}
+
 function htmlNavBar()
 {
     global $accountLogged, $user, $category, $failed_login, $entered_email, $failed_attempt, $error;
