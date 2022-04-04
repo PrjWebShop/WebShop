@@ -51,10 +51,12 @@ if (isset($_REQUEST["register"])) {
     $_POST = array();
 }
 
-function htmlHeader($currFile)
+function htmlHeader($currFile, $title)
 { ?>
 
 <head>
+    <meta charset="utf-8">
+    <title> <?php echo $title; ?> </title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
     </style>
@@ -67,9 +69,6 @@ function htmlHeader($currFile)
         $cssFile = "/" . strtolower(pathinfo($currFile)["filename"]) . ".css";
         $cssPath = "/WebShop/Css" . $cssFile;
         $cssFullPath = pathinfo($currFile)["dirname"] . "/Css" . $cssFile;
-        echo $cssPath;
-        echo "<br/>";
-        echo $cssFullPath;
         if (file_exists($cssFullPath))
             echo "<link rel='stylesheet' href='$cssPath'>";
     ?>

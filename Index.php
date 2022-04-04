@@ -6,7 +6,7 @@ require_once 'src/htmlFunction.php';
 ?>
 <html>
 
-<?php htmlHeader(__FILE__); ?>
+<?php htmlHeader(__FILE__, "WebShop"); ?>
 
 <body>
 
