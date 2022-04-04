@@ -4,6 +4,9 @@ footer {
     padding: 2rem 0 2rem 0;
     text-align: center;
     color: white;
+    position: absolute;
+    bottom: auto;
+    width: 100%;
 }
 
 footer span {

@@ -59,15 +59,8 @@ require_once 'src/htmlFunction.php';
 
         </div>
     </div>
-    <div class="text-center p-2 bg-dark">
-        <span class="p-1 font-weight-bold btn text-light p-2 m-2">&copy; 2022 WebShop Designed by ></span>
-        <span class="p-1 font-weight-bold btn btn-danger">Alexandre Michaud</span>
-        <span class="p-1 font-weight-bold btn btn-info">Alexandre Boucher</span>
-        <span class="p-1 font-weight-bold btn btn-warning">Yue Yin</span>
-        <span class="p-1 font-weight-bold btn btn-success">Anurag Nandi</span>
-    </div>
 </body>
 <?php
-htmlFooter();
+    htmlFooter();
 ?>
 </html>
