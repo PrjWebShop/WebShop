@@ -33,9 +33,14 @@ footer span {
     color: black;
 }
 
-.Search_Bar {
+.Float_Right {
     float: right;
     right: 0;
+}
+
+.Float_left {
+    float: left;
+    left: 0;
 }
 
 .clearfix::after {

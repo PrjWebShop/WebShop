@@ -18,7 +18,7 @@ require_once 'src/htmlFunction.php';
         htmlNavBar();
     ?>
     <div class="clearfix">
-        <form action="Index.php" method="GET" class="nav-link Search_Bar">
+        <form action="Index.php" method="GET" class="nav-link Float_Right">
             <?php
                 if (isset($_GET["category"])) {
                     echo "<input type='hidden' name='category' value='$category'/>";
