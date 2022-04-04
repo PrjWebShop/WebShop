@@ -1,0 +1,8 @@
+Options +MultiViews
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+RewriteBase /
+RewriteRule ^settings/view/([0-9]+)/?$ settings.php?view=$1 [NC,QSA,L]

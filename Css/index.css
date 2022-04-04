@@ -5,6 +5,10 @@
     margin-right: 1rem;
 }
 
+.navi-profile {
+    width: 3rem;
+}
+
 a.disabled {
     pointer-events: none;
     cursor: default;
