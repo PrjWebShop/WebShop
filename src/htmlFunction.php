@@ -79,7 +79,10 @@ function htmlNavBar()
                 <li class="nav-item">
                     <a class="nav-link" href="/WebShop/about">About</a>
                 </li>
-                <li class="nav-item dropdown">
+                
+            
+                <?php if ($accountLogged) { ?>
+                    <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Account
                     </a>
@@ -87,21 +90,21 @@ function htmlNavBar()
                         <a class="dropdown-item" href="/WebShop/settings">Settings</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <div class="dropdown-divider"></div>
-                        <form method="post">
+                        <form method="POST">
                         <input type="submit" class="dropdown-item" href="#" name="logout" value="Sign Out"></input>
                         </form>
                     </div>
                 </li>
-            </ul>
-            <form onsubmit="return false" class="form-inline my-2 my-lg-0">
-                <?php if ($accountLogged) {
-                } else {
+                </ul>
+                <?php } else {
+                    echo "<form onsubmit='return false' class='form-inline my-2 my-lg-0'>";
+                    echo "</ul>";
                     echo "<button type='button' class='btn btn-primary  my-2 my-sm-0' data-toggle='modal' data-target='#exampleModal'>";
                     echo "Sign In";
                     echo "</button>";
+                    echo "</form>";
                 }
                 ?>
-            </form>
         </div>
     </nav>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

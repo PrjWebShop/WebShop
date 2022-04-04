@@ -8,7 +8,7 @@ include 'js/javascript.php';
 define("SQL_ERROR_DUPLICATE", 1062);
 define("SQL_ERROR_DATA_TOO_LONG", 1406); // Data exceeds character limit
 
-define("MAX_PRODUCT_PER_PAGE", 21);
+define("MAX_PRODUCT_PER_PAGE", 15);
 
 define("DEFAULT_IMAGE_PATH", "Img/default.jpg");
 
