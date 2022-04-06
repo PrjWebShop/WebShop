@@ -1,24 +1,18 @@
 <?php
 
-require_once 'src/lib.php';
 require_once 'src/htmlFunction.php';
 
 ?>
 <html>
 
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="./Css/index.css">
-    <link rel="stylesheet" href="./Css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-</head>
+<?php htmlHeader(__FILE__, "WebShop"); ?>
 
 <body>
 
     <?php
     htmlNavBar();
     ?>
+
     <div class="d-flex justify-content-center mt-2 mb-2">
         <form action="Index.php" method="GET" class="form-inline">
             <?php
@@ -27,7 +21,7 @@ require_once 'src/htmlFunction.php';
             }
             ?>
             <div class="form-group input-group-sm">
-                <input type="text" class="form-control input-group-sm" name="search" minlength="3" placeholder="Enter keyword">
+                <input type="text" required class="form-control input-group-sm" name="search" minlength="3" placeholder="Enter keyword">
                 <button type="submit" class="btn btn-primary ml-1 mr-1"><span class="fa fa-search"></span></button>
             </div>
         </form>
