@@ -1,55 +1,6 @@
 <?php
+
 require_once 'src/lib.php';
-
-$failed_login = null;
-$entered_email = "";
-$failed_attempt = null;
-
-// Login button
-if (isset($_REQUEST["login"])) {
-    $email = $_REQUEST["email"];
-    $pwd = $_REQUEST["password"];
-    if (Account::checkLogin($email, $pwd)) {
-        setcookie("user", $email, time() + 86400);
-        $_POST = array();
-        header("Refresh:0");
-    } else {
-        $failed_login = true;
-        $entered_email = $_REQUEST["email"];
-    }
-    $_POST = array();
-}
-
-// is set for sign up
-
-if (isset($_REQUEST["register"])) {
-    $email = $_REQUEST["email"];
-    $pwd = $_REQUEST["password"];
-    $first_name = $_REQUEST["first_name"];
-    $last_name = $_REQUEST["last_name"];
-    $address = $_REQUEST["address"];
-    try {
-        if (Account::createAccount($email, $pwd, $first_name, $last_name, $address)) {
-            setcookie("user", $email, time() + 600);
-            $_POST = array();
-            header("Refresh:0");
-        }
-    } catch (\Throwable $th) {
-        $failed_attempt = true;
-        switch ($th->getCode()) {
-            case SQL_ERROR_DUPLICATE:
-                $error = "Email already registed!";
-                break;
-            case SQL_ERROR_DATA_TOO_LONG:
-                $error = $th->getMessage(); //"Fields must have less than 100 characters!";
-                break;
-            default:
-                $error = $th->getMessage();
-                break;
-        }
-    }
-    $_POST = array();
-}
 
 function htmlHeader($currFile, $title)
 { ?>
@@ -62,8 +13,9 @@ function htmlHeader($currFile, $title)
     </style>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="WebShop/Css/hover-min.css">
-    <link rel="stylesheet" href="WebShop/Css/style.css">
+    <link rel="stylesheet" href="/WebShop/Css/hover-min.css">
+    <link rel="stylesheet" href="/WebShop/Css/style.css">
+    <link rel="stylesheet" href="/WebShop/Css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <?php // get current file's css if it exists (Index.php -> index.css)
@@ -116,7 +68,7 @@ function htmlNavBar()
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/WebShop/settings/profile">Settings</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="/WebShop/settings/listing">My Listings</a>
                         <div class="dropdown-divider"></div>
                         <form method="POST">
                         <input type="submit" class="dropdown-item" href="#" name="logout" value="Sign Out"></input>
@@ -211,4 +163,102 @@ function htmlFooter()
         </div>
     </footer>
 <?php
+}
+
+function displayCategories()
+{
+    global $category;
+    $listOfCategories = Product::getCategoryList();
+
+    foreach ($listOfCategories as $oneCategory) {
+        echo "<a href='?category=$oneCategory' id='" . Product::getCategoryIndexFromName($oneCategory) . "' class='list-group-item list-group-item-action";
+        if ($oneCategory == $category) echo "active";
+        echo "'>$oneCategory</a>";
+    }
+}
+
+function listCategories()
+{
+    $listOfCategories = Product::getCategoryList();
+
+    foreach ($listOfCategories as $category) {
+        echo "<option>$category</option>";
+    }
+}
+
+/**
+ * Function that displays the products
+ * 
+ * @param Product[] $listOfProducts
+ */
+function displayProducts($listOfProducts)
+{
+    global $currentPage, $user, $accountLogged;
+
+    if ($listOfProducts == 0)
+        return;
+
+    $start = ($currentPage - 1) * MAX_PRODUCT_PER_PAGE + 1;
+    $end = $start + MAX_PRODUCT_PER_PAGE;
+    $count = 1;
+    foreach ($listOfProducts as $product) {
+        if ($count++ < $start) {
+            continue;
+        }
+        echo "<div class='col-12 col-md-4'>";
+        echo "<a title='" . $product->getName() . "' href='product.php?id=" . $product->getProductId() . "'>";
+        echo "<div class='card m-2'>";
+        echo "<div class='CardImgWrap'>";
+        echo "<img class='card-img-top maxSizeImage' src='" . $product->getImagePath() . "' alt='Card image cap'>";
+        echo "</div>";
+        echo "<div class='card-body'>";
+        echo "<b>" . $product->getName() . "</b><br/>";
+        echo "<i>" . $product->getDescription() . "</i><br/><br/>";
+        echo "Price: $" . number_format($product->getPrice(), 2) . "<br/>";
+        echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
+        if ($product->getCategoryId() == 4) // Hard-coded - need to rewrite this
+            echo "Size: " . Product::getSizeToString($product->getSize()) . "<br/>";
+        $seller = Account::getAccountInfo($product->getSellerId());
+        echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
+        if ($accountLogged && $user->getAccountId() == $product->getSellerId()) {
+            echo "<input type='button' class='d-flex justify-content-end mt-1' value='Cannot purchase your own products' disabled />";
+        } elseif ($accountLogged && Product::isProductInCart($user->getAccountId(), $product->getProductId())) {
+            echo "<input type='button' class='d-flex justify-content-end mt-1' value='In Cart' disabled />";
+        } else {
+            echo "<form method='POST' class='d-flex justify-content-end mt-1'>";
+            echo "<input type='hidden' name='productID' value='" . $product->getProductId() . "'/>";
+            echo "<input type='submit' name='addToCart' value='Add to cart'/>";
+            echo "</form>";
+        }
+        echo "</div>";
+        echo "</div>";
+        echo "</a>";
+        echo "</div>";
+
+        if ($count == $end) {
+            return;
+        }
+    }
+}
+
+function navigationArrows()
+{
+    global $currentPage, $maxPage;
+    echo "<div class='d-inline'>";
+
+    echo "<a href='Index.php'>";
+    echo "<input type='submit' value='|<'" . ($currentPage == 1 ? "disabled" : "") . " />";
+    echo "</a>";
+    echo "<a href='Index.php?page=" . max(((int)$currentPage - 1), 1) . "'>";
+    echo "<input type='submit' value='<'" . ($currentPage == 1 ? "disabled" : "") . " />";
+    echo "</a>";
+    echo "&nbsp $currentPage / $maxPage &nbsp";
+    echo "<a href='Index.php?page=" . min(((int)$currentPage + 1), $maxPage) . "'>";
+    echo "<input type='button' value='>'" . ($currentPage == $maxPage ? "disabled" : "") . "/>";
+    echo "</a>";
+    echo "<a href='Index.php?page=" . $maxPage . "'>";
+    echo "<input type='button' value='>|'" . ($currentPage == $maxPage ? "disabled" : "") . "/>";
+    echo "</a>";
+
+    echo "</div>";
 }
