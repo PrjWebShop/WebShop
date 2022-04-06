@@ -4,9 +4,7 @@ require_once 'src/htmlFunction.php';
 
 $args = $_SERVER["REQUEST_URI"];
 $arg_arr = explode("/",$args);
-$opt = $arg_arr[3];
-
-print($opt);
+$opt = $arg_arr[3]; // parameter (profile, themes, listing, admin)
 
 ?>
 <html>

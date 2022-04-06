@@ -138,9 +138,9 @@ function displayProducts($listOfProducts)
         $seller = Account::getAccountInfo($product->getSellerId());
         echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
         if ($accountLogged && $user->getAccountId() == $product->getSellerId()) {
-            echo "<input type='button' value='Cannot purchase your own products' disabled />";
+            echo "<input type='button' class='d-flex justify-content-end mt-1' value='Cannot purchase your own products' disabled />";
         } elseif ($accountLogged && Product::isProductInCart($user->getAccountId(), $product->getProductId())) {
-            echo "<input type='button' value='In Cart' disabled />";
+            echo "<input type='button' class='d-flex justify-content-end mt-1' value='In Cart' disabled />";
         } else {
             echo "<form method='POST' class='d-flex justify-content-end mt-1'>";
             echo "<input type='hidden' name='productID' value='" . $product->getProductId() . "'/>";

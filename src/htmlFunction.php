@@ -65,7 +65,7 @@ function htmlHeader($currFile, $title)
     <link rel="stylesheet" href="WebShop/Css/hover-min.css">
     <link rel="stylesheet" href="WebShop/Css/style.css">
 
-    <?php // get current file's css (Index.php -> index.css)
+    <?php // get current file's css if it exists (Index.php -> index.css)
         $cssFile = "/" . strtolower(pathinfo($currFile)["filename"]) . ".css";
         $cssPath = "/WebShop/Css" . $cssFile;
         $cssFullPath = pathinfo($currFile)["dirname"] . "/Css" . $cssFile;
@@ -114,7 +114,7 @@ function htmlNavBar()
                         Account
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/WebShop/settings">Settings</a>
+                        <a class="dropdown-item" href="/WebShop/settings/profile">Settings</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <div class="dropdown-divider"></div>
                         <form method="POST">
@@ -147,9 +147,10 @@ function htmlNavBar()
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="SignIn">
+                        <div class="tab-pane fade show active" id="SignIn">
 
                             <form method="post">
+                                <br/>
                                 <div class="form-group" for="email">
                                     <label> Email </label> <input type="email" name="email" id="email" class="form-control" value="<?php echo $entered_email ?>" />
                                 </div>
@@ -167,8 +168,9 @@ function htmlNavBar()
                             </form>
                         </div>
 
-                        <div class="tab-pane" id="SignUp">
+                        <div class="tab-pane fade" id="SignUp">
                             <form method="post">
+                                <br/>
                                 <div class="form-group"><label>Email</label><input type="email" name="email" class="form-control" /></div>
                                 <div class="form-group"><label>Password</label><input type="password" name="password" class="form-control" /></div>
                                 <div class="form-group"><label>First Name</label><input type="text" name="first_name" class="form-control" /></div>

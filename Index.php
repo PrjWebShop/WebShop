@@ -22,7 +22,7 @@ require_once 'src/htmlFunction.php';
             }
             ?>
             <div class="form-group input-group-sm">
-                <input type="text" class="form-control input-group-sm" name="search" minlength="3" placeholder="Enter keyword">
+                <input type="text" required class="form-control input-group-sm" name="search" minlength="3" placeholder="Enter keyword">
                 <button type="submit" class="btn btn-primary ml-1 mr-1"><span class="fa fa-search"></span></button>
             </div>
         </form>
