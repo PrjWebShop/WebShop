@@ -1,5 +1,9 @@
 <?php
 
+<<<<<<< HEAD
+require_once 'src/lib.php';
+=======
+>>>>>>> aacee2c5412c2fed3bf352281ca2873df3c2744e
 require_once 'src/htmlFunction.php';
 
 if (isset($_GET["id"]))
