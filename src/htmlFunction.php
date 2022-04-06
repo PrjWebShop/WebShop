@@ -64,6 +64,7 @@ function htmlHeader($currFile, $title)
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="WebShop/Css/hover-min.css">
     <link rel="stylesheet" href="WebShop/Css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <?php // get current file's css if it exists (Index.php -> index.css)
         $cssFile = "/" . strtolower(pathinfo($currFile)["filename"]) . ".css";
