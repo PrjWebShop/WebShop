@@ -1,6 +1,6 @@
 <?php
 
-require_once 'src/lib.php';
+require_once 'src/htmlFunction.php';
 
 if (isset($_GET["id"]))
 {

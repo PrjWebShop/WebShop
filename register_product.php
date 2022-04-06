@@ -1,6 +1,5 @@
 <?php
 
-require_once 'src/lib.php';
 require_once 'src/htmlFunction.php';
 
 if (!$accountLogged)
