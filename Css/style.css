@@ -35,17 +35,3 @@ footer span {
     background-color: gold;
     color: black;
 }
-
-.Float_Right {
-    float: right;
-    right: 0;
-}
-
-.Float_left {
-    float: left;
-    left: 0;
-}
-
-.clearfix::after {
-    clear: both
-}

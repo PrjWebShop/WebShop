@@ -6,15 +6,7 @@ require_once 'src/htmlFunction.php';
 
 <html>
 
-<head>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-    </style>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="./Css/login.css">
-    <link rel="stylesheet" href="./Css/hover-min.css">
-</head>
+<?php htmlHeader(__FILE__, "About"); ?>
 
 <body style="background-color: aquamarine;">
 
@@ -59,15 +51,12 @@ require_once 'src/htmlFunction.php';
 
         </div>
     </div>
-    <div class="text-center p-2 bg-dark">
-        <span class="p-1 font-weight-bold btn text-light p-2 m-2">&copy; 2022 WebShop Designed by ></span>
-        <span class="p-1 font-weight-bold btn btn-danger">Alexandre Michaud</span>
-        <span class="p-1 font-weight-bold btn btn-info">Alexandre Boucher</span>
-        <span class="p-1 font-weight-bold btn btn-warning">Yue Yin</span>
-        <span class="p-1 font-weight-bold btn btn-success">Anurag Nandi</span>
-    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
 </body>
 <?php
-htmlFooter();
+    htmlFooter();
 ?>
 </html>

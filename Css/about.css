@@ -97,17 +97,3 @@ body {
         opacity: 1;
     }
 }
-
-
-/* .topBaar {
-    position: absolute;
-    top: 0;
-    left: 0;
-} */
-
-.navi-logo {
-    width: 10%;
-    height: 20%;
-    border: 1px solid lightgray;
-    margin-right: 1rem;
-}

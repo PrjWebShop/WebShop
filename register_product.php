@@ -1,9 +1,9 @@
 <?php
 
-require_once 'src/lib.php';
+require_once 'src/htmlFunction.php';
 
-if(!$accountLogged)
-    header("Location: Index.php");
+if (!$accountLogged)
+    header("Location: Index");
 
 $fieldCheck = true;
 
@@ -11,81 +11,84 @@ $fieldCheck = true;
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Register your product</title>
-    </head>
-    <body>
-        <h2>Register your product</h2><br/>
-        <div>
-            <form method="POST" action="#" enctype="multipart/form-data">
 
-                <!-- Category -->
-                <label>Category</label><?php checkField("name"); ?>
-                <br/>
-                <select name="category" id="category" onchange="categoryOnChange()">
-                    <?php listCategories(); ?>
-                </select><br/><br/>
+<?php htmlHeader(__FILE__, "Register your product"); ?>
 
-                <!-- Name -->
-                <label>Product Name</label><?php checkField("name"); ?>
-                <br/><input required type="text" name="name"/><br/><br/>
+<body>
 
-                <!-- Description -->
-                <label>Description</label><?php checkField("description"); ?>
-                <br/><textarea name="description" cols="40" rows="5" required></textarea><br/><br/>
-                
+    <?php
+    htmlNavBar();
+    ?>
+    <h2>Register your product</h2><br />
+    <div>
+        <form method="POST" action="#" enctype="multipart/form-data">
 
-                <!-- Quantity -->
-                <label>Quantity</label><?php checkField("quantity"); ?>
-                <br/><input required type="number" name="quantity" min="1"/><br/><br/>
+            <!-- Category -->
+            <label>Category</label><?php checkField("name"); ?>
+            <br />
+            <select name="category" id="category" onchange="categoryOnChange()">
+                <?php listCategories(); ?>
+            </select><br /><br />
 
-                <!-- Size -->
-                <label>Size</label><?php checkField("size"); ?>
-                <br/><input type="number" name="size" id="size" min="0" disabled/><br/><br/>
+            <!-- Name -->
+            <label>Product Name</label><?php checkField("name"); ?>
+            <br /><input required type="text" name="name" /><br /><br />
 
-                <!-- Image -->
-                <label>Image</label>
-                <br/><input type="file" name="image" accept="image/*"/><br/><br/>
-
-                <!-- Price -->
-                <label>Price</label><?php checkField("price"); ?>
-                <br/><input required name="price" pattern="^\d*(\.\d{0,2})?$"/><br/><br/>
-
-                <!-- Register Button -->
-                <input type="submit" name="submit" value="Register"/>
-                <a href="Index.php">
-                <input type="button" value="Go back"/>
-                </a>
-            </form>
-        </div>
+            <!-- Description -->
+            <label>Description</label><?php checkField("description"); ?>
+            <br /><textarea name="description" cols="40" rows="5" required></textarea><br /><br />
 
 
-        <script>
-            function categoryOnChange() {
+            <!-- Quantity -->
+            <label>Quantity</label><?php checkField("quantity"); ?>
+            <br /><input required type="number" name="quantity" min="1" /><br /><br />
 
-                var category = document.getElementById("category");
-                var txtSize = document.getElementById("size");
-                // Enables the size field for clothing products
-                if (category.value == "Clothing")
-                {
-                    txtSize.disabled = false;
-                }
-                else
-                {
-                    txtSize.disabled = true;
-                    txtSize.value = "";
-                }
+            <!-- Size -->
+            <label>Size</label><?php checkField("size"); ?>
+            <br /><input type="number" name="size" id="size" min="0" disabled /><br /><br />
+
+            <!-- Image -->
+            <label>Image</label>
+            <br /><input type="file" name="image" accept="image/*" /><br /><br />
+
+            <!-- Price -->
+            <label>Price</label><?php checkField("price"); ?>
+            <br /><input required name="price" pattern="^\d*(\.\d{0,2})?$" /><br /><br />
+
+            <!-- Register Button -->
+            <input type="submit" name="submit" value="Register" />
+            <a href="Index.php">
+                <input type="button" value="Go back" />
+            </a>
+        </form>
+    </div>
+
+
+    <script>
+        function categoryOnChange() {
+
+            var category = document.getElementById("category");
+            var txtSize = document.getElementById("size");
+            // Enables the size field for clothing products
+            if (category.value == "Clothing") {
+                txtSize.disabled = false;
+            } else {
+                txtSize.disabled = true;
+                txtSize.value = "";
             }
-        </script>
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+</body>
 
-    </body>
 </html>
 
 <?php
 
-if (isset($_REQUEST["submit"]) && $fieldCheck)
-{
+if (isset($_REQUEST["submit"]) && $fieldCheck) {
 
     // Get File Info //
 
@@ -101,11 +104,11 @@ if (isset($_REQUEST["submit"]) && $fieldCheck)
     $prodImagePath = "";
 
     $newProd = new Product(null, $prodCategory, $prodName, $prodDesc, $prodPrice, $prodQuantity, $prodSize, $prodSeller, $prodImagePath);
-        
+
     // Upload File //
 
     $uploadOK = true;
-    
+
     $fileName = $file['name'];
     $fileTmpName = $file['tmp_name'];
     $fileSize = $file['size'];
@@ -128,8 +131,7 @@ if (isset($_REQUEST["submit"]) && $fieldCheck)
     move_uploaded_file($fileTmpName, $fileDestination);
     $newProd->setImagePath($fileNameNew);
 
-    if ($uploadOK) 
-    {
+    if ($uploadOK) {
         $newProd->addProductToDatabase();
 
         unset($_POST);

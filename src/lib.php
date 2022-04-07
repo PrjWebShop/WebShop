@@ -8,9 +8,59 @@ include 'js/javascript.php';
 define("SQL_ERROR_DUPLICATE", 1062);
 define("SQL_ERROR_DATA_TOO_LONG", 1406); // Data exceeds character limit
 
-define("MAX_PRODUCT_PER_PAGE", 8);
+define("MAX_PRODUCT_PER_PAGE", 15);
 
 define("DEFAULT_IMAGE_PATH", "Img/default.jpg");
+
+$failed_login = null;
+$entered_email = "";
+$failed_attempt = null;
+
+// Login button
+if (isset($_REQUEST["login"])) {
+    $email = $_REQUEST["email"];
+    $pwd = $_REQUEST["password"];
+    if (Account::checkLogin($email, $pwd)) {
+        setcookie("user", $email, time() + 86400);
+        $_POST = array();
+        header("Refresh:0");
+    } else {
+        $failed_login = true;
+        $entered_email = $_REQUEST["email"];
+    }
+    $_POST = array();
+}
+
+// is set for sign up
+
+if (isset($_REQUEST["register"])) {
+    $email = $_REQUEST["email"];
+    $pwd = $_REQUEST["password"];
+    $first_name = $_REQUEST["first_name"];
+    $last_name = $_REQUEST["last_name"];
+    $address = $_REQUEST["address"];
+    try {
+        if (Account::createAccount($email, $pwd, $first_name, $last_name, $address)) {
+            setcookie("user", $email, time() + 600);
+            $_POST = array();
+            header("Refresh:0");
+        }
+    } catch (\Throwable $th) {
+        $failed_attempt = true;
+        switch ($th->getCode()) {
+            case SQL_ERROR_DUPLICATE:
+                $error = "Email already registed!";
+                break;
+            case SQL_ERROR_DATA_TOO_LONG:
+                $error = $th->getMessage(); //"Fields must have less than 100 characters!";
+                break;
+            default:
+                $error = $th->getMessage();
+                break;
+        }
+    }
+    $_POST = array();
+}
 
 // Checks if the user is logged in and retrieves account information if they are
 if (isset($_COOKIE["user"])) {
@@ -25,7 +75,8 @@ if (isset($_COOKIE["user"])) {
 // User hit logout
 if (isset($_REQUEST["logout"])) {
     setcookie("user", "", time() - 3600);
-    header("Location: login.php");
+    $_POST = array();
+    header("Refresh:0");
 }
 // Add to cart button
 if (isset($_REQUEST["addToCart"])) {
@@ -78,105 +129,6 @@ if ($listOfProducts != 0) {
     $productFound = true;
 } else {
     $productFound = false;
-}
-
-
-function displayCategories()
-{
-    global $category;
-    $listOfCategories = Product::getCategoryList();
-
-    foreach ($listOfCategories as $oneCategory) {
-        echo "<a href='?category=$oneCategory' id='" . Product::getCategoryIndexFromName($oneCategory) . "' class='list-group-item list-group-item-action";
-        if ($oneCategory == $category) echo "active";
-        echo "'>$oneCategory</a>";
-    }
-}
-
-function listCategories()
-{
-    $listOfCategories = Product::getCategoryList();
-
-    foreach ($listOfCategories as $category) {
-        echo "<option>$category</option>";
-    }
-}
-
-/**
- * Function that displays the products
- * 
- * @param Product[] $listOfProducts
- */
-function displayProducts($listOfProducts)
-{
-    global $currentPage, $user, $accountLogged;
-
-    if ($listOfProducts == 0)
-        return;
-
-    $start = ($currentPage - 1) * MAX_PRODUCT_PER_PAGE + 1;
-    $end = $start + MAX_PRODUCT_PER_PAGE;
-    $count = 1;
-    foreach ($listOfProducts as $product) {
-        if ($count++ < $start) {
-            continue;
-        }
-        echo "<div class='col-12 col-md-6'>";
-        echo "<a title='" . $product->getName() . "' href='product.php?id=" . $product->getProductId() . "'>";
-        echo "<div class='card m-2'>";
-        echo "<div class='CardImgWrap'>";
-        echo "<img class='card-img-top maxSizeImage' src='" . $product->getImagePath() . "' alt='Card image cap'>";
-        echo "</div>";
-        echo "<div class='card-body'>";
-        echo "<b>" . $product->getName() . "</b><br/>";
-        echo "<i>" . $product->getDescription() . "</i><br/><br/>";
-        echo "Price: $" . number_format($product->getPrice(), 2) . "<br/>";
-        echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
-        if ($product->getCategoryId() == 4) // Hard-coded - need to rewrite this
-            echo "Size: " . Product::getSizeToString($product->getSize()) . "<br/>";
-        $seller = Account::getAccountInfo($product->getSellerId());
-        echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
-        if ($accountLogged && $user->getAccountId() == $product->getSellerId()) {
-            echo "<input type='button' value='Cannot purchase your own products' disabled />";
-        } elseif ($accountLogged && Product::isProductInCart($user->getAccountId(), $product->getProductId())) {
-            echo "<input type='button' value='In Cart' disabled />";
-        } else {
-            echo "<form method='POST' class='d-flex justify-content-end mt-1'>";
-            echo "<input type='hidden' name='productID' value='" . $product->getProductId() . "'/>";
-            echo "<input type='submit' name='addToCart' value='Add to cart'/>";
-            echo "</form>";
-        }
-        echo "</div>";
-        echo "</div>";
-        echo "</a>";
-        echo "</div>";
-
-        if ($count == $end) {
-            return;
-        }
-    }
-}
-
-function navigationArrows()
-{
-    global $currentPage, $maxPage;
-    echo "<div class='d-inline'>";
-
-    echo "<a href='Index.php'>";
-    echo "<input type='submit' value='|<'" . ($currentPage == 1 ? "disabled" : "") . " />";
-    echo "</a>";
-    echo "<a href='Index.php?page=" . max(((int)$currentPage - 1), 1) . "'>";
-    echo "<input type='submit' value='<'" . ($currentPage == 1 ? "disabled" : "") . " />";
-    echo "</a>";
-    echo "&nbsp $currentPage / $maxPage &nbsp";
-    echo "<a href='Index.php?page=" . min(((int)$currentPage + 1), $maxPage) . "'>";
-    echo "<input type='button' value='>'" . ($currentPage == $maxPage ? "disabled" : "") . "/>";
-    echo "</a>";
-    echo "<a href='Index.php?page=" . $maxPage . "'>";
-    echo "<input type='button' value='>|'" . ($currentPage == $maxPage ? "disabled" : "") . "/>";
-    echo "</a>";
-
-    echo "</div>";
 }
 
 function checkField($field)
