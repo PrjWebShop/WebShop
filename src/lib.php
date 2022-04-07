@@ -10,7 +10,7 @@ define("SQL_ERROR_DATA_TOO_LONG", 1406); // Data exceeds character limit
 
 define("MAX_PRODUCT_PER_PAGE", 15);
 
-define("DEFAULT_IMAGE_PATH", "Img/default.jpg");
+define("DEFAULT_IMAGE_PATH", "Img/default.png");
 
 $failed_login = null;
 $entered_email = "";

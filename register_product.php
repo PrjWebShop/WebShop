@@ -20,7 +20,7 @@ $fieldCheck = true;
     htmlNavBar();
     ?>
     <h2>Register your product</h2><br />
-    <div>
+    <div style="text-align: center;">
         <form method="POST" action="#" enctype="multipart/form-data">
 
             <!-- Category -->
@@ -62,6 +62,7 @@ $fieldCheck = true;
             </a>
         </form>
     </div>
+    <?php htmlFooter(); ?>
 
 
     <script>
