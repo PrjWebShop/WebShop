@@ -20,10 +20,10 @@ if (isset($_GET["id"]))
             htmlNavBar();
         ?>
         
-        <div class="page-container">
+        <div class="page-container <?php echo getThemeBackground(); ?>">
             <div class="content-wrap ProductPageTable">
                 <div>
-                    <table>
+                    <table class="<?php echo getThemeBackground(); ?> bgWhite">
                         <tr>
                             <th rowspan="8" class="Photo"><img src="<?php echo $prod->getImagePath(); ?>" alt=" I am Lost '-_-"></th>
                             <th>Detail Information</th>

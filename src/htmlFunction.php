@@ -41,7 +41,7 @@ function htmlNavBar()
     $location = $_SERVER["PHP_SELF"];
 ?>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light <?php echo getThemeContrast(); ?>">
         <a class="navbar-brand" href="/WebShop/Index">
             <img class="navi-logo img-fluid" src="/WebShop/Img/Logo/logo.png" alt="Logo Not Found">
         </a>
@@ -51,23 +51,23 @@ function htmlNavBar()
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/WebShop/Index">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="<?php echo getThemeContrast(); ?> nav-link" href="/WebShop/Index">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Cart</a>
+                    <a class="<?php echo getThemeContrast(); ?> nav-link" href="#">Cart</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php if (!$accountLogged) echo "disabled"; ?>" href="/WebShop/register_product">Sell</a>
+                    <a class="<?php echo getThemeContrast(); ?> nav-link <?php if (!$accountLogged) echo "disabled"; ?>" href="/WebShop/register_product">Sell</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/WebShop/about">About</a>
+                    <a class="<?php echo getThemeContrast(); ?> nav-link" href="/WebShop/about">About</a>
                 </li>
                 
             
                 <?php if ($accountLogged) { ?>
                     <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="<?php echo getThemeContrast(); ?> nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Account
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -94,7 +94,7 @@ function htmlNavBar()
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-body">
+                <div class="modal-body <?php echo getThemeBackground(); ?>">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a class="nav-link active" href="#SignIn" data-toggle="tab">Sign in</a>
@@ -234,16 +234,18 @@ function displayProducts($listOfProducts)
             echo "Size: " . Product::getSizeToString($product->getSize()) . "<br/>";
         $seller = Account::getAccountInfo($product->getSellerId());
         echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
+        echo "<div class='d-flex justify-content-end mt-1'>";
         if ($accountLogged && $user->getAccountId() == $product->getSellerId()) {
-            echo "<input type='button' class='d-flex justify-content-end mt-1' value='Cannot purchase your own products' disabled />";
+            echo "<input type='button' class='themeButton ". getThemeBackground() ."' value='Owned by you' disabled />";
         } elseif ($accountLogged && Product::isProductInCart($user->getAccountId(), $product->getProductId())) {
-            echo "<input type='button' class='d-flex justify-content-end mt-1' value='In Cart' disabled />";
+            echo "<input type='button' class='themeButton ". getThemeBackground() ."' value='In Cart' disabled />";
         } else {
-            echo "<form method='POST' class='d-flex justify-content-end mt-1'>";
+            echo "<form method='POST' class='formCard'>";
             echo "<input type='hidden' name='productID' value='" . $product->getProductId() . "'/>";
-            echo "<input type='submit' name='addToCart' value='Add 1 to cart'/>";
+            echo "<input type='submit' name='addToCart' value='Add 1 to cart' class='themeButton ". getThemeContrast() ."'/>";
             echo "</form>";
         }
+        echo "</div>";
         echo "</div>";
         echo "</div>";
         echo "</a>";

@@ -17,7 +17,7 @@ $fieldCheck = true;
     <body>
 
         <?php htmlNavBar(); ?>
-        <div class="page-container">
+        <div class="page-container <?php echo getThemeBackground(); ?>">
             <div class="content-wrap">
                 <div class="RegisterPageStyle">
                     
@@ -59,9 +59,9 @@ $fieldCheck = true;
                             <br /><input required name="price" pattern="^\d*(\.\d{0,2})?$" /><br /><br />
 
                             <!-- Register Button -->
-                            <input type="submit" name="submit" value="Register" />
+                            <input type="submit" name="submit" value="Register" class="themeButton <?php echo getThemeContrast(); ?>"/>
                             <a href="Index.php">
-                                <input type="button" value="Go back" />
+                                <input type="button" value="Go back"  class="themeButton <?php echo getThemeContrast(); ?>"/>
                             </a>
                         </form>
                     </div>

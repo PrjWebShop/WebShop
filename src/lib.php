@@ -144,4 +144,20 @@ function checkField($field)
     }
 }
 
+function getThemeBackground()
+{
+    if (!isset($_COOKIE["user"]))
+    {
+        return "theme1";
+    }
+
+    global $user;
+
+    return "theme".$user->getTheme();
+}
+
+function getThemeContrast()
+{
+    return getThemeBackground()."Contrast";
+}
 

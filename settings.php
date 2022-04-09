@@ -13,7 +13,7 @@ $opt = $arg_arr[3]; // parameter (profile, themes, listing, admin)
     <body>
         <?php htmlNavBar(); ?>
         
-        <div class="page-container">
+        <div class="page-container <?php echo getThemeBackground(); ?>">
             <div class="container-fluid">
                 <div class="content-wrap ProductPageTable">
                     <div class="row">

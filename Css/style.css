@@ -10,6 +10,12 @@
     padding-bottom: 2.5rem;
 }
 
+/* Main Page */
+
+.formCard {
+    margin-bottom: 0px;
+}
+
 
 /* Product Page */
 
@@ -108,4 +114,67 @@ footer span {
 .YY {
     background-color: gold;
     color: black;
+}
+
+/* Themes */
+.theme1
+{
+    background-color: #DCE2F0;
+    color: #50586C;
+}
+
+.theme1Contrast
+{
+    background-color: #50586C !important;
+    color: #DCE2F0 !important;
+}
+
+.theme2
+{
+    background-color: #FCF6F5;
+    color: #2BAE66;
+}
+
+.theme2Contrast
+{
+    background-color: #2BAE66 !important;
+    color: #FCF6F5 !important;
+}
+
+.theme3
+{
+    background-color: #DBB98F;
+    color: #96351F;
+}
+
+.theme3Contrast
+{
+    background-color: #96351F !important;
+    color: #DBB98F !important;
+}
+
+.theme3
+{
+    background-color: #292826;
+    color: #F9D142;
+}
+
+.theme3Contrast
+{
+    background-color: #F9D142 !important;
+    color: #292826 !important;
+}
+
+.themeButton
+{
+    border-radius: 100px;
+    font-weight: bold;
+    border:none;
+    padding: 5px 10px 5px 10px;
+    margin: 5px;
+}
+
+.bgWhite
+{
+    background-color: white;
 }

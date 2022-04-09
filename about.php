@@ -8,11 +8,11 @@ require_once 'src/htmlFunction.php';
 
 <?php htmlHeader(__FILE__, "About"); ?>
 
-    <body style="background-color: aquamarine;">
+    <body>
 
         <?php htmlNavBar(); ?>
 
-        <div class="page-container">
+        <div class="page-container <?php echo getThemeBackground(); ?>">
             <div class="content-wrap">
                 <div class="AboutPageStyle">
                     <div class="container-fluid negativeMargin fade-in-element">

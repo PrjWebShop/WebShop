@@ -12,7 +12,7 @@ require_once 'src/htmlFunction.php';
     <?php
     htmlNavBar();
     ?>
-    <div class="page-container">
+    <div class="page-container <?php echo getThemeBackground(); ?>">
         <div class="content-wrap ProductPageTable">
             <div>
                 <div class="d-flex justify-content-center mt-2 mb-2">

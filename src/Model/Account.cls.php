@@ -9,14 +9,16 @@ class Account
     private $firstName;
     private $lastName;
     private $address;
+    private $theme;
 
-    function __construct($accountId, $email, $firstName, $lastName, $address)
+    function __construct($accountId, $email, $firstName, $lastName, $address, $theme)
     {
         $this->accountId = $accountId;
         $this->email = $email;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->address = $address;
+        $this->theme = $theme;
     }
 
     public function getAccountId() { return $this->accountId; }
@@ -32,6 +34,9 @@ class Account
 
     public function getAddress() { return $this->address; }
     public function setAddress($address) { $this->address = $address; }
+
+    public function getTheme() { return $this->theme; }
+    public function setTheme($theme) { $this->theme = $theme; }
 
     /**
      * Function that retrieves account info from the database with given identifier
@@ -58,8 +63,9 @@ class Account
             $firstName = $row["first_name"];
             $lastName = $row["last_name"];
             $address = $row["address"];
+            $theme = $row["theme"];
 
-            $account = new Account($accountId, $email, $firstName, $lastName, $address);
+            $account = new Account($accountId, $email, $firstName, $lastName, $address, $theme);
             return $account;
         }
         return false;
