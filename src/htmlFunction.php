@@ -25,7 +25,7 @@ function htmlHeader($currFile, $title)
         if (file_exists($cssFullPath))
             echo "<link rel='stylesheet' href='$cssPath'>";
     ?>
-    
+
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -213,11 +213,21 @@ function displayProducts($listOfProducts)
         echo "<a title='" . $product->getName() . "' href='product.php?id=" . $product->getProductId() . "'>";
         echo "<div class='card m-2'>";
         echo "<div class='CardImgWrap'>";
+        echo "<center><b>" . $product->getName() . "</b></center><br/>";
         echo "<img class='card-img-top maxSizeImage' src='" . $product->getImagePath() . "' alt='Card image cap'>";
         echo "</div>";
         echo "<div class='card-body'>";
-        echo "<b>" . $product->getName() . "</b><br/>";
-        echo "<i>" . $product->getDescription() . "</i><br/><br/>";
+        // if (strlen($product->getDescription()) > 45)
+        // {
+        //     $desc = substr($product->getDescription(), 0, 45);
+        //     echo "<i>" . $desc . "...</i><br/><br/>";
+        // }
+        // else
+        // {
+            echo "<div class='description'>";
+            echo "<i>" . $product->getDescription() . "</i><br/><br/>";
+            echo "</div>";
+        // }
         echo "Price: $" . number_format($product->getPrice(), 2) . "<br/>";
         echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
         if ($product->getCategoryId() == 4) // Hard-coded - need to rewrite this
@@ -231,7 +241,7 @@ function displayProducts($listOfProducts)
         } else {
             echo "<form method='POST' class='d-flex justify-content-end mt-1'>";
             echo "<input type='hidden' name='productID' value='" . $product->getProductId() . "'/>";
-            echo "<input type='submit' name='addToCart' value='Add to cart'/>";
+            echo "<input type='submit' name='addToCart' value='Add 1 to cart'/>";
             echo "</form>";
         }
         echo "</div>";

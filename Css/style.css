@@ -23,12 +23,18 @@
     min-width: 500px;
 }
 
+.ProductPageTable img {
+    width: 500px;
+    height: auto;
+}
+
 hr {
     width: 25%;
 }
 
 ul {
     margin: 2rem 2rem 2rem 0;
+    max-width: 400px;
 }
 
 .ProductPageTable th {
@@ -50,6 +56,10 @@ ul {
 
 .RegisterPageStyle h2 {
     margin-bottom: 1rem;
+}
+
+.RegisterPageStyle input[type=file] {
+    text-align-last: end;
 }
 
 

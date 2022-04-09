@@ -29,6 +29,7 @@ a:hover {
     align-items: center;
     flex-direction: column;
     margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .card {
@@ -47,6 +48,14 @@ nav {
     position: fixed;
 }
 
+.description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2; 
+    -webkit-box-orient: vertical;
+ }
 
 /* form {
     margin: 0 !important;
