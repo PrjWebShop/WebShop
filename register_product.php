@@ -12,59 +12,67 @@ $fieldCheck = true;
 <!DOCTYPE html>
 <html>
 
-<?php htmlHeader(__FILE__, "Register your product"); ?>
+    <?php htmlHeader(__FILE__, "Register your product"); ?>
 
-<body>
+    <body>
 
-    <?php
-    htmlNavBar();
-    ?>
-    <h2>Register your product</h2><br />
-    <div style="text-align: center;">
-        <form method="POST" action="#" enctype="multipart/form-data">
+        <?php htmlNavBar(); ?>
+        <div class="page-container">
+            <div class="content-wrap">
+                <div class="RegisterPageStyle">
+                    
+                    <h2>Register your product</h2>
+                    
+                    <div>
+                        <form method="POST" action="#" enctype="multipart/form-data">
 
-            <!-- Category -->
-            <label>Category</label><?php checkField("name"); ?>
-            <br />
-            <select name="category" id="category" onchange="categoryOnChange()">
-                <?php listCategories(); ?>
-            </select><br /><br />
+                            <!-- Category -->
+                            <label>Category</label><?php checkField("name"); ?>
+                            <br />
+                            <select name="category" id="category" onchange="categoryOnChange()">
+                                <?php listCategories(); ?>
+                            </select><br /><br />
 
-            <!-- Name -->
-            <label>Product Name</label><?php checkField("name"); ?>
-            <br /><input required type="text" name="name" /><br /><br />
+                            <!-- Name -->
+                            <label>Product Name</label><?php checkField("name"); ?>
+                            <br /><input required type="text" name="name" /><br /><br />
 
-            <!-- Description -->
-            <label>Description</label><?php checkField("description"); ?>
-            <br /><textarea name="description" cols="40" rows="5" required></textarea><br /><br />
-
-
-            <!-- Quantity -->
-            <label>Quantity</label><?php checkField("quantity"); ?>
-            <br /><input required type="number" name="quantity" min="1" /><br /><br />
-
-            <!-- Size -->
-            <label>Size</label><?php checkField("size"); ?>
-            <br /><input type="number" name="size" id="size" min="0" disabled /><br /><br />
-
-            <!-- Image -->
-            <label>Image</label>
-            <br /><input type="file" name="image" accept="image/*" /><br /><br />
-
-            <!-- Price -->
-            <label>Price</label><?php checkField("price"); ?>
-            <br /><input required name="price" pattern="^\d*(\.\d{0,2})?$" /><br /><br />
-
-            <!-- Register Button -->
-            <input type="submit" name="submit" value="Register" />
-            <a href="Index.php">
-                <input type="button" value="Go back" />
-            </a>
-        </form>
-    </div>
-    <?php htmlFooter(); ?>
+                            <!-- Description -->
+                            <label>Description</label><?php checkField("description"); ?>
+                            <br /><textarea name="description" cols="40" rows="5" required></textarea><br /><br />
 
 
+                            <!-- Quantity -->
+                            <label>Quantity</label><?php checkField("quantity"); ?>
+                            <br /><input required type="number" name="quantity" min="1" /><br /><br />
+
+                            <!-- Size -->
+                            <label>Size</label><?php checkField("size"); ?>
+                            <br /><input type="number" name="size" id="size" min="0" disabled /><br /><br />
+
+                            <!-- Image -->
+                            <label>Image</label>
+                            <br /><input type="file" name="image" accept="image/*" /><br /><br />
+
+                            <!-- Price -->
+                            <label>Price</label><?php checkField("price"); ?>
+                            <br /><input required name="price" pattern="^\d*(\.\d{0,2})?$" /><br /><br />
+
+                            <!-- Register Button -->
+                            <input type="submit" name="submit" value="Register" />
+                            <a href="Index.php">
+                                <input type="button" value="Go back" />
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php htmlFooter(); ?>
+        </div>
+
+
+        
+    </body>
     <script>
         function categoryOnChange() {
 
@@ -79,8 +87,6 @@ $fieldCheck = true;
             }
         }
     </script>
-     
-</body>
 
 </html>
 

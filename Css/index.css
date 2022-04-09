@@ -1,7 +1,6 @@
 .navi-logo {
-    width: 70px;
-    height: 35px;
-    /* border: 1px solid lightgray; */
+    width: 6rem;
+    height: 3rem;
     margin-left: 0.5rem;
 }
 
@@ -24,7 +23,6 @@ a:hover {
     text-decoration: none;
 }
 
-
 .CardImgWrap {
     display: flex;
     justify-content: center;
@@ -34,7 +32,8 @@ a:hover {
 }
 
 .card {
-    min-height: 35rem;
+    width: 25rem;
+    min-height: 15rem;
 }
 
 .maxSizeImage {
@@ -47,7 +46,9 @@ a:hover {
 nav {
     position: fixed;
 }
-form{
+
+
+/* form {
     margin: 0 !important;
     padding: 0 !important;
-}
+} */

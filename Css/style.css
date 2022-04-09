@@ -1,3 +1,67 @@
+/* Container Style */
+
+.page-container {
+    position: relative;
+    min-height: 100vh;
+    padding: 3rem 0 5rem 0;
+}
+
+.content-wrap {
+    padding-bottom: 2.5rem;
+}
+
+
+/* Product Page */
+
+.ProductPageTable table {
+    margin: auto;
+}
+
+.ProductPageTable .photo {
+    padding: 2rem 3rem 2rem 3rem;
+    margin: 5rem;
+    min-width: 500px;
+}
+
+hr {
+    width: 25%;
+}
+
+ul {
+    margin: 2rem 2rem 2rem 0;
+}
+
+.ProductPageTable th {
+    text-align: center;
+    padding-bottom: 0.5rem;
+}
+
+.ProductPageTable table,
+.ProductPageTable th {
+    border: black 2px solid;
+}
+
+
+/* Register Product Page*/
+
+.RegisterPageStyle {
+    text-align: center;
+}
+
+.RegisterPageStyle h2 {
+    margin-bottom: 1rem;
+}
+
+
+/* About Page */
+
+.AboutPageStyle {
+    overflow: hidden;
+}
+
+
+/* Footer */
+
 footer {
     background-color: #343A40;
     margin-top: 2rem;
@@ -5,7 +69,7 @@ footer {
     text-align: center;
     color: white;
     position: absolute;
-    bottom: auto;
+    bottom: 0;
     width: 100%;
 }
 
