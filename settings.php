@@ -6,6 +6,14 @@ $args = $_SERVER["REQUEST_URI"];
 $arg_arr = explode("/",$args);
 $opt = $arg_arr[3]; // parameter (profile, themes, listing, admin)
 
+// Save theme
+if (isset($_REQUEST["theme"]))
+{
+    $theme = $_REQUEST["theme"];
+    echo $theme;
+    Account::saveTheme($user->getAccountId(), intval($theme));
+}
+
 ?>
 <html>
     <?php htmlHeader(__FILE__, "Settings"); ?>
@@ -33,6 +41,14 @@ $opt = $arg_arr[3]; // parameter (profile, themes, listing, admin)
                                     Account
                                 </a>
                             </div>
+                        </div class="ml-3 col-md-3 col-12">
+                        <form method="POST">
+
+                            Theme: <input type="number" name="theme"/><br/>
+                            <input type="submit" name="themes" value="Save"/>
+                        </form>
+                        <div>
+
                         </div>
                         
                     </div>

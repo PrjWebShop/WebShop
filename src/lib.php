@@ -116,6 +116,14 @@ if (isset($_GET["search"])) {
     $search = false;
 }
 
+// Save theme
+if (isset($_REQUEST["theme"]))
+{
+    $theme = $_REQUEST["theme"];
+    Account::saveTheme($user->getAccountId(), intval($theme));
+    $user->setTheme($theme);
+}
+
 $listOfProducts = Product::getProductList($category_filter, $search);
 
 if ($listOfProducts != 0) {
@@ -129,15 +137,6 @@ if ($listOfProducts != 0) {
     $productFound = true;
 } else {
     $productFound = false;
-}
-
-// Save theme
-if (isset($_REQUEST["themes"]))
-{
-    $theme = $_REQUEST["themes"];
-    echo $theme;
-    echo $user->getAccountId();
-    Account::saveTheme($user->getAccountId(), intval($theme));
 }
 
 function checkField($field)
