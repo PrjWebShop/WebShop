@@ -131,6 +131,15 @@ if ($listOfProducts != 0) {
     $productFound = false;
 }
 
+// Save theme
+if (isset($_REQUEST["themes"]))
+{
+    $theme = $_REQUEST["themes"];
+    echo $theme;
+    echo $user->getAccountId();
+    Account::saveTheme($user->getAccountId(), intval($theme));
+}
+
 function checkField($field)
 {
     if (!isset($_REQUEST["submit"]))

@@ -134,4 +134,22 @@ class Account
         }
         return false;
     }
+
+    public static function saveTheme($accountid, $theme)
+    {
+        global $connection;
+
+        $sqlStmt = $connection->prepare("UPDATE account SET theme = :theme WHERE account_id = :account_id;");
+
+        $sqlStmt->bindParam(":theme", $theme);
+        $sqlStmt->bindParam(":account_id", $accountid);
+
+        $sqlStmt->execute();
+
+        if ($sqlStmt->rowCount() > 0)
+        {
+            return true;
+        }
+        return false;
+    }
 }
