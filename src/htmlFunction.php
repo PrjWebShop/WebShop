@@ -41,7 +41,7 @@ function htmlNavBar()
     $location = $_SERVER["PHP_SELF"];
 ?>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light <?php echo getThemeContrast(); ?>">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light <?php echo getThemeContrast(); ?>" id="header">
         <a class="navbar-brand" href="/WebShop/Index">
             <img class="navi-logo img-fluid" src="/WebShop/Img/Logo/logo.png" alt="Logo Not Found">
         </a>
@@ -52,22 +52,22 @@ function htmlNavBar()
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="<?php echo getThemeContrast(); ?> nav-link" href="/WebShop/Index">Home <span class="sr-only">(current)</span></a>
+                    <a class="<?php echo getThemeContrast(); ?> nav-link" id="headerLabel1" href="/WebShop/Index">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="<?php echo getThemeContrast(); ?> nav-link" href="#">Cart</a>
+                    <a class="<?php echo getThemeContrast(); ?> nav-link" id="headerLabel2" href="#">Cart</a>
                 </li>
                 <li class="nav-item">
-                    <a class="<?php echo getThemeContrast(); ?> nav-link <?php if (!$accountLogged) echo "disabled"; ?>" href="/WebShop/register_product">Sell</a>
+                    <a class="<?php echo getThemeContrast(); ?> nav-link <?php if (!$accountLogged) echo "disabled"; ?>" id="headerLabel3" href="/WebShop/register_product">Sell</a>
                 </li>
                 <li class="nav-item">
-                    <a class="<?php echo getThemeContrast(); ?> nav-link" href="/WebShop/about">About</a>
+                    <a class="<?php echo getThemeContrast(); ?> nav-link" id="headerLabel4" href="/WebShop/about">About</a>
                 </li>
                 
             
                 <?php if ($accountLogged) { ?>
                     <li class="nav-item dropdown">
-                    <a class="<?php echo getThemeContrast(); ?> nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="<?php echo getThemeContrast(); ?> nav-link dropdown-toggle" id="headerLabel5" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Account
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -94,7 +94,7 @@ function htmlNavBar()
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-body <?php echo getThemeBackground(); ?>">
+                <div class="modal-body <?php echo getThemeBackground(); ?>" id="background">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a class="nav-link active" href="#SignIn" data-toggle="tab">Sign in</a>

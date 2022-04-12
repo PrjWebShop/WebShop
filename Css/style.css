@@ -155,14 +155,14 @@ footer span {
 
 .theme4
 {
-    background-color: #292826;
-    color: #F9D142;
+    background-color: #F9D142;
+    color: #292826;
 }
 
 .theme4Contrast
 {
-    background-color: #F9D142 !important;
-    color: #292826 !important;
+    background-color: #292826 !important;
+    color: #F9D142 !important;
 }
 
 .themeButton
