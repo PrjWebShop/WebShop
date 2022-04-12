@@ -6,14 +6,6 @@ $args = $_SERVER["REQUEST_URI"];
 $arg_arr = explode("/",$args);
 $opt = $arg_arr[3]; // parameter (profile, themes, listing, admin)
 
-// Save theme
-if (isset($_REQUEST["theme"]))
-{
-    $theme = $_REQUEST["theme"];
-    echo $theme;
-    Account::saveTheme($user->getAccountId(), intval($theme));
-}
-
 ?>
 <html>
     <?php htmlHeader(__FILE__, "Settings"); ?>
@@ -42,15 +34,27 @@ if (isset($_REQUEST["theme"]))
                                 </a>
                             </div>
                         </div class="ml-3 col-md-3 col-12">
-                        <form method="POST">
 
-                            Theme: <input type="number" name="theme"/><br/>
-                            <input type="submit" name="themes" value="Save"/>
-                        </form>
-                        <div>
-
-                        </div>
+                        <?php 
                         
+                        switch ($opt)
+                        {
+                            case "profile":
+                                profileSettings();
+                                break;
+                            case "themes":
+                                themesSettings();
+                                break;
+                            case "listing":
+                                listingSettings();
+                                break;
+                            case "admin":
+                                adminSettings();
+                                break;
+                            default:
+                                break;
+                        }
+                        ?>                        
                     </div>
                 </div>
             </div>
@@ -58,3 +62,28 @@ if (isset($_REQUEST["theme"]))
         </div>
     </body>
 </html>
+
+<?php
+
+function profileSettings()
+{
+    
+}
+
+function themesSettings()
+{ ?>
+    <form method="POST">
+        Theme: <input type="number" name="theme"/><br/>
+        <input type="submit" name="themes" value="Save"/>
+    </form>
+<?php }
+
+function listingSettings()
+{
+    
+}
+
+function adminSettings()
+{
+    
+}
