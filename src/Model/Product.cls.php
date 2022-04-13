@@ -236,6 +236,43 @@ class Product
     }
 
     /**
+     * Function that returns an array of products listed by a seller
+     * 
+     * @param int $account_id
+     * @return Product[] returns an array of type Product
+     */
+    public static function getPostedProductList(int $account_id)
+    {
+        global $connection;
+
+        $cpt = 0;
+
+        $sqlStmt = $connection->prepare("SELECT * FROM product WHERE seller_id = :account_id;");
+        
+        $sqlStmt->bindParam(':account_id', $account_id);
+
+        $sqlStmt->execute();
+
+        $listOfProducts = false;
+
+        while ($row = $sqlStmt->fetch()) {
+            $prodId = $row["product_id"];
+            $catId = $row["category_id"];
+            $name = $row["name"];
+            $desc = $row["description"];
+            $price = $row["price"];
+            $qty = $row["quantity"];
+            $size = $row["size"];
+            $seller = $row["seller_id"];
+            $img = $row["image"];
+
+            $prod = new Product($prodId, $catId, $name, $desc, $price, $qty, $size, $seller, $img);
+            $listOfProducts[$cpt++] = $prod;
+        }
+        return $listOfProducts;
+    }
+
+    /**
      * Function to change the count of a specific product in a cart
      * 
      * @param int $account_id
@@ -398,6 +435,11 @@ class Product
     {
         global $connection;
 
+        if ($amount == 0)
+        {
+            return Product::RemoveProductFromDatabase($product_id);
+        }
+
         $sqlStmt = $connection->prepare("UPDATE product
                     SET quantity = quantity + :amount
                     WHERE product_id = :product_id");
@@ -412,6 +454,29 @@ class Product
             return false;
         return true;
     }
+
+    /**
+     * Updates the quantity for the product specified in the product table.
+     * 
+     * @param int $product_id
+     * @param int $amount amount to add or remove
+     */
+    public static function RemoveProductFromDatabase($productID)
+    {
+        global $connection;
+
+        $sqlStmt = $connection->prepare("REMOVE FROM product
+                    WHERE product_id = :product_id");
+
+        $sqlStmt->bindParam(':product_id', $product_id);
+
+        $sqlStmt->execute();
+
+        if ($sqlStmt->rowCount() == 0)
+            return false;
+        return true;
+    }
+
     
     /**
      * Function that returns a product's quantity in stock from product table

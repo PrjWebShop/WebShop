@@ -6,7 +6,7 @@ function htmlHeader($currFile, $title)
 { ?>
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <title> <?php echo $title; ?> </title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
@@ -277,4 +277,20 @@ function navigationArrows()
     echo "</a>";
 
     echo "</div>";
+}
+
+function displayListings()
+{
+    global $user;
+
+    $listOfProducts = Product::getPostedProductList($user->getAccountId());
+    foreach ($listOfProducts as $product) {
+        echo "<form method='POST'>";
+        echo "<li>".$product->getName();
+        echo "<input type='hidden' name='productID' value='" . $product->getProductId() . "'/>";
+        echo "<input type='submit' name='editProduct' value='Edit'/>";
+        echo "<input type='submit' name='editProduct' value='Remove'/>";
+        echo "</li>";
+        echo "</form>";
+    }
 }

@@ -93,6 +93,11 @@ $opt = $arg_arr[3]; // parameter (profile, themes, listing, admin)
             var background = document.getElementById("background2");
             background.classList.remove("theme1", "theme2", "theme3", "theme4");
             background.classList.add("theme" + theme);
+
+            // Button
+            var themeButton = document.getElementById("themeButton");
+            themeButton.classList.remove("theme1Contrast", "theme2Contrast", "theme3Contrast", "theme4Contrast");
+            themeButton.classList.add("theme" + theme + "Contrast");
         }
     </script>
 </html>
@@ -110,21 +115,26 @@ function themesSettings()
     $theme = $user->getTheme();
     
     echo "<form method='POST'>";
-        echo "<select name='theme' id='themeSelector' onchange='themeOnChange()'>";
+        echo "Theme: <select name='theme' id='themeSelector' onchange='themeOnChange()'>";
             echo "<option value='1'" . ($theme == 1 ? "selected" : "") . ">Blue</option>";
             echo "<option value='2'" . ($theme == 2 ? "selected" : "") . ">Green</option>";
             echo "<option value='3'" . ($theme == 3 ? "selected" : "") . ">Red</option>";
             echo "<option value='4'" . ($theme == 4 ? "selected" : "") . ">Yellow</option>";
         echo "</select>";
         echo "<br/>";
-        echo "<input type='submit' name='themes' value='Save'/>";
+        echo "<input type='submit' name='themes' id='themeButton' value='Save' class='themeButton ". getThemeContrast() ."'/>";
     echo "</form>";
 }
 
 function listingSettings()
-{
-    echo "Product Listings <br/>// TO DO";
-}
+{ ?>
+<div class="listingPage">
+    <ul>
+        <?php displayListings(); ?>
+    </ul>
+</div>
+
+<?php }
 
 function adminSettings()
 {

@@ -139,6 +139,22 @@ if ($listOfProducts != 0) {
     $productFound = false;
 }
 
+if (isset($_REQUEST["editProduct"]))
+{
+    switch ($_REQUEST["editProduct"]) {
+        case 'Edit':
+            header("Location: /WebShop/edit_product");
+            break;
+
+        case 'Remove':
+            $productID = $_REQUEST["productID"];
+            $prod = Product::getProductByID($productID);
+            if ($prod->getSellerId() == $user->getAccountId())
+                Product::RemoveProductFromDatabase($productID);
+            break;
+    }
+}
+
 function checkField($field)
 {
     if (!isset($_REQUEST["submit"]))
