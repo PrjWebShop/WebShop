@@ -78,6 +78,15 @@ if (isset($_REQUEST["logout"])) {
     $_POST = array();
     header("Refresh:0");
 }
+
+// Product and Seller
+if (isset($_REQUEST["ProductId"]))
+{
+    $prod_id = $_REQUEST["ProductId"];
+    $prod = Product::getProductByID($prod_id);
+    $seller = Account::getAccountInfo($prod->getSellerId());
+}
+
 // Add to cart button
 if (isset($_REQUEST["addToCart"])) {
     $addToCartOK = true;
@@ -139,20 +148,23 @@ if ($listOfProducts != 0) {
     $productFound = false;
 }
 
+// Edit Product button in settings/listing
 if (isset($_REQUEST["editProduct"]))
 {
-    switch ($_REQUEST["editProduct"]) {
-        case 'Edit':
-            header("Location: /WebShop/edit_product");
-            break;
-
-        case 'Remove':
-            $productID = $_REQUEST["productID"];
-            $prod = Product::getProductByID($productID);
-            if ($prod->getSellerId() == $user->getAccountId())
-                Product::RemoveProductFromDatabase($productID);
-            break;
+    if ($_REQUEST["editProduct"] == 'Remove') {
+        $productID = $_REQUEST["productID"];
+        $prod = Product::getProductByID($productID);
+        if ($prod->getSellerId() == $user->getAccountId())
+            Product::RemoveProductFromDatabase($productID);
+        header("Location: /WebShop/settings/listing");
     }
+}
+
+// Add to Cart button in product page
+if (isset($_REQUEST["addToCart"]))
+{
+    $quantity = $_REQUEST["quantityToAdd"];
+    Product::addProductToCart($user->getAccountId(), $prod->getProductId(), $quantity);
 }
 
 function checkField($field)
@@ -160,6 +172,8 @@ function checkField($field)
     if (!isset($_REQUEST["submit"]))
         return;
 
+    if (!isset($_REQUEST[$field]))
+        return;
     $fieldValue = $_REQUEST[$field];
 
     if ($fieldValue == "") {

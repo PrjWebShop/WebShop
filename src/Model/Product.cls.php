@@ -465,10 +465,10 @@ class Product
     {
         global $connection;
 
-        $sqlStmt = $connection->prepare("REMOVE FROM product
+        $sqlStmt = $connection->prepare("DELETE FROM product
                     WHERE product_id = :product_id");
 
-        $sqlStmt->bindParam(':product_id', $product_id);
+        $sqlStmt->bindParam(':product_id', $productID);
 
         $sqlStmt->execute();
 

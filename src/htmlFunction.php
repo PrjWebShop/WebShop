@@ -210,7 +210,7 @@ function displayProducts($listOfProducts)
             continue;
         }
         echo "<div class='col-12 col-md-4'>";
-        echo "<a title='" . $product->getName() . "' href='product.php?id=" . $product->getProductId() . "'>";
+        echo "<a title='" . $product->getName() . "' href='product.php?ProductId=" . $product->getProductId() . "'>";
         echo "<div class='card m-2'>";
         echo "<div class='CardImgWrap'>";
         echo "<center><b>" . $product->getName() . "</b></center><br/>";
@@ -285,9 +285,9 @@ function displayListings()
 
     $listOfProducts = Product::getPostedProductList($user->getAccountId());
     foreach ($listOfProducts as $product) {
-        echo "<form method='POST'>";
+        echo "<form method='POST' action='/WebShop/edit_product'>";
         echo "<li>".$product->getName();
-        echo "<input type='hidden' name='productID' value='" . $product->getProductId() . "'/>";
+        echo "<input type='hidden' name='ProductId' value='" . $product->getProductId() . "'/>";
         echo "<input type='submit' name='editProduct' value='Edit'/>";
         echo "<input type='submit' name='editProduct' value='Remove'/>";
         echo "</li>";

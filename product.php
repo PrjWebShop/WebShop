@@ -2,13 +2,6 @@
 
 require_once 'src/htmlFunction.php';
 
-if (isset($_GET["id"]))
-{
-    $prod_id = $_GET["id"];
-    $prod = Product::getProductByID($prod_id);
-    $seller = Account::getAccountInfo($prod->getSellerId());
-}
-
 ?>
 <html>
 
@@ -39,7 +32,12 @@ if (isset($_GET["id"]))
                                     <ul><?php echo $prod->getDescription(); ?><hr></ul>
                                     <ul><?php echo $prod->getQuantity() . " left in stock"; ?><hr></ul>
                                     <ul><?php echo $prod->getPrice() . "$"; ?><hr></ul>
-                                    <ul>Choose Quantity and Add button</ul>
+                                    <ul>
+                                        <form method="post">
+                                            <input type="number" name="quantityToAdd" value="1" style="width: 3rem;"/>
+                                            <input type="submit" name="submit" value="Add to Cart" class="themeButton <?php echo getThemeContrast(); ?>">
+                                        </form>
+                                    </ul>
                                 </ul>
                             </td>
                         </tr>
