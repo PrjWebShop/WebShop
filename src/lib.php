@@ -148,14 +148,15 @@ if ($listOfProducts != 0) {
     $productFound = false;
 }
 
-// Edit Product button in settings/listing
+// Remove Product button in settings/listing
 if (isset($_REQUEST["editProduct"]))
 {
     if ($_REQUEST["editProduct"] == 'Remove') {
-        $productID = $_REQUEST["productID"];
-        $prod = Product::getProductByID($productID);
+        // $productID = $_REQUEST["productID"];
+        // $prod = Product::getProductByID($productID);
+        $prod = Product::getProductByID($prod->getProductId());
         if ($prod->getSellerId() == $user->getAccountId())
-            Product::RemoveProductFromDatabase($productID);
+            Product::RemoveProductFromDatabase($prod->getProductId());
         header("Location: /WebShop/settings/listing");
     }
 }
@@ -174,8 +175,8 @@ function checkField($field)
 
     if (!isset($_REQUEST[$field]))
         return;
+    
     $fieldValue = $_REQUEST[$field];
-
     if ($fieldValue == "") {
         $fieldCheck = false;
         echo "<label style='color: red;'>*</label>";

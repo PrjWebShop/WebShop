@@ -465,6 +465,8 @@ class Product
     {
         global $connection;
 
+        $prod = Product::getProductByID($productID);
+
         $sqlStmt = $connection->prepare("DELETE FROM product
                     WHERE product_id = :product_id");
 
@@ -474,6 +476,8 @@ class Product
 
         if ($sqlStmt->rowCount() == 0)
             return false;
+        
+        unlink(IMAGE_UPLOAD_FOLDER . $prod->imagePath);
         return true;
     }
 
