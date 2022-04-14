@@ -94,6 +94,10 @@ ul {
     padding: 12px;
 }
 
+.ListingForm {
+    margin-block-end: 0em;
+}
+
 /* Footer */
 
 footer {

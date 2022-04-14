@@ -285,7 +285,7 @@ function displayListings()
 
     $listOfProducts = Product::getPostedProductList($user->getAccountId());
     foreach ($listOfProducts as $product) {
-        echo "<form method='POST' action='/WebShop/edit_product'>";
+        echo "<form method='POST' action='/WebShop/edit_product' class='ListingForm'>";
         echo "<li>".$product->getName();
         echo "<input type='hidden' name='ProductId' value='" . $product->getProductId() . "'/>";
         echo "<input type='submit' name='editProduct' value='Edit'/>";
