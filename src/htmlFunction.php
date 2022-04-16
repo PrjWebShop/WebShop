@@ -55,7 +55,7 @@ function htmlNavBar()
                     <a class="<?php echo getThemeContrast(); ?> nav-link" id="headerLabel1" href="/WebShop/Index">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="<?php echo getThemeContrast(); ?> nav-link" id="headerLabel2" href="#">Cart</a>
+                    <a class="<?php echo getThemeContrast(); ?> nav-link" id="headerLabel2" href="/WebShop/shopping_cart">Cart</a>
                 </li>
                 <li class="nav-item">
                     <a class="<?php echo getThemeContrast(); ?> nav-link <?php if (!$accountLogged) echo "disabled"; ?>" id="headerLabel3" href="/WebShop/register_product">Sell</a>
@@ -292,5 +292,32 @@ function displayListings()
         echo "<input type='submit' name='editProduct' value='Remove'/>";
         echo "</li>";
         echo "</form>";
+    }
+}
+
+function displayCart($cart)
+{
+    global $currentPage, $user, $accountLogged;
+
+    if ($cart == 0)
+        return;
+
+    foreach ($cart as $oneCartEntry) {
+        
+        $product = Product::getProductByID($oneCartEntry["product_id"]);
+
+        echo "<div class='col-12 col-md-4'>";
+            echo "<a title='" . $product->getName() . "' href='product.php?ProductId=" . $product->getProductId() . "'>";
+            echo "<div class='card m-2'>";
+                echo "<div class='card-body'>";
+                    echo "<b>" . $product->getName() . "</b><br/>";
+                    echo "<form method='POST'>";
+                        echo "In Cart: <input type='number' name='count' minimum='0' maximum='".$product->getQuantity()."' value='".$oneCartEntry['count']."' style='width:3rem;'>";
+                    echo "</form>";
+                    echo "Price: $" . number_format($product->getPrice(), 2) . "<br/>";
+                echo "</div>";
+            echo "</div>";
+            echo "</a>";
+        echo "</div>";
     }
 }

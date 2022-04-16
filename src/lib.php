@@ -100,7 +100,8 @@ if (isset($_REQUEST["addToCart"])) {
     }
 
     if ($accountLogged && $addToCartOK) {
-        Product::addProductToCart($user->getAccountId(), $prod->getProductId(), 1);
+        $quantity = isset($_REQUEST["quantityToAdd"]) ? $_REQUEST["quantityToAdd"] : 1;
+        Product::addProductToCart($user->getAccountId(), $prod->getProductId(), $quantity);
         unset($_POST);
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
@@ -159,13 +160,6 @@ if (isset($_REQUEST["editProduct"]))
             Product::RemoveProductFromDatabase($prod->getProductId());
         header("Location: /WebShop/settings/listing");
     }
-}
-
-// Add to Cart button in product page
-if (isset($_REQUEST["addToCart"]))
-{
-    $quantity = $_REQUEST["quantityToAdd"];
-    Product::addProductToCart($user->getAccountId(), $prod->getProductId(), $quantity);
 }
 
 function checkField($field)

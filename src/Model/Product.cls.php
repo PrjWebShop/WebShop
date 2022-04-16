@@ -1,6 +1,8 @@
 <?php
 
 define("IMAGE_UPLOAD_FOLDER", "Img/uploads/");
+define("MODE_ADDITION", "add");
+define("MODE_OVERWRITE","overwrite");
 
 require_once 'src/dbConfig.php';
 
@@ -208,29 +210,24 @@ class Product
 
         $cpt = 0;
 
-        $sqlStmt = $connection->prepare("SELECT * FROM product
-                    WHERE product_id IN
-                    (SELECT product_id FROM carts WHERE account_id = :account_id);");
+        $sqlStmt = $connection->prepare("SELECT * FROM carts WHERE account_id = :account_id;");
         
         $sqlStmt->bindParam(':account_id', $account_id);
 
         $sqlStmt->execute();
 
-        $listOfProducts = false;
+        $result = $sqlStmt->rowCount();
+
+        if ($result == 0)
+            return 0;
 
         while ($row = $sqlStmt->fetch()) {
-            $prodId = $row["product_id"];
-            $catId = $row["category_id"];
-            $name = $row["name"];
-            $desc = $row["description"];
-            $price = $row["price"];
-            $qty = $row["quantity"];
-            $size = $row["size"];
-            $seller = $row["seller_id"];
-            $img = $row["image"];
+            $product_id = $row["product_id"];
+            $count = $row["count"];
+            $date = $row["date"];
 
-            $prod = new Product($prodId, $catId, $name, $desc, $price, $qty, $size, $seller, $img);
-            $listOfProducts[$cpt++] = $prod;
+            $cartRow = array("product_id" => $product_id, "count" => $count ,"date" => $date);
+            $listOfProducts[$cpt++] = $cartRow;
         }
         return $listOfProducts;
     }
@@ -279,17 +276,27 @@ class Product
      * @param int $product_id
      * @param int $newCount
      */
-    public static function editProductCountInCart(int $account_id, int $product_id, int $newCount)
+    public static function editProductCountInCart(int $account_id, int $product_id, int $newCount, string $mode)
     {
         global $connection;
 
-        
         if ($newCount > 0) {
 
             // Checks if there's enough in stock
-            if (Product::getQuantityInStock($product_id) >= $newCount)
+            if (Product::getQuantityInStock($product_id) - Product::getQuantityInCart($account_id, $product_id) >= $newCount)
             {
-                $sqlStmt = $connection->prepare("UPDATE carts SET count = :newCount WHERE account_id = :account_id AND product_id = :product_id");
+                switch ($mode) {
+                    case MODE_ADDITION:
+                        $sqlStmt = $connection->prepare("UPDATE carts SET count = count + :newCount WHERE account_id = :account_id AND product_id = :product_id");
+                        break;
+                    
+                    case MODE_OVERWRITE:
+                        $sqlStmt = $connection->prepare("UPDATE carts SET count = :newCount WHERE account_id = :account_id AND product_id = :product_id");
+                        break;
+
+                    default:
+                        return;
+                }
 
                 $sqlStmt->bindParam(':newCount', $newCount);
                 $sqlStmt->bindParam(':account_id', $account_id);
@@ -297,7 +304,7 @@ class Product
 
                 $sqlStmt->execute();
 
-                if ($sqlStmt->rowCount($connection) >= 1)
+                if ($sqlStmt->rowCount() >= 1)
                     return true;
                 
             }
@@ -341,6 +348,12 @@ class Product
     public static function addProductToCart(int $account_id, int $product_id, int $count)
     {
         global $connection;
+
+        if (Product::isProductInCart($account_id, $product_id))
+        {
+            Product::editProductCountInCart($account_id, $product_id, $count, MODE_ADDITION);
+            return;
+        }
 
         $date = date('Y-m-d H:i:s');
 
@@ -500,6 +513,24 @@ class Product
 
         if ($row = $sqlStmt->fetch()) {
             $quantity = $row["quantity"];
+            return (int)$quantity;
+        }
+        return 0;
+    }
+
+    private static function getQuantityInCart(int $account_id, int $product_id)
+    {
+        global $connection;
+
+        $sqlStmt = $connection->prepare("SELECT count FROM carts WHERE account_id = :account_id AND product_id = :product_id;");
+
+        $sqlStmt->bindParam(':account_id', $account_id);
+        $sqlStmt->bindParam(':product_id', $product_id);
+
+        $sqlStmt->execute();
+
+        if ($row = $sqlStmt->fetch()) {
+            $quantity = $row["count"];
             return (int)$quantity;
         }
         return 0;
