@@ -231,7 +231,7 @@ function displayProducts($listOfProducts)
         echo "Price: $" . number_format($product->getPrice(), 2) . "<br/>";
         echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
         if ($product->getCategoryId() == 4) // Hard-coded - need to rewrite this
-            echo "Size: " . Product::getSizeToString($product->getSize()) . "<br/>";
+            echo "Size: " . Product::getSizeToString($product->getSize())["long"] . "<br/>";
         $seller = Account::getAccountInfo($product->getSellerId());
         echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
         echo "<div class='d-flex justify-content-end mt-1'>";
@@ -306,7 +306,7 @@ function displayCart($cart)
         ?>
         <div class="clearFix">
             <div class="floatL">
-                <table>
+                <table class="<?php echo getThemeBackground(); ?> bgWhite">
                     <tr>
                         <th colspan="2">Shopping Cart</th>
                         <th>Price</th>
@@ -325,7 +325,7 @@ function displayCart($cart)
                                         <ul>
                                             <?php echo $product->getName();
                                                     if ($product->getSize() > 0)
-                                                    { echo " (" . $product->getSizeToString($product->getSize()) . ")"; } 
+                                                    { echo " (" . $product->getSizeToString($product->getSize())["short"] . ")"; } 
                                             ?><hr>
                                         </ul>
                                         <ul><?php echo $product->getProductId(); ?><hr></ul>
@@ -343,11 +343,16 @@ function displayCart($cart)
                         ?>
                 </table>
             </div>
-            <div class="floatR">
-                <p><span>Total bft</span></p>
-                <p><span>tps</span></p>
-                <p><span>tvq</span></p>
-                <p><span>Grand Total</span></p>
+            <?php 
+            $total = Product::getTotalPriceFromCart($user->getAccountId());
+            $tps = number_format($total * (TAX_RATE_TPS / 100), 2);
+            $tvq = number_format($total * (TAX_RATE_TVQ / 100), 2);
+            ?>
+            <div class="floatR <?php echo getThemeBackground(); ?> bgWhite">
+                <p><span>Total bft <?php echo $total; ?>$</span></p>
+                <p><span>tps <?php echo $tps; ?>$</span></p>
+                <p><span>tvq <?php echo $tvq; ?>$</span></p>
+                <p><span>Grand Total <?php echo $total + $tps + $tvq; ?></span></p>
                 <input type="submit" value="Checkout" class="themeButton <?php echo getThemeContrast(); ?>">
             </div>
         </div>

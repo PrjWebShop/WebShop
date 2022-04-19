@@ -635,6 +635,31 @@ class Product
     }
 
     /**
+     * Calculates the total cost of products in the cart (Taxes not included)
+     */
+    public static function getTotalPriceFromCart(int $account_id)
+    {
+        global $connection;
+
+        $sqlStmt = $connection->prepare("
+        SELECT SUM(p.price * c.count) as total FROM product as p
+        INNER JOIN carts as c
+        ON c.product_id = p.product_id
+        WHERE c.account_id = :account_id;");
+
+        $sqlStmt->bindParam(':account_id', $account_id);
+
+        $sqlStmt->execute();
+
+        $sqlStmt->setFetchMode(PDO::FETCH_BOTH);
+
+        while ($row = $sqlStmt->fetch()) {
+            $total = $row["total"];
+        }
+        return $total;
+    }
+
+    /**
      * Function that returns size
      * 
      * @param int $num any number between 1 and 7
@@ -644,21 +669,21 @@ class Product
     {
         switch ($num) {
             case 1:
-                return "XS";
+                return array("short"=>"XS", "long"=>"Extra Small");
             case 2:
-                return "S";
+                return array("short"=>"S", "long"=>"Small");
             case 3:
-                return "M";
+                return array("short"=>"M", "long"=>"Medium");
             case 4:
-                return "L";
+                return array("short"=>"L", "long"=>"Large");
             case 5:
-                return "XL";
+                return array("short"=>"XL", "long"=>"Extra Large");
             case 6:
-                return "XXL";
+                return array("short"=>"XXL", "long"=>"2X Large");
             case 7:
-                return "XXXL";
+                return array("short"=>"XXXL", "long"=>"3X Large");
             default:
-                return "Invalid Size";
+                return array("short"=>"N/A", "long"=>"Invalid Size");
         }
     }
 }

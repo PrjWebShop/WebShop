@@ -12,6 +12,9 @@ define("MAX_PRODUCT_PER_PAGE", 15);
 
 define("DEFAULT_IMAGE_PATH", "Img/default.png");
 
+define("TAX_RATE_TPS", 5);
+define("TAX_RATE_TVQ", 9.975);
+
 $failed_login = null;
 $entered_email = "";
 $failed_attempt = null;
