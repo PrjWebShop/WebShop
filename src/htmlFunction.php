@@ -241,7 +241,7 @@ function displayProducts($listOfProducts)
             echo "<input type='button' class='themeButton ". getThemeBackground() ."' value='In Cart' disabled />";
         } else {
             echo "<form method='POST' class='formCard'>";
-            echo "<input type='hidden' name='productID' value='" . $product->getProductId() . "'/>";
+            echo "<input type='hidden' name='ProductId' value='" . $product->getProductId() . "'/>";
             echo "<input type='submit' name='addToCart' value='Add 1 to cart' class='themeButton ". getThemeContrast() ."'/>";
             echo "</form>";
         }
