@@ -232,6 +232,11 @@ footer span {
     padding: .5rem 1rem .5rem 1rem;
 }
 
+.CartPageTable form {
+    text-align: center;
+    margin: .5rem 0 .5rem 0;
+}
+
 .cartPrice,
 th {
     padding: .5rem 2rem .5rem 2rem;
@@ -245,15 +250,35 @@ th {
 .floatR {
     float: right;
     width: 15%;
-    margin: 0 15rem 0 0;
+    margin: 0 18rem 0 0;
     border: black solid 2px;
+    overflow: hidden;
 }
 
 .floatR p {
+    text-align: end;
     margin: 0;
     padding: .25rem 0 .25rem .5rem;
     color: black;
     font-weight: bold;
+}
+
+.floatR span {
+    text-align: end;
+}
+
+.checkoutFloatL {
+    float: left;
+    width: 59.9%;
+}
+
+.checkoutFloatR {
+    float: right;
+    width: 40%;
+}
+
+.prices p {
+    margin-right: 1rem;
 }
 
 .clearFix::after {

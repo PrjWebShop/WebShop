@@ -349,12 +349,27 @@ function displayCart($cart)
             $tvq = number_format($total * (TAX_RATE_TVQ / 100), 2);
             ?>
             <div class="floatR <?php echo getThemeBackground(); ?> bgWhite">
-                <p><span>Total bft <?php echo $total; ?>$</span></p>
-                <p><span>tps <?php echo $tps; ?>$</span></p>
-                <p><span>tvq <?php echo $tvq; ?>$</span></p>
-                <p><span>Grand Total <?php echo $total + $tps + $tvq; ?>$</span></p>
+                <div  class="clearFix">
+                    <div class="checkoutFloatL">
+                        <p><span>Total: </span></p>
+                        <p><span>TPS: </span></p>
+                        <p><span>TVQ: </span></p>
+                        <p><span>Grand Total: </span></p>
+                    </div>
+                    <div class="checkoutFloatR">
+                        <div class="prices">
+                            <p><span><?php echo $total; ?>$</span></p>
+                            <p><span><?php echo $tps; ?>$</span></p>
+                            <p><span><?php echo $tvq; ?>$</span></p>
+                            <p><span><?php echo $total + $tps + $tvq; ?>$</span></p>
+                        </div>
+                        
+                    </div>
+                </div>
+               
+                
                 <form method="POST">
-                <input type="submit" name="btnCheckout" value="Checkout" class="themeButton <?php echo getThemeContrast(); ?>">
+                    <input type="submit" name="btnCheckout" value="Checkout" class="themeButton <?php echo getThemeContrast(); ?>">
                 </form>
             </div>
         </div>
