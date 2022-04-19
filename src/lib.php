@@ -93,8 +93,6 @@ if (isset($_REQUEST["ProductId"]))
 // Add to cart button
 if (isset($_REQUEST["addToCart"])) {
     $addToCartOK = true;
-    $prodID = $_REQUEST["productID"];
-    $prod = Product::getProductByID($prodID);
 
     // check if user is the seller of the product
     if ($prod->getSellerId() == $user->getAccountId()) {

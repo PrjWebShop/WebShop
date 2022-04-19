@@ -2,6 +2,12 @@
 
 require_once 'src/htmlFunction.php';
 
+if (!isset($_REQUEST["ProductId"]))
+{
+    header("Location:Index");
+    exit;
+}
+
 ?>
 <html>
 
@@ -33,8 +39,8 @@ require_once 'src/htmlFunction.php';
                                     <ul><?php echo $prod->getQuantity() . " left in stock"; ?><hr></ul>
                                     <ul><?php echo "Price: " . $prod->getPrice() . "$"; ?><hr></ul>
                                     <ul>
-                                        <form method="post">
-                                            <input type="hidden" name="productID" value="<?php echo $prod->getProductId(); ?>"/>
+                                        <form method="post" action="Index">
+                                            <input type="hidden" name="ProductId" value="<?php echo $prod->getProductId(); ?>"/>
                                             <input type="number" name="quantityToAdd" value="1" style="width: 3rem;"/>
                                             <input type="submit" name="addToCart" value="Add to Cart" class="themeButton <?php echo getThemeContrast(); ?>">
                                         </form>
