@@ -283,32 +283,33 @@ class Product
         if ($newCount > 0) {
 
             // Checks if there's enough in stock
-            if (Product::getQuantityInStock($product_id) - Product::getQuantityInCart($account_id, $product_id) >= $newCount)
+            if (Product::getQuantityInStock($product_id) - Product::getQuantityInCart($account_id, $product_id) < $newCount)
             {
-                switch ($mode) {
-                    case MODE_ADDITION:
-                        $sqlStmt = $connection->prepare("UPDATE carts SET count = count + :newCount WHERE account_id = :account_id AND product_id = :product_id");
-                        break;
-                    
-                    case MODE_OVERWRITE:
-                        $sqlStmt = $connection->prepare("UPDATE carts SET count = :newCount WHERE account_id = :account_id AND product_id = :product_id");
-                        break;
-
-                    default:
-                        return;
-                }
-
-                $sqlStmt->bindParam(':newCount', $newCount);
-                $sqlStmt->bindParam(':account_id', $account_id);
-                $sqlStmt->bindParam(':product_id', $product_id);
-
-                $sqlStmt->execute();
-
-                if ($sqlStmt->rowCount() >= 1)
-                    return true;
-                
+                $newCount = Product::getQuantityInStock($product_id) - Product::getQuantityInCart($account_id, $product_id);
+                // return false; // count is greater than quantity    
             }
-            return false; // count is greater than quantity    
+
+            switch ($mode) {
+                case MODE_ADDITION:
+                    $sqlStmt = $connection->prepare("UPDATE carts SET count = count + :newCount WHERE account_id = :account_id AND product_id = :product_id");
+                    break;
+                
+                case MODE_OVERWRITE:
+                    $sqlStmt = $connection->prepare("UPDATE carts SET count = :newCount WHERE account_id = :account_id AND product_id = :product_id");
+                    break;
+
+                default:
+                    return;
+            }
+
+            $sqlStmt->bindParam(':newCount', $newCount);
+            $sqlStmt->bindParam(':account_id', $account_id);
+            $sqlStmt->bindParam(':product_id', $product_id);
+
+            $sqlStmt->execute();
+
+            if ($sqlStmt->rowCount() >= 1)
+                return true;
                 
         } else // if the count is set to 0, remove the product from the cart
             return Product::removeProductFromCart($account_id, $product_id);
@@ -348,6 +349,13 @@ class Product
     public static function addProductToCart(int $account_id, int $product_id, int $count)
     {
         global $connection;
+
+        $prod = Product::getProductByID($product_id);
+
+        if ($count > $prod->getQuantity())
+        {
+            $count = $prod->getQuantity();
+        }
 
         if (Product::isProductInCart($account_id, $product_id))
         {
