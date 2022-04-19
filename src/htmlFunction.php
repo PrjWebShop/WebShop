@@ -332,7 +332,7 @@ function displayCart($cart)
                                         <ul><?php echo $product->getQuantity(); ?><hr></ul>
                                         <ul><?php //echo $product->get(); ?></ul>
                                         <ul>
-                                            <?php echo "In Cart: " . $product->getQuantity();?>
+                                            <?php echo "In Cart: " . $oneCartEntry["count"];?>
                                         </ul>
                                     </ul>
                                 </td>
@@ -348,7 +348,7 @@ function displayCart($cart)
                 <p><span>tps</span></p>
                 <p><span>tvq</span></p>
                 <p><span>Grand Total</span></p>
-                <input type="submit" value="Checkout">
+                <input type="submit" value="Checkout" class="themeButton <?php echo getThemeContrast(); ?>">
             </div>
         </div>
         

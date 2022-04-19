@@ -4,6 +4,11 @@ require_once 'src/htmlFunction.php';
 
 $cartEmpty = true;
 
+if (!$accountLogged) {
+    header("Location: Index");
+    exit;
+}
+
 $listOfProductsInCart = Product::getProductListFromCart($user->getAccountId());
 if ($listOfProductsInCart != 0)
     $cartEmpty = false;
