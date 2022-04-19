@@ -10,6 +10,7 @@
     padding-bottom: 2.5rem;
 }
 
+
 /* Main Page */
 
 .formCard {
@@ -75,6 +76,7 @@ ul {
     overflow: hidden;
 }
 
+
 /* Settings Page */
 
 .listingPage {
@@ -89,7 +91,8 @@ ul {
 
 .listingPage ul li {
     border: 1px solid #ddd;
-    margin-top: -1px; /* Prevent double borders */
+    margin-top: -1px;
+    /* Prevent double borders */
     background-color: #f6f6f6;
     padding: 12px;
 }
@@ -97,6 +100,7 @@ ul {
 .ListingForm {
     margin-block-end: 0em;
 }
+
 
 /* Footer */
 
@@ -138,65 +142,120 @@ footer span {
     color: black;
 }
 
+
 /* Themes */
-.theme1
-{
+
+.theme1 {
     background-color: #DCE2F0;
     color: #50586C;
 }
 
-.theme1Contrast
-{
+.theme1Contrast {
     background-color: #50586C !important;
     color: #DCE2F0 !important;
 }
 
-.theme2
-{
+.theme2 {
     background-color: #FCF6F5;
     color: #2BAE66;
 }
 
-.theme2Contrast
-{
+.theme2Contrast {
     background-color: #2BAE66 !important;
     color: #FCF6F5 !important;
 }
 
-.theme3
-{
+.theme3 {
     background-color: #DBB98F;
     color: #96351F;
 }
 
-.theme3Contrast
-{
+.theme3Contrast {
     background-color: #96351F !important;
     color: #DBB98F !important;
 }
 
-.theme4
-{
+.theme4 {
     background-color: #F9D142;
     color: #292826;
 }
 
-.theme4Contrast
-{
+.theme4Contrast {
     background-color: #292826 !important;
     color: #F9D142 !important;
 }
 
-.themeButton
-{
+.themeButton {
     border-radius: 100px;
     font-weight: bold;
-    border:none;
+    border: none;
     padding: 5px 10px 5px 10px;
     margin: 5px;
 }
 
-.bgWhite
-{
+.bgWhite {
     background-color: white;
+}
+
+
+/* Shopping Cart */
+
+.shoppingCartPhoto {
+    text-align: center;
+}
+
+.shoppingCartPhoto img {
+    margin: 2rem 0 2rem 0;
+    height: 50%;
+    width: 50%;
+}
+
+.CartPageTable table {
+    margin: 0 1rem 0 20rem;
+}
+
+.CartPageTable ul {
+    margin: 0;
+}
+
+.CartPageTable table {
+    border: black 2px solid;
+}
+
+.CartPageTable td {
+    border-top: black 1px solid;
+    border-bottom: black 1px solid;
+}
+
+.CartPageTable input[type=submit] {
+    border-radius: 15rem;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+.cartPrice,
+th {
+    padding: .5rem 2rem .5rem 2rem;
+}
+
+.floatL {
+    float: left;
+    width: 65%;
+}
+
+.floatR {
+    float: right;
+    width: 15%;
+    margin: 0 15rem 0 0;
+    border: black solid 2px;
+}
+
+.floatR p {
+    margin: 0;
+    padding: .25rem 0 .25rem .5rem;
+    color: black;
+    font-weight: bold;
+}
+
+.clearFix::after {
+    clear: both;
 }

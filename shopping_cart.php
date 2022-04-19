@@ -20,7 +20,7 @@ if ($listOfProductsInCart != 0)
     htmlNavBar();
     ?>
     <div class="page-container <?php echo getThemeBackground(); ?>">
-        <div class="content-wrap ProductPageTable">
+        <div class="content-wrap CartPageTable">
             <div>
                 <div class="container-fluid">
                     <div class="row">
@@ -33,7 +33,7 @@ if ($listOfProductsInCart != 0)
                                 ?>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>

@@ -27,11 +27,11 @@ require_once 'src/htmlFunction.php';
                                     <ul><?php echo $prod->getName();
                                                 if ($prod->getSize() > 0)
                                                 { echo " (" . $prod->getSizeToString($prod->getSize()) . ")"; } ?><hr></ul>
-                                    <ul>Product Number: <?php echo $prod->getProductId(); ?><hr></ul>
+                                    <ul>Product Number: <?php echo  " " . $prod->getProductId(); ?><hr></ul>
                                     <ul>Sold by: <?php echo $seller->getFirstName() . " " . $seller->getLastName(); ?><hr></ul>
                                     <ul><?php echo $prod->getDescription(); ?><hr></ul>
                                     <ul><?php echo $prod->getQuantity() . " left in stock"; ?><hr></ul>
-                                    <ul><?php echo $prod->getPrice() . "$"; ?><hr></ul>
+                                    <ul><?php echo "Price: " . $prod->getPrice() . "$"; ?><hr></ul>
                                     <ul>
                                         <form method="post">
                                             <input type="hidden" name="productID" value="<?php echo $prod->getProductId(); ?>"/>

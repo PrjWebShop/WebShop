@@ -299,13 +299,61 @@ function displayCart($cart)
 {
     global $currentPage, $user, $accountLogged;
 
-    if ($cart == 0)
+    if ($cart == 0){
         return;
+    }
+    else{
+        ?>
+        <div class="clearFix">
+            <div class="floatL">
+                <table>
+                    <tr>
+                        <th colspan="2">Shopping Cart</th>
+                        <th>Price</th>
+                    </tr>
+                        <?php                
+            
 
-    foreach ($cart as $oneCartEntry) {
+                    foreach ($cart as $oneCartEntry) { 
+                
+                        $product = Product::getProductByID($oneCartEntry["product_id"]);
+                        ?>
+                            <tr>
+                                <td class="shoppingCartPhoto" ><img src="<?php echo $product->getImagePath(); ?>" alt=" I am Lost '-_-"></td>
+                                <td>
+                                    <ul>
+                                        <ul>
+                                            <?php echo $product->getName();
+                                                    if ($product->getSize() > 0)
+                                                    { echo " (" . $product->getSizeToString($product->getSize()) . ")"; } 
+                                            ?><hr>
+                                        </ul>
+                                        <ul><?php echo $product->getProductId(); ?><hr></ul>
+                                        <ul><?php echo $product->getQuantity(); ?><hr></ul>
+                                        <ul><?php //echo $product->get(); ?></ul>
+                                        <ul>
+                                            <?php echo "In Cart: " . $product->getQuantity();?>
+                                        </ul>
+                                    </ul>
+                                </td>
+                                <td class= "cartPrice"><?php echo $product->getPrice() . "$"; ?></td>
+                            </tr>
+                        <?php
+                    }
+                        ?>
+                </table>
+            </div>
+            <div class="floatR">
+                <p><span>Total bft</span></p>
+                <p><span>tps</span></p>
+                <p><span>tvq</span></p>
+                <p><span>Grand Total</span></p>
+                <input type="submit" value="Checkout">
+            </div>
+        </div>
         
-        $product = Product::getProductByID($oneCartEntry["product_id"]);
-
+        <?php
+        /*
         echo "<div class='col-12 col-md-4'>";
             echo "<a title='" . $product->getName() . "' href='product.php?ProductId=" . $product->getProductId() . "'>";
             echo "<div class='card m-2'>";
@@ -319,5 +367,7 @@ function displayCart($cart)
             echo "</div>";
             echo "</a>";
         echo "</div>";
+        */
     }
+    
 }
