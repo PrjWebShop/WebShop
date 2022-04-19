@@ -448,7 +448,9 @@ class Product
     {
         global $connection;
 
-        if ($amount == 0)
+        $prod = Product::getProductByID($product_id);
+
+        if ($prod->getQuantity() + $amount == 0)
         {
             return Product::RemoveProductFromDatabase($product_id);
         }

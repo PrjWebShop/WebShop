@@ -67,7 +67,7 @@ function htmlNavBar()
             
                 <?php if ($accountLogged) { ?>
                     <li class="nav-item dropdown">
-                    <a class="<?php echo getThemeContrast(); ?> nav-link dropdown-toggle" id="headerLabel5" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="<?php echo getThemeContrast(); ?> nav-link dropdown-toggle" id="headerLabel5" href="/WebShop/settings/profile" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Account
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -352,8 +352,10 @@ function displayCart($cart)
                 <p><span>Total bft <?php echo $total; ?>$</span></p>
                 <p><span>tps <?php echo $tps; ?>$</span></p>
                 <p><span>tvq <?php echo $tvq; ?>$</span></p>
-                <p><span>Grand Total <?php echo $total + $tps + $tvq; ?></span></p>
-                <input type="submit" value="Checkout" class="themeButton <?php echo getThemeContrast(); ?>">
+                <p><span>Grand Total <?php echo $total + $tps + $tvq; ?>$</span></p>
+                <form method="POST">
+                <input type="submit" name="btnCheckout" value="Checkout" class="themeButton <?php echo getThemeContrast(); ?>">
+                </form>
             </div>
         </div>
         

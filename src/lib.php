@@ -165,6 +165,12 @@ if (isset($_REQUEST["editProduct"]))
     }
 }
 
+// Checkout
+if (isset($_REQUEST["btnCheckout"]))
+{
+    Product::checkout($user->getAccountId());
+}
+
 function checkField($field)
 {
     if (!isset($_REQUEST["submit"]))
