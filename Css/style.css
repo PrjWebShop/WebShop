@@ -252,8 +252,14 @@ th:last-child {
     border: black 1px solid;
 }
 
-.floatL td:nth-child(2) {
-    padding: 2rem;
+.floatL td:nth-child(1) {
+    text-align: center;
+    margin: auto;
+    padding: 1rem;
+}
+
+.floatL td:nth-child(3) {
+    padding: 2rem 2rem 2rem 0;
 }
 
 .floatR {
