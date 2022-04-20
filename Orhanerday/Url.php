@@ -5,7 +5,7 @@ class Url
 {
     public const ORIGIN = 'https://api.openai.com';
     public const API_VERSION = 'v1';
-    public const OPEN_AI_URL = self::ORIGIN ."/". self::API_VERSION;
+    public const OPEN_AI_URL = self::ORIGIN . "/" . self::API_VERSION;
 
     /**
      * @param string $engine
@@ -13,7 +13,7 @@ class Url
      */
     public static function completionURL(string $engine)
     {
-        return self::OPEN_AI_URL."/engines/$engine/completions";
+        return self::OPEN_AI_URL . "/engines/$engine/completions";
     }
 
     /**
@@ -22,12 +22,12 @@ class Url
      */
     public static function searchURL(string $engine)
     {
-        return self::OPEN_AI_URL."/engines/$engine/search";
+        return self::OPEN_AI_URL . "/engines/$engine/search";
     }
 
     public static function enginesUrl()
     {
-        return self::OPEN_AI_URL."/engines";
+        return self::OPEN_AI_URL . "/engines";
     }
 
     /**
@@ -36,21 +36,21 @@ class Url
      */
     public static function engineUrl(string $engine)
     {
-        return self::OPEN_AI_URL."/engines/$engine";
+        return self::OPEN_AI_URL . "/engines/$engine";
     }
 
     public static function classificationsUrl()
     {
-        return self::OPEN_AI_URL."/classifications";
+        return self::OPEN_AI_URL . "/classifications";
     }
 
     public static function filesUrl()
     {
-        return self::OPEN_AI_URL."/files";
+        return self::OPEN_AI_URL . "/files";
     }
 
     public static function answersUrl()
     {
-        return self::OPEN_AI_URL."/answers";
+        return self::OPEN_AI_URL . "/answers";
     }
 }

@@ -5,34 +5,34 @@ require_once 'src/lib.php';
 function htmlHeader($currFile, $title)
 { ?>
 
-<head>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
-    <title> <?php echo $title; ?> </title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-    </style>
+    <head>
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+        <title> <?php echo $title; ?> </title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+        </style>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="/WebShop/Css/hover-min.css">
-    <link rel="stylesheet" href="/WebShop/Css/style.css">
-    <link rel="stylesheet" href="/WebShop/Css/index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="/WebShop/Css/hover-min.css">
+        <link rel="stylesheet" href="/WebShop/Css/style.css">
+        <link rel="stylesheet" href="/WebShop/Css/index.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <?php // get current file's css if it exists (Index.php -> index.css)
+        <?php // get current file's css if it exists (Index.php -> index.css)
         $cssFile = "/" . strtolower(pathinfo($currFile)["filename"]) . ".css";
         $cssPath = "/WebShop/Css" . $cssFile;
         $cssFullPath = pathinfo($currFile)["dirname"] . "/Css" . $cssFile;
         if (file_exists($cssFullPath))
             echo "<link rel='stylesheet' href='$cssPath'>";
-    ?>
+        ?>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    
-</head>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-<?php 
+    </head>
+
+<?php
 }
 
 function htmlNavBar()
@@ -63,24 +63,25 @@ function htmlNavBar()
                 <li class="nav-item">
                     <a class="<?php echo getThemeContrast(); ?> nav-link" id="headerLabel4" href="/WebShop/about">About</a>
                 </li>
-                
-            
+                <li class="nav-item">
+                    <a class="<?php echo getThemeContrast(); ?> nav-link" id="headerLabel4" href="/WebShop/Orhanerday/chatbot">Chatbot</a>
+                </li>
                 <?php if ($accountLogged) { ?>
                     <li class="nav-item dropdown">
-                    <a class="<?php echo getThemeContrast(); ?> nav-link dropdown-toggle" id="headerLabel5" href="/WebShop/settings/profile" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Account
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/WebShop/settings/profile">Settings</a>
-                        <a class="dropdown-item" href="/WebShop/settings/listing">My Listings</a>
-                        <div class="dropdown-divider"></div>
-                        <form method="POST">
-                        <input type="submit" class="dropdown-item" href="#" name="logout" value="Sign Out"></input>
-                        </form>
-                    </div>
-                </li>
-                </ul>
-                <?php } else {
+                        <a class="<?php echo getThemeContrast(); ?> nav-link dropdown-toggle" id="headerLabel5" href="/WebShop/settings/profile" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Account
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/WebShop/settings/profile">Settings</a>
+                            <a class="dropdown-item" href="/WebShop/settings/listing">My Listings</a>
+                            <div class="dropdown-divider"></div>
+                            <form method="POST">
+                                <input type="submit" class="dropdown-item" href="#" name="logout" value="Sign Out"></input>
+                            </form>
+                        </div>
+                    </li>
+            </ul>
+        <?php } else {
                     echo "<form onsubmit='return false' class='form-inline my-2 my-lg-0'>";
                     echo "</ul>";
                     echo "<button type='button' class='btn btn-primary  my-2 my-sm-0' data-toggle='modal' data-target='#exampleModal'>";
@@ -88,7 +89,7 @@ function htmlNavBar()
                     echo "</button>";
                     echo "</form>";
                 }
-                ?>
+        ?>
         </div>
     </nav>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -107,7 +108,7 @@ function htmlNavBar()
                         <div class="tab-pane fade show active" id="SignIn">
 
                             <form method="post">
-                                <br/>
+                                <br />
                                 <div class="form-group" for="email">
                                     <label> Email </label> <input type="email" name="email" id="email" class="form-control" value="<?php echo $entered_email ?>" />
                                 </div>
@@ -127,7 +128,7 @@ function htmlNavBar()
 
                         <div class="tab-pane fade" id="SignUp">
                             <form method="post">
-                                <br/>
+                                <br />
                                 <div class="form-group"><label>Email</label><input type="email" name="email" class="form-control" /></div>
                                 <div class="form-group"><label>Password</label><input type="password" name="password" class="form-control" /></div>
                                 <div class="form-group"><label>First Name</label><input type="text" name="first_name" class="form-control" /></div>
@@ -166,7 +167,7 @@ function htmlFooter()
             <span>&copy; 2022</span>
         </div>
     </footer>
-<?php
+    <?php
 }
 
 function displayCategories()
@@ -224,9 +225,9 @@ function displayProducts($listOfProducts)
         // }
         // else
         // {
-            echo "<div class='description'>";
-            echo "<i>" . $product->getDescription() . "</i><br/><br/>";
-            echo "</div>";
+        echo "<div class='description'>";
+        echo "<i>" . $product->getDescription() . "</i><br/><br/>";
+        echo "</div>";
         // }
         echo "Price: $" . number_format($product->getPrice(), 2) . "<br/>";
         echo "Quantity: " . $product->getQuantity() . " in stock <br/>";
@@ -236,13 +237,13 @@ function displayProducts($listOfProducts)
         echo "Seller: " . $seller->getFirstName() . " " . $seller->getLastName() . "<br/>";
         echo "<div class='d-flex justify-content-end mt-1'>";
         if ($accountLogged && $user->getAccountId() == $product->getSellerId()) {
-            echo "<input type='button' class='themeButton ". getThemeBackground() ."' value='Owned by you' disabled />";
+            echo "<input type='button' class='themeButton " . getThemeBackground() . "' value='Owned by you' disabled />";
         } elseif ($accountLogged && Product::isProductInCart($user->getAccountId(), $product->getProductId())) {
-            echo "<input type='button' class='themeButton ". getThemeBackground() ."' value='In Cart' disabled />";
+            echo "<input type='button' class='themeButton " . getThemeBackground() . "' value='In Cart' disabled />";
         } else {
             echo "<form method='POST' class='formCard'>";
             echo "<input type='hidden' name='ProductId' value='" . $product->getProductId() . "'/>";
-            echo "<input type='submit' name='addToCart' value='Add 1 to cart' class='themeButton ". getThemeContrast() ."'/>";
+            echo "<input type='submit' name='addToCart' value='Add 1 to cart' class='themeButton " . getThemeContrast() . "'/>";
             echo "</form>";
         }
         echo "</div>";
@@ -284,36 +285,32 @@ function displayListings()
     global $user;
 
     $listOfProducts = Product::getPostedProductList($user->getAccountId());
-    
-    if($listOfProducts){
+
+    if ($listOfProducts) {
         foreach ($listOfProducts as $product) {
             echo "<form method='POST' action='/WebShop/edit_product' class='ListingForm'>";
-            echo "<li>".$product->getName();
+            echo "<li>" . $product->getName();
             echo "<input type='hidden' name='ProductId' value='" . $product->getProductId() . "'/>";
             echo "<input type='submit' name='editProduct' value='Edit'/>";
             echo "<input type='submit' name='editProduct' value='Remove'/>";
             echo "</li>";
             echo "</form>";
-        } 
-    }
-    else{
+        }
+    } else {
         echo "<div class='ListingForm'>";
-        echo "<p>You have no product to sell at the moment.</p>" ;  
+        echo "<p>You have no product to sell at the moment.</p>";
         echo "</div>";
     }
-
-    
 }
 
 function displayCart($cart)
 {
     global $currentPage, $user, $accountLogged;
 
-    if ($cart == 0){
+    if ($cart == 0) {
         return;
-    }
-    else{
-        ?>
+    } else {
+    ?>
         <div class="clearFix">
             <div class="floatL">
                 <table class="<?php echo getThemeBackground(); ?> bgWhite">
@@ -321,51 +318,58 @@ function displayCart($cart)
                         <th colspan="3">Shopping Cart</th>
                         <th>Price</th>
                     </tr>
-                        <?php                
-            
+                    <?php
 
-                    foreach ($cart as $oneCartEntry) { 
-                
+
+                    foreach ($cart as $oneCartEntry) {
+
                         $product = Product::getProductByID($oneCartEntry["product_id"]);
-                        ?>
-                            <tr>
-                                <td>
-                                    <form method="POST">
-                                        <input type="hidden" name="cartProductId" value="<?php echo $product->getProductId(); ?>">
-                                        <input type="submit" name="btnRemoveFromCart" value="Remove" class="themeButton <?php echo getThemeContrast(); ?>">
-                                    </form>
-                                </td>
-                                <td class="shoppingCartPhoto" ><img src="<?php echo $product->getImagePath(); ?>" alt=" I am Lost '-_-"></td>
-                                <td>
+                    ?>
+                        <tr>
+                            <td>
+                                <form method="POST">
+                                    <input type="hidden" name="cartProductId" value="<?php echo $product->getProductId(); ?>">
+                                    <input type="submit" name="btnRemoveFromCart" value="Remove" class="themeButton <?php echo getThemeContrast(); ?>">
+                                </form>
+                            </td>
+                            <td class="shoppingCartPhoto"><img src="<?php echo $product->getImagePath(); ?>" alt=" I am Lost '-_-"></td>
+                            <td>
+                                <ul>
                                     <ul>
-                                        <ul>
-                                            <?php echo $product->getName();
-                                                    if ($product->getSize() > 0)
-                                                    { echo " (" . $product->getSizeToString($product->getSize())["short"] . ")"; } 
-                                            ?><hr>
-                                        </ul>
-                                        <ul><?php echo $product->getProductId(); ?><hr></ul>
-                                        <ul><?php echo $product->getQuantity(); ?><hr></ul>
-                                        <ul><?php //echo $product->get(); ?></ul>
-                                        <ul>
-                                            <?php echo "In Cart: " . $oneCartEntry["count"];?>
-                                        </ul>
+                                        <?php echo $product->getName();
+                                        if ($product->getSize() > 0) {
+                                            echo " (" . $product->getSizeToString($product->getSize())["short"] . ")";
+                                        }
+                                        ?>
+                                        <hr>
                                     </ul>
-                                </td>
-                                <td class= "cartPrice"><?php echo $product->getPrice() . "$"; ?></td>
-                            </tr>
-                        <?php
+                                    <ul><?php echo $product->getProductId(); ?>
+                                        <hr>
+                                    </ul>
+                                    <ul><?php echo $product->getQuantity(); ?>
+                                        <hr>
+                                    </ul>
+                                    <ul><?php //echo $product->get(); 
+                                        ?></ul>
+                                    <ul>
+                                        <?php echo "In Cart: " . $oneCartEntry["count"]; ?>
+                                    </ul>
+                                </ul>
+                            </td>
+                            <td class="cartPrice"><?php echo $product->getPrice() . "$"; ?></td>
+                        </tr>
+                    <?php
                     }
-                        ?>
+                    ?>
                 </table>
             </div>
-            <?php 
+            <?php
             $total = Product::getTotalPriceFromCart($user->getAccountId());
             $tps = number_format($total * (TAX_RATE_TPS / 100), 2);
             $tvq = number_format($total * (TAX_RATE_TVQ / 100), 2);
             ?>
             <div class="floatR <?php echo getThemeBackground(); ?> bgWhite">
-                <div  class="clearFix">
+                <div class="clearFix">
                     <div class="checkoutFloatL">
                         <p><span>Total: </span></p>
                         <p><span>TPS: </span></p>
@@ -379,18 +383,17 @@ function displayCart($cart)
                             <p><span><?php echo $tvq; ?>$</span></p>
                             <p><span><?php echo $total + $tps + $tvq; ?>$</span></p>
                         </div>
-                        
+
                     </div>
                 </div>
-               
-                
+
+
                 <form method="POST">
                     <input type="submit" name="btnCheckout" value="Checkout" class="themeButton <?php echo getThemeContrast(); ?>">
                 </form>
             </div>
         </div>
-        
-        <?php
+
+<?php
     }
-    
 }

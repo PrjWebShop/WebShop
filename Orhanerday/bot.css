@@ -1,0 +1,26 @@
+/* vertically and horizontal center a div  */
+/* code taken from https://stackoverflow.com/questions/396145/how-can-i-vertically-center-a-div-element-for-all-browsers-using-css */
+
+.outer {
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .middle {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  .inner {
+    margin-left: auto;
+    margin-right: auto;
+    width: 35rem;
+    height: 35rem;
+    overflow: auto;
+    border: 1px solid #333;
+    border-radius: 0.5rem;  
+  }
