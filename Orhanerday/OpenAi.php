@@ -9,6 +9,7 @@ class OpenAi
     {
         $this->headers = [
             "Content-Type: application/json",
+            "Authorization: Bearer sk-",
         ];
     }
 
