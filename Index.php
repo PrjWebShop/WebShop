@@ -44,12 +44,11 @@ require_once 'src/htmlFunction.php';
                         </div> -->
                         <div class="col-md-12 col-12">
                             <div class="text-center">
-                                <span class="badge badge-pill badge-primary p-2">All Categories</span>
-                                <span class="badge badge-pill badge-secondary p-2">Featured</span>
-                                <span class="badge badge-pill badge-success p-2">New</span>
-                                <span class="badge badge-pill badge-danger p-2">Sale</span>
-                                <span class="badge badge-pill badge-info p-2">Clothing</span>
-                                <span class="badge badge-pill badge-warning p-2">Accessories</span>
+                                <a href="Index"><span class="badge badge-pill badge-primary p-2">All Categories</span></a>
+                                <a href="Index?category=Electronics"><span class="badge badge-pill badge-secondary p-2">Electronics</span></a>
+                                <a href="Index?category=Video%20Games"><span class="badge badge-pill badge-success p-2">Video Games</span></a>
+                                <a href="Index?category=Movies"><span class="badge badge-pill badge-danger p-2">Movies</span></a>
+                                <a href="Index?category=Clothing"><span class="badge badge-pill badge-info p-2">Clothing</span></a>
                             </div>
                         </div>
                         <div class="col-md-12 col-12">
