@@ -163,6 +163,13 @@ if (isset($_REQUEST["editProduct"]))
     }
 }
 
+// Remove Product from Cart
+if (isset($_REQUEST["btnRemoveFromCart"]))
+{
+    $cartProductId = $_REQUEST["cartProductId"];
+    Product::removeProductFromCart($user->getAccountId(), $cartProductId);
+}
+
 // Checkout
 if (isset($_REQUEST["btnCheckout"]))
 {

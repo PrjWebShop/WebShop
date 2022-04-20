@@ -329,7 +329,12 @@ function displayCart($cart)
                         $product = Product::getProductByID($oneCartEntry["product_id"]);
                         ?>
                             <tr>
-                                <td><form action="POST"><input type="submit" name="btnRemoveFromCart" value="Remove"></form></td>
+                                <td>
+                                    <form method="POST">
+                                        <input type="hidden" name="cartProductId" value="<?php echo $product->getProductId(); ?>">
+                                        <input type="submit" name="btnRemoveFromCart" value="Remove" class="themeButton <?php echo getThemeContrast(); ?>">
+                                    </form>
+                                </td>
                                 <td class="shoppingCartPhoto" ><img src="<?php echo $product->getImagePath(); ?>" alt=" I am Lost '-_-"></td>
                                 <td>
                                     <ul>
