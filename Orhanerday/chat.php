@@ -39,11 +39,12 @@ $answer = $open_ai->answer([
     "model" => "davinci",
     "examples_context" => "WebShop is built by Alex M, Alex B, You Yin and Anurag",
     "examples" => [
-        ["Who built the webshop?", "WebShop is built by Alex M, Anurag, Yu and Alex B"],
+        ["Who built the webshop?", "WebShop is built by Team AAAY"],
         ["What is your name?", "I am just a bot without a name"],
         ["What is your age?", "I am just a bot without an age"],
-        ["Is pokemon game available", "Yes, there are 100 in stock and price is Price is 99.99$"],
-        ["Do you have Simpsons arcade machine in stock?", "Yes, there are 14 in stock and price is Price is 799.9$"]
+        ["Is pokemon game available", "Yes, there are 100 pokemon red in stock and price is Price is 99.99$"],
+        ["Do you have Simpsons arcade machine in stock?", "Yes, there are 14 Simpsons machine in stock and price is Price is 799.9$"],
+        ["Tell me about the web shop", "The webshop is built by Anurag, Alex M, Alex B and Yue. In total it took two sprints to finish, Alex M and Alex B did the Frontend and Backend, Yue did all the testing and Anurag built the bot and some design."]
     ],
     "max_tokens" => 5,
     "stop" => ["\n", "  "],

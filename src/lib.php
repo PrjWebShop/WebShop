@@ -138,6 +138,7 @@ if (isset($_REQUEST["theme"]))
 $listOfProducts = Product::getProductList($category_filter, $search);
 
 if ($listOfProducts != 0) {
+    // asort($listOfProducts);
     $maxPage = ceil(count($listOfProducts) / MAX_PRODUCT_PER_PAGE);
 
     if (isset($_GET["page"])) {
