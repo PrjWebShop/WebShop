@@ -284,15 +284,25 @@ function displayListings()
     global $user;
 
     $listOfProducts = Product::getPostedProductList($user->getAccountId());
-    foreach ($listOfProducts as $product) {
-        echo "<form method='POST' action='/WebShop/edit_product' class='ListingForm'>";
-        echo "<li>".$product->getName();
-        echo "<input type='hidden' name='ProductId' value='" . $product->getProductId() . "'/>";
-        echo "<input type='submit' name='editProduct' value='Edit'/>";
-        echo "<input type='submit' name='editProduct' value='Remove'/>";
-        echo "</li>";
-        echo "</form>";
+    
+    if($listOfProducts){
+        foreach ($listOfProducts as $product) {
+            echo "<form method='POST' action='/WebShop/edit_product' class='ListingForm'>";
+            echo "<li>".$product->getName();
+            echo "<input type='hidden' name='ProductId' value='" . $product->getProductId() . "'/>";
+            echo "<input type='submit' name='editProduct' value='Edit'/>";
+            echo "<input type='submit' name='editProduct' value='Remove'/>";
+            echo "</li>";
+            echo "</form>";
+        } 
     }
+    else{
+        echo "<div class='ListingForm'>";
+        echo "<p>You have no product to sell at the moment.</p>" ;  
+        echo "</div>";
+    }
+
+    
 }
 
 function displayCart($cart)
@@ -308,7 +318,7 @@ function displayCart($cart)
             <div class="floatL">
                 <table class="<?php echo getThemeBackground(); ?> bgWhite">
                     <tr>
-                        <th colspan="2">Shopping Cart</th>
+                        <th colspan="3">Shopping Cart</th>
                         <th>Price</th>
                     </tr>
                         <?php                
@@ -319,6 +329,7 @@ function displayCart($cart)
                         $product = Product::getProductByID($oneCartEntry["product_id"]);
                         ?>
                             <tr>
+                                <td><form action="POST"><input type="submit" name="btnRemoveFromCart" value="Remove"></form></td>
                                 <td class="shoppingCartPhoto" ><img src="<?php echo $product->getImagePath(); ?>" alt=" I am Lost '-_-"></td>
                                 <td>
                                     <ul>
@@ -375,21 +386,6 @@ function displayCart($cart)
         </div>
         
         <?php
-        /*
-        echo "<div class='col-12 col-md-4'>";
-            echo "<a title='" . $product->getName() . "' href='product.php?ProductId=" . $product->getProductId() . "'>";
-            echo "<div class='card m-2'>";
-                echo "<div class='card-body'>";
-                    echo "<b>" . $product->getName() . "</b><br/>";
-                    echo "<form method='POST'>";
-                        echo "In Cart: <input type='number' name='count' minimum='0' maximum='".$product->getQuantity()."' value='".$oneCartEntry['count']."' style='width:3rem;'>";
-                    echo "</form>";
-                    echo "Price: $" . number_format($product->getPrice(), 2) . "<br/>";
-                echo "</div>";
-            echo "</div>";
-            echo "</a>";
-        echo "</div>";
-        */
     }
     
 }
