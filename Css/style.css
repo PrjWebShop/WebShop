@@ -247,6 +247,15 @@ th {
     width: 65%;
 }
 
+.floatL td:last-child,
+th:last-child {
+    border: black 1px solid;
+}
+
+.floatL td:nth-child(2) {
+    padding: 2rem;
+}
+
 .floatR {
     float: right;
     width: 15%;
